@@ -2,11 +2,7 @@
 
 import { useState } from 'react'
 import {Dialog,DialogPanel,Disclosure,DisclosureButton,DisclosurePanel,Popover,PopoverGroup,} from '@headlessui/react'
-import {
-
-  PhoneIcon,
-  ChevronDownIcon,
-  ArrowPathIcon,Bars3Icon,ChartPieIcon,CursorArrowRaysIcon,FingerPrintIcon,SquaresPlusIcon,XMarkIcon,} from '@heroicons/react/24/outline'
+import {PhoneIcon,ChevronDownIcon,ArrowPathIcon,Bars3Icon,ChartPieIcon,CursorArrowRaysIcon,FingerPrintIcon,SquaresPlusIcon,XMarkIcon,} from '@heroicons/react/24/outline'
 
 import images from '../../assets/assets'
 
