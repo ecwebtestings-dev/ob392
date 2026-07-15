@@ -67,7 +67,7 @@ export default function Header() {
           Who We Are</a>
           <a href="/" className="text-sm/6 font-medium text-gray-400  hover:text-badges flex items-center gap-1">
          Services</a>
-          <a href="#" className="text-sm/6 font-medium text-gray-400  hover:text-badges flex items-center gap-1">
+          <a href="/contact" className="text-sm/6 font-medium text-gray-400  hover:text-badges flex items-center gap-1">
          Contact Us
           </a>
         </PopoverGroup>
@@ -127,12 +127,12 @@ export default function Header() {
                 </Disclosure>
 
 
-                <a href="#" className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-light text-gray-400 hover:bg-white/5
+                <a href="/services" className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-light text-gray-400 hover:bg-white/5
                 flex items-center gap-2">
                  Who We Are
                 </a>
                 
-                <a href="#" className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-light text-gray-400 hover:bg-white/5
+                <a href="/contact" className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-light text-gray-400 hover:bg-white/5
                 flex items-center gap-2">
                 Contact Us
                 </a>
