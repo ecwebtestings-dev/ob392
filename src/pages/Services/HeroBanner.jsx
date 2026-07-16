@@ -22,7 +22,7 @@ export default function HeroBanner() {
       {/* Hero Content */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
         <div className="max-w-4xl">
-          <h1 className="text-5xl font-extrabold leading-tight text-hero-text mb-6">
+          <h1 className="text-4xl font-extrabold leading-tight text-hero-text mb-6">
             Building Africa's Next Generation of{" "}
             <span className="text-badges">Farmers</span> and{" "}
             <span className="text-badges">Entrepreneurs</span>
