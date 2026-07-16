@@ -12,6 +12,8 @@ import AboutHero2 from './AboutHero2.jpg';
 import AboutHero3 from './AboutHero3.jpg';
 import AboutHero4 from './AboutHero4.jpg';
 import TeamPhoto from "./teamphoto.jpg";
+import Export from './export.jpg';
+import Export2 from './Export2.jpg';
 
 const images ={
     logo,
@@ -28,6 +30,8 @@ const images ={
     AboutHero3,
     AboutHero4,
     TeamPhoto,
+    Export,
+    Export2
     
 }
 

@@ -8,7 +8,7 @@ export default function Hero() {
     <section className="relative overflow-hidden sm:h-[100vh] mt-5">
   {/* Background Image with Overlay */}
         <div 
-            className="absolute inset-0 -z-20 bg-cover bg-center bg-no-repeat"
+            className="absolute inset-0 -z-20 bg-cover bg-center bg-no-repeat bg-fixed"
             style={{
             backgroundImage: `url('${images.Ugx}')`
             }}
@@ -25,7 +25,7 @@ export default function Hero() {
           Empowering Africa’s Farmers & Entrepreneurs for Global Markets
         </h1>
 
-        <p className="mt-7 max-w-xl text-[1rem] leading-6 font-light text-hero-text">
+        <p className="mt-7 max-w-xl  leading-6 font-light text-hero-text">
           OB39 Ltd transforms small-scale producers and emerging businesses
           through cooperative capital cycles, modern training,
           and direct digital market access—bypassing middlemen and building sustainable,

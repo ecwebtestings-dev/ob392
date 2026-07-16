@@ -9,13 +9,17 @@ const links = [
 
 export default function AboutHero() {
 
-  console.log('RENDERED');
+
   return (
     <div className="relative isolate overflow-hidden bg-gray-900 py-30 sm:py-50 mt-6">
-      <img alt=""
-        src={images.AboutHero4}
-        className="absolute inset-0 -z-10 size-full object-cover object-right md:object-center"
-      />
+     <div
+        className="absolute inset-0 -z-10 bg-cover bg-center bg-fixed"
+        style={{
+          backgroundImage: `url(${images.AboutHero4})`,
+        }}
+    ></div>
+
+    
       {/**DARK OVERLAY */}
         <div className="absolute inset-0 z-10 bg-gradient-to-r from-background/90 via-background/70 via-40% to-background/40"></div>
 

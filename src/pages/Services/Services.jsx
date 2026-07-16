@@ -1,8 +1,27 @@
+import WhatsApp from "../../components/ui/Whatsapp";
+import AgribusinessExport from "./AgriBusinessExport";
+import BusinessIncubation from "./BusinessIncubation";
+import CallToAction from "./Calltoaction";
+import HeroBanner from "./HeroBanner";
+import HowItWorks from "./HowItWorks";
+import ImpactBenefits from "./ImpactBenefits";
+import ServicesOverview from "./ServicesOverview";
+import WhoWeServe from "./Whoweserve";
 
 export default function Services() {
   return (
-    <div>
-      
-    </div>
+    <>
+     <HeroBanner/> 
+     <ServicesOverview/>
+     <BusinessIncubation/>
+      <CallToAction/>
+     <AgribusinessExport/>
+      <WhoWeServe/>
+     <HowItWorks/>
+     
+     <ImpactBenefits/>
+     <WhatsApp/>
+   
+    </>
   )
 }

@@ -61,7 +61,7 @@ export default function Header() {
 
           <a href="/about" className="text-sm/6 font-medium text-gray-400 hover:text-badges flex items-center gap-1"> 
           Who We Are</a>
-          <a href="/" className="text-sm/6 font-medium text-gray-400  hover:text-badges flex items-center gap-1">
+          <a href="/services" className="text-sm/6 font-medium text-gray-400  hover:text-badges flex items-center gap-1">
          Services</a>
           <a href="/contact" className="text-sm/6 font-medium text-gray-400  hover:text-badges flex items-center gap-1">
          Contact Us

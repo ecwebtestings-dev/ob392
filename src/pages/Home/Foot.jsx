@@ -9,6 +9,9 @@ import AnimatedButton from '../../components/ui/Buttons'
 
 
 export default function Footer() {
+
+  const footerDate = new Date().getFullYear();
+
   return (
     <footer className="bg-background ubuntu-light">
       {/* Top CTA Section */}
@@ -162,7 +165,7 @@ export default function Footer() {
         <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div className="text-sm/6 text-gray-400">
-              © 2026 OB39 Ltd. All rights reserved.
+              © {footerDate} OB39 Ltd. All rights reserved.
             </div>
            
             <div className="flex items-center gap-4">
