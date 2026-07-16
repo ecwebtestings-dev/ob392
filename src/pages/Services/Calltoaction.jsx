@@ -3,10 +3,10 @@ export default function CallToAction() {
   return (
     <section className="py-20 px-6 bg-white">
       <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-3xl md:text-5xl font-bold text-green-950 mb-6 leading-tight">
+        <h2 className="text-3xl md:text-5xl font-bold text-heading mb-6 leading-tight">
           Ready to Grow With OB39?
         </h2>
-        <p className="text-green-950/80 text-lg mb-10 max-w-2xl mx-auto">
+        <p className="text-gray-500 text-lg mb-10 max-w-2xl mx-auto">
           Whether you farm, run a business, or want to invest in Africa's next generation
           of enterprises — there's a place for you in our network.
         </p>

@@ -24,7 +24,7 @@ export default function WhoWeServe() {
     <section id="who-we-serve" className="py-20 px-6 bg-white">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold text-green-950 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-heading mb-4">
             Who We Serve
           </h2>
           <p className="text-stone-600 max-w-2xl mx-auto">

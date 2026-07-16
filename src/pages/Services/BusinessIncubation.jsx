@@ -27,7 +27,7 @@ export default function BusinessIncubation() {
             <span className="inline-block px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full mb-4 uppercase tracking-wider">
               Growth Solutions
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-green-950 mb-6 leading-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-heading mb-6 leading-tight">
               Turning Small Daily Contributions into Real Business Growth
             </h2>
             <p className="text-stone-600 leading-relaxed mb-8">
@@ -69,13 +69,13 @@ export default function BusinessIncubation() {
 
         {/* Feature list */}
         <div className="bg-stone-50 rounded-2xl p-8 mb-10">
-          <h3 className="text-xl font-bold text-green-950 mb-6">What's included:</h3>
+          <h3 className="text-xl font-bold text-heading mb-6">What's included:</h3>
           <div className="grid md:grid-cols-2 gap-4">
             {features.map((feature, idx) => {
               const Icon = feature.icon;
               return (
                 <div key={idx} className="flex items-start gap-3">
-                  <div className="flex-shrink-0 w-8 h-8 bg-green-700 rounded-lg flex items-center justify-center">
+                  <div className="flex-shrink-0 w-8 h-8 bg-green-900 rounded-lg flex items-center justify-center">
                     <Icon className="w-4 h-4 text-green-100" />
                   </div>
                   <p className="text-stone-700 text-sm leading-relaxed pt-1">
@@ -94,7 +94,7 @@ export default function BusinessIncubation() {
               key={idx}
               className="relative bg-white border border-stone-200 rounded-xl p-5 text-center hover:border-green-700 transition-colors"
             >
-              <div className="w-10 h-10 bg-green-700 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-3">
+              <div className="w-10 h-10 bg-green-900 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-3">
                 {step.num}
               </div>
               <p className="text-sm font-semibold text-green-950">{step.label}</p>

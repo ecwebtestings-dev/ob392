@@ -32,7 +32,7 @@ export default function AgribusinessExport() {
             <span className="inline-block px-3 py-1 bg-amber-100 text-amber-800 text-xs font-semibold rounded-full mb-4 uppercase tracking-wider">
               Export Development
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-green-950 mb-6 leading-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-heading mb-6 leading-tight">
               From the Field to the Global Market — Without the Middleman
             </h2>
             <p className="text-stone-600 leading-relaxed">
@@ -48,7 +48,7 @@ export default function AgribusinessExport() {
 
         {/* Feature list */}
         <div className="bg-white rounded-2xl p-8 mb-10 shadow-sm">
-          <h3 className="text-xl font-bold text-green-950 mb-6">What's included:</h3>
+          <h3 className="text-xl font-bold text-heading mb-6">What's included:</h3>
           <div className="grid md:grid-cols-2 gap-4">
             {features.map((feature, idx) => {
               const Icon = feature.icon;
