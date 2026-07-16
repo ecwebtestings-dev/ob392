@@ -6,7 +6,7 @@ export default function CallToAction() {
         <h2 className="text-3xl md:text-5xl font-bold text-heading mb-6 leading-tight">
           Ready to Grow With OB39?
         </h2>
-        <p className="text-gray-500 text-lg mb-10 max-w-2xl mx-auto">
+        <p className="text-stone-600 text-lg mb-10 max-w-2xl mx-auto">
           Whether you farm, run a business, or want to invest in Africa's next generation
           of enterprises — there's a place for you in our network.
         </p>
