@@ -55,7 +55,7 @@ export default function ProblemsWeSolve() {
           <h2 className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-white sm:text-4xl lg:text-balance">
             Removing Barriers to Success
           </h2>
-          <p className="mt-6 text-md/8 text-text-color">
+          <p className="mt-6 text-md text-gray-400">
             African farmers and entrepreneurs face critical challenges. We provide integrated solutions 
             that address the root causes of business failure and agricultural underperformance.
           </p>
