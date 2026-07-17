@@ -11,7 +11,7 @@ export default function About() {
   return (
     <div>
 
-      <AboutHero/>
+      <AboutHero />
       <AboutSection/>
       <CompanyStory/>
       <WhatsApp/>

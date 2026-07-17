@@ -41,7 +41,7 @@ const aboutItems = [
 
 export default function AboutSection() {
   return (
-    <div className="bg-white py-24 sm:py-32 font-sans">
+    <div id="ourgoals" className="bg-white py-24 sm:py-32 font-sans">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         
         {/* Section Header */}

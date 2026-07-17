@@ -6,7 +6,7 @@ export default function HeroBanner() {
   return (
     <section
       id="hero"
-      className="relative lg:min-h-screen md:min-h-[80vh] min-h-[90vh] flex items-center overflow-hidden py-30 sm:py-50 mt-6"
+      className="relative lg:min-h-screen md:min-h-[80vh] min-h-[90vh] flex items-center overflow-hidden py-30 sm:py-50"
     >
       {/* Background Image */}
       <div

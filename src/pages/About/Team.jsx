@@ -2,7 +2,7 @@ import images from "../../assets/assets";
 
 export default function TeamPhoto() {
   return (
-    <section className="bg-white py-10 sm:py-20 font-sans">
+    <section id="ourteam" className="bg-white py-10 sm:py-20 font-sans">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         
         {/* Photo Container */}

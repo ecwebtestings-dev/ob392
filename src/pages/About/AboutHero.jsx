@@ -1,17 +1,16 @@
 import images from "../../assets/assets"
 
 const links = [
-  { name: 'Open roles', href: '#' },
-  { name: 'Internship program', href: '#' },
-  { name: 'Our values', href: '#' },
-  { name: 'Meet our leadership', href: '#' },
+  { name: 'Our vision', href: '/about#ourgoals' },
+  { name: 'Our Story', href: '/about#ourstory' },
+  { name: 'Meet our leadership', href: '/about#ourteam' },
 ]
 
 export default function AboutHero() {
 
 
   return (
-    <div className="relative isolate overflow-hidden bg-gray-900 py-30 sm:py-50 mt-6">
+    <div className="relative min-h-screen isolate overflow-hidden bg-gray-900 py-30 sm:py-50 ">
      <div
         className="absolute inset-0 -z-10 bg-cover bg-center bg-fixed"
         style={{
@@ -35,6 +34,7 @@ export default function AboutHero() {
             "0B39 builds the digital infrastructure and export ecosystems that connect African farmers and young businesses directly to high-value domestic and global markets
           </p>
         </div>
+
         <div className="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
           <div className="grid grid-cols-1 gap-x-8 gap-y-6 text-base/7 font-semibold text-white sm:grid-cols-2 md:flex lg:gap-x-10">
             {links.map((link) => (

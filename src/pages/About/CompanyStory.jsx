@@ -14,7 +14,7 @@ export default function Story() {
         <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
 
           {/* Left Column: The Why */}
-          <div className="flex flex-col justify-center">
+          <div  id="ourstory" className="flex flex-col justify-center">
             <span className="inline-flex w-fit rounded-full bg-badge-bg px-4 py-2 text-sm font-semibold uppercase tracking-wider text-badges">
               Our Journey
             </span>
