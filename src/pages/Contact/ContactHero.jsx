@@ -1,5 +1,6 @@
 import { PhoneIcon, EnvelopeIcon } from "@heroicons/react/24/solid";
 import images from "../../assets/assets";
+import AnimatedButton from "../../components/ui/Buttons";
 
 export default function ContactHero() {
   return (
@@ -49,13 +50,10 @@ export default function ContactHero() {
 
           {/* CTAs */}
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
-             <a
-              href="#contact-form"
-              className="group inline-flex items-center justify-center gap-2 rounded-lg bg-button-bg px-7 py-3.5 text-base font-semibold text-background transition-all duration-300 hover:bg-button-hover hover:shadow-xl hover:shadow-badges/25 hover:-translate-y-0.5">
-           
-              Get in Touch
-              <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-            </a>
+             
+             <AnimatedButton href="#contact-form">Get in Touch</AnimatedButton>
+             
+             
 
             
             <a  href="tel:+256701234567"
