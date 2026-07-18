@@ -9,15 +9,14 @@ import AnimatedButton from '../../components/ui/Buttons'
 export default function Footer() {
   const footerDate = new Date().getFullYear();
 
-  const platforms = [
-    'Agribusiness Development',
-    'Business Incubation',
-    'Digital Marketplace',
-    'Export Facilitation',
-    'Capital Pooling',
-  ];
+  
 
-  const company = ['About Us', 'Who we are', 'Services', 'Contact Us'];
+  const company = [
+  { name: 'Home', href: '/' },
+  { name: 'Who We Are', href: '/about' },
+  { name: 'Services', href: '/services' },
+  { name: 'Contact Us', href: '/contact' },
+];
 
   const socials = [
     {
@@ -81,110 +80,91 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Main Footer */}
-      <div className="relative mx-auto max-w-7xl px-6 py-16 lg:px-8">
-        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-6">
-          {/* Brand Column */}
-          <div className="lg:col-span-2">
-            <a href="/" className="-m-1.5 flex items-center gap-2 p-1.5 text-2xl">
-              <img alt="Logo" src={images.logo} className="h-8 w-auto" />
-              <h1 className="text-white">OB39</h1>
+     {/* Main Footer */}
+<div className="relative mx-auto max-w-7xl px-6 py-16 lg:px-8">
+  <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-5">
+    {/* Brand Column */}
+    <div className="lg:col-span-2">
+      <a href="/" className="-m-1.5 flex items-center gap-2 p-1.5 text-2xl">
+        <img alt="Logo" src={images.logo} className="h-8 w-auto" />
+        <h1 className="text-white">OB39</h1>
+      </a>
+      <p className="mt-6 max-w-sm text-base/7 text-gray-400">
+        Empowering Africa's farmers and entrepreneurs through cooperative
+        capital, modern training, and direct market access. Building
+        globally competitive enterprises for sustainable economic growth.
+      </p>
+    </div>
+
+    {/* Company Column */}
+    <div className="lg:col-span-1">
+      <h3 className="text-xs font-semibold tracking-widest text-badges">
+        COMPANY
+      </h3>
+      <ul role="list" className="mt-6 space-y-4">
+        {company.map((item) => (
+          <li key={item.name}>
+            
+            <a  href={item.href}
+              className="text-sm/6 text-gray-400 transition-colors hover:text-white"
+            >
+              {item.name}
             </a>
-            <p className="mt-6 max-w-sm text-base/7 text-gray-400">
-              Empowering Africa's farmers and entrepreneurs through cooperative
-              capital, modern training, and direct market access. Building
-              globally competitive enterprises for sustainable economic growth.
-            </p>
-          </div>
+          </li>
+        ))}
+      </ul>
+    </div>
 
-          {/* Platforms Column */}
-          <div className="lg:col-span-1">
-            <h3 className="text-xs font-semibold tracking-widest text-badges">
-              PLATFORMS
-            </h3>
-            <ul role="list" className="mt-6 space-y-4">
-              {platforms.map((item) => (
-                <li key={item}>
-                  
-                  <a  href="#"
-                    className="text-sm/6 text-gray-400 transition-colors hover:text-white"
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
+    {/* Get In Touch Column */}
+    <div className="lg:col-span-2">
+      <h3 className="text-xs font-semibold tracking-widest text-badges">
+        GET IN TOUCH
+      </h3>
+      <ul role="list" className="mt-6 space-y-5">
+        <li className="flex items-start gap-3">
+          <span className="mt-0.5 flex size-9 flex-shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5">
+            <MapPinIcon className="size-4 text-badges" />
+          </span>
+          <span className="text-sm/6 text-gray-400">
+            Plot 238 Kalule Road,
+            <br />
+            Kampala, Uganda
+          </span>
+        </li>
+        <li className="flex items-center gap-3">
+          <span className="flex size-9 flex-shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5">
+            <PhoneIcon className="size-4 text-badges" />
+          </span>
+          
+          <a  href="tel:+256701234567"
+            className="text-sm/6 text-gray-400 transition-colors hover:text-white"
+          >
+            +256 701 234 567
+          </a>
+        </li>
+        <li className="flex items-start gap-3">
+          <span className="mt-0.5 flex size-9 flex-shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5">
+            <EnvelopeIcon className="size-4 text-badges" />
+          </span>
+          <div className="text-sm/6 text-gray-400">
+            
+            <a  href="mailto:info@ob39.co.ug"
+              className="block transition-colors hover:text-white"
+            >
+              info@ob39.co.ug
+            </a>
+            
+            <a  href="mailto:support@ob39.co.ug"
+              className="block transition-colors hover:text-white"
+            >
+              support@ob39.co.ug
+            </a>
           </div>
-
-          {/* Company Column */}
-          <div className="lg:col-span-1">
-            <h3 className="text-xs font-semibold tracking-widest text-badges">
-              COMPANY
-            </h3>
-            <ul role="list" className="mt-6 space-y-4">
-              {company.map((item) => (
-                <li key={item}>
-                  
-                   <a href="#"
-                    className="text-sm/6 text-gray-400 transition-colors hover:text-white"
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Get In Touch Column */}
-          <div className="lg:col-span-2">
-            <h3 className="text-xs font-semibold tracking-widest text-badges">
-              GET IN TOUCH
-            </h3>
-            <ul role="list" className="mt-6 space-y-5">
-              <li className="flex items-start gap-3">
-                <span className="mt-0.5 flex size-9 flex-shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5">
-                  <MapPinIcon className="size-4 text-badges" />
-                </span>
-                <span className="text-sm/6 text-gray-400">
-                  Plot 238 Kalule Road,
-                  <br />
-                  Kampala, Uganda
-                </span>
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="flex size-9 flex-shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5">
-                  <PhoneIcon className="size-4 text-badges" />
-                </span>
-                <a
-                  href="tel:+256701234567"
-                  className="text-sm/6 text-gray-400 transition-colors hover:text-white"
-                >
-                  +256 701 234 567
-                </a>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="mt-0.5 flex size-9 flex-shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5">
-                  <EnvelopeIcon className="size-4 text-badges" />
-                </span>
-                <div className="text-sm/6 text-gray-400">
-                  <a
-                    href="mailto:info@ob39.co.ug"
-                    className="block transition-colors hover:text-white"
-                  >
-                    info@ob39.co.ug
-                  </a>
-                  <a
-                    href="mailto:support@ob39.co.ug"
-                    className="block transition-colors hover:text-white"
-                  >
-                    support@ob39.co.ug
-                  </a>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
 
       {/* Bottom Bar */}
       <div className="relative border-t border-white/10">

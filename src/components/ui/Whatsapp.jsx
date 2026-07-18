@@ -51,7 +51,8 @@ const StyledWrapper = styled.div`
     transition: all 0.35s ease;
   }
 
-  .Btn:hover {
+  @media(min-width:425px){
+    .Btn:hover {
     width: 180px;
     border-radius: 9999px;
     transform: translateY(-3px);
@@ -60,6 +61,8 @@ const StyledWrapper = styled.div`
   .Btn:active {
     transform: scale(0.96);
   }
+  }
+  
 
   .sign {
     width: 58px;
