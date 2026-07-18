@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
 export default function AnimatedButton({
-  href = "#",
+  href = "/contact",
   children,
   color = "#22c55e",
   icon = true,

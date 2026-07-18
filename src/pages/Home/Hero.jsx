@@ -45,7 +45,7 @@ export default function Hero() {
               <AnimatedButton>Lend With Us</AnimatedButton>
 
               <a
-                href="/"
+                href="/services"
                 className="group inline-flex w-1/2 items-center justify-center gap-2 rounded-lg border border-white/10 px-6 py-4 text-base font-semibold text-white transition-all duration-300 hover:border-badges/40 hover:bg-white/5 sm:w-auto"
               >
                 Learn More

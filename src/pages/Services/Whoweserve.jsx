@@ -13,7 +13,7 @@ const audiences = [
     icon: Briefcase,
     title: 'For Entrepreneurs & SMEs',
     description:
-      'Young and developing businesses struggling with capital access, bookkeeping, and market reach.',
+      'Young and developing businesses struggling with capital access, financial risk management like book keeping, and market reach.',
     cta: 'Join as a Business',
     color: 'amber',
   },

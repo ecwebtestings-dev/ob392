@@ -36,10 +36,10 @@ export default function CallToAction() {
             </p>
 
             <div className="mt-12 flex flex-col items-center justify-center gap-5 sm:flex-row">
-              <AnimatedButton href="/">Become a member</AnimatedButton>
+              <AnimatedButton href="/contact">Become a member</AnimatedButton>
 
               <a
-                href="/"
+                href="/services"
                 className="rounded-xl border border-white/20 bg-white/10 px-8 py-3 text-lg font-semibold text-white backdrop-blur transition hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Explore Our Services

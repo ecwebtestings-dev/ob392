@@ -117,7 +117,7 @@ export default function InvestmentOpportunity() {
             </div>
 
             <div className="mt-10">
-              <AnimatedButton href="/">Partner with us</AnimatedButton>
+              <AnimatedButton href="/contact">Partner with us</AnimatedButton>
             </div>
           </div>
 

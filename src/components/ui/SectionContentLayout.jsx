@@ -41,6 +41,7 @@ export default function AboutOverview() {
               <p className="mt-6 text-md/8 text-text-color">
                 We empower small-scale farmers and emerging businesses through cooperative capital, 
                 modern training, and direct market access—building globally competitive enterprises.
+                OB39 has improved  agriculture, contributing to <strong>20%</strong> of Uganda's GDP. Our enterprise and business services have contributed to  about <strong>30%</strong> of the GDP meaning we are aiming at improving 50% percent of the countries GDP a very big impact and improvement to the countries economy.
               </p>
             </div>
           </div>

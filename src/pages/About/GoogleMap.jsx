@@ -8,12 +8,12 @@ export default function LocationSection() {
           {/* Left Column - Content */}
           <div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight">
-              Rooted in Lira,{' '}
+              Rooted in Kampala,{' '}
               <span className="text-badges">Connected Globally.</span>
             </h2>
             
             <p className="mt-6 text-md leading-relaxed text-text-color">
-              Our HQ is in Lira—a vibrant hub of innovation. We designed our space to be a home for creativity, with the best cassava in Uganda just a walk away.
+              Our HQ is in Kampala—a vibrant hub of innovation. We designed our space to be a home for creativity, with the best cassava in Uganda just a walk away.
             </p>
 
             {/* Address Card */}
@@ -45,7 +45,7 @@ export default function LocationSection() {
                   ob39 Uganda Ltd.
                 </h3>
                 <p className="mt-1 text-text-color">
-                  Lira, Uganda
+                  Kampala, Uganda.
                 </p>
               </div>
             </div>
@@ -54,17 +54,18 @@ export default function LocationSection() {
           {/* Right Column - Map */}
           <div className="relative">
             <div className="overflow-hidden rounded-2xl shadow-xl">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d80923.80442787774!2d32.850724429225636!3d2.2486571070947545!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1770b09fcc01830f%3A0xddfcd30f83eb2797!2sLira!5e0!3m2!1sen!2sug!4v1784056886302!5m2!1sen!2sug"
-                width="100%"
+            
+
+              <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d56937.4142604401!2d32.59901961121614!3d0.2854245411898566!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177dbdd859044fb5%3A0xb2db3b8b874c82fa!2sBunga%2C%20Kampala!5e0!3m2!1sen!2sug!4v1784396509363!5m2!1sen!2sug" 
+              width="100%"
                 height="400"
                 style={{ border: 0 }}
                 allowFullScreen=""
                 loading="lazy"
                 referrerPolicy="strict-origin-when-cross-origin"
                 className="grayscale hover:grayscale-0 transition-all duration-500"
-                title="0b39 Location Map"
-              />
+                title="0b39 Location Map"></iframe>
             </div>
             
             {/* Decorative Elements */}

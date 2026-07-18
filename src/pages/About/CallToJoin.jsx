@@ -25,7 +25,7 @@ export default function JoinUsCTA() {
 
             {/* CTA Button */}
             <div className="mt-10">
-              <AnimatedButton href="/">
+              <AnimatedButton href="/contact">
                 Contact Us
               </AnimatedButton>
             </div>

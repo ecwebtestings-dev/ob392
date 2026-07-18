@@ -6,14 +6,14 @@ const steps = [
     num: '01',
     title: 'Join a Unit',
     description:
-      'Become part of a farming cooperative (15 households) or a business unit (60 members).',
+      'Become part of a farming cooperative (15 households) ',
   },
   {
     icon: HandCoins,
     num: '02',
     title: 'Contribute & Access Resources',
     description:
-      'Pool a share of profits or harvest, and gain access to training, tools, and inputs.',
+      'Pool a share of profits and gain access to training, tools, and inputs.',
   },
   {
     icon: Sprout,
@@ -27,7 +27,7 @@ const steps = [
     num: '04',
     title: 'Reach the Market',
     description:
-      'Sell through fair-price channels, export networks, or the OM digital marketplace.',
+      'Sell through fair-price channels, export networks.',
   },
 ];
 
@@ -46,7 +46,7 @@ export default function HowItWorks() {
 
         {/* Horizontal timeline (desktop) / vertical stack (mobile) */}
         <div className="relative">
-          {/* Connecting line (desktop only) */}
+          {/* Connecting line */}
           <div className="hidden md:block absolute top-12 left-[12.5%] right-[12.5%] h-0.5 bg-stone-300" />
 
           <div className="grid md:grid-cols-4 gap-8">

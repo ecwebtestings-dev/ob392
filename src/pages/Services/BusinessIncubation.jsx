@@ -2,7 +2,7 @@ import { Check, TrendingUp, Users, Shield, BookOpen, Handshake } from 'lucide-re
 
 const features = [
   { icon: Users, text: 'Structured daily capital pooling and secure fund management' },
-  { icon: BookOpen, text: 'Business training: financial management, bookkeeping, marketing, leadership' },
+  { icon: BookOpen, text: 'Business training: financial risk management, bookkeeping, marketing, leadership' },
   { icon: TrendingUp, text: 'One-on-one business advisory and mentorship' },
   { icon: Shield, text: 'Business continuity and risk-management planning' },
   { icon: Handshake, text: 'Network of fellow entrepreneurs for referrals, partnerships, and joint ventures' },
@@ -11,7 +11,7 @@ const features = [
 
 const steps = [
   { num: 1, label: 'Join a unit' },
-  { num: 2, label: 'Contribute daily %' },
+  { num: 2, label: 'Contribute often %' },
   { num: 3, label: 'Receive growth capital' },
   { num: 4, label: 'Expand your business' },
 ];

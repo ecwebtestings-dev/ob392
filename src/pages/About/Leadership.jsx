@@ -40,17 +40,17 @@ export default function LeadershipQuote() {
               in Uganda, for Uganda, and solve national problems."
             </p>
 
-            {/* Author */}
+            {/* Founder */}
             <div className="mt-10">
               <div className="h-px w-16 bg-gray-200 mx-auto"></div>
               <p className="mt-6 text-lg font-bold text-heading">
-                Ocakala Timothy
+                Ocaa Joshua Solomon
               </p>
               <p className="mt-1 text-sm font-medium text-text-color">
                 Founder & CEO
               </p>
               
-              {/* LinkedIn Link */}
+              {/* Message Link */}
               <a
                 href="https://wa.me/256783380569"
                 className="mt-4 inline-flex items-center gap-2 rounded-full bg-gray-100 px-4 py-2 text-sm font-medium text-heading hover:bg-gray-200 transition-colors"

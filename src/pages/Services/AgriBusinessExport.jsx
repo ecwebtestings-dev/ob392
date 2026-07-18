@@ -7,7 +7,7 @@ const features = [
   { icon: GraduationCap, text: 'Training in modern planting, harvesting, storage, and processing techniques' },
   { icon: Warehouse, text: 'Shared farm tools, livestock, and cold-storage/warehouse access' },
   { icon: Globe, text: 'Direct market linkage to international buyers meeting export standards' },
-  { icon: RefreshCw, text: 'Up to six capital/harvest cycles per year for continuous income' },
+  { icon: RefreshCw, text: 'Up to six capital cycles per year for continuous income' },
 ];
 
 export default function AgribusinessExport() {
