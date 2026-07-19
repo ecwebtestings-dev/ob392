@@ -20,7 +20,7 @@ export default function AboutHero() {
 
     
       {/**DARK OVERLAY */}
-        <div className="absolute inset-0 z-10 bg-gradient-to-r from-background/90 via-background/70 via-40% to-background/40"></div>
+        <div className="absolute inset-0 z-10 bg-gradient-to-r from-background/90 via-background/80 via-80% to-background/90"></div>
 
         
       <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-30">

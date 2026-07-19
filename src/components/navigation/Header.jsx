@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import {
   Dialog,
   DialogPanel,
@@ -26,43 +27,60 @@ import {
 import images from '../../assets/assets'
 
 const products = [
-  { name: 'Business Development & Advisory',
+  {
+    name: 'Business Development & Advisory',
     description: 'Strategic guidance to grow your enterprise',
-    href: '/services#agribusiness', 
-    icon: ChartPieIcon 
+    href: '/services#agribusiness',
+    icon: ChartPieIcon,
   },
-  { 
-    name: 'Cooperative Financing', 
-    description: 'Pooled capital for sustainable growth', 
-    href: '/services#business-incubation', 
-    icon: CursorArrowRaysIcon 
+  {
+    name: 'Cooperative Financing',
+    description: 'Pooled capital for sustainable growth',
+    href: '/services#business-incubation',
+    icon: CursorArrowRaysIcon,
   },
-  { 
-    name: 'Market Access & Exports', 
-    description: 'Direct routes to international buyers', 
-    href: '/services', 
-    icon: FingerPrintIcon 
+  {
+    name: 'Market Access & Exports',
+    description: 'Direct routes to international buyers',
+    href: '/services',
+    icon: FingerPrintIcon,
   },
-  { 
-    name: 'Modern Agriculture', 
-    description: 'Technology-driven farming practices', 
-    href: '/services#how-it-works', 
-    icon: ArrowPathIcon 
+  {
+    name: 'Modern Agriculture',
+    description: 'Technology-driven farming practices',
+    href: '/services#how-it-works',
+    icon: ArrowPathIcon,
   },
 ]
 
-const callsToAction = [{ name: 'Contact sales', href: '#', icon: PhoneIcon }]
+const callsToAction = [{ name: 'Contact Us', href: './contact', icon: PhoneIcon }]
 
 const navLinks = [
+  { name: 'Home', href: '/' },
   { name: 'Who We Are', href: '/about' },
   { name: 'Contact Us', href: '/contact' },
 ]
 
+// Shared active-link style logic, for both desktop and mobile nav
+function getDesktopLinkClasses(isActive) {
+  return `relative text-sm/6 font-medium transition-colors after:absolute after:-bottom-1 after:left-0 after:h-px after:bg-badges after:transition-all after:duration-300 ${
+    isActive
+      ? 'text-badges after:w-full'
+      : 'text-gray-400 hover:text-white after:w-0 hover:after:w-full'
+  }`
+}
 
-
+function getMobileLinkClasses(isActive) {
+  return `-mx-3 flex items-center gap-2 rounded-lg px-3 py-2.5 text-base/7 font-medium transition-colors hover:bg-white/5 ${
+    isActive ? 'text-badges' : 'text-gray-400 hover:text-white'
+  }`
+}
 
 export default function Header() {
-  
+  const location = useLocation()
+  const currentPath = location.pathname
+
+  //Navigation
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -72,6 +90,9 @@ export default function Header() {
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  const isServicesActive = currentPath.startsWith('/services')
+
 
 
 
@@ -83,13 +104,13 @@ export default function Header() {
           : 'bg-background/0 border-b border-transparent'
       }`}
     >
+
+      {/**MAIN NAVIGATION  */}
       <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
         <div className="flex lg:flex-1">
           <a href="/" className="-m-1.5 flex items-center gap-2 p-1.5 text-2xl">
             <img alt="Logo" src={images.logo} className="h-8 w-auto" />
-            <h1 className="text-white">OB39
-             
-            </h1>
+            <h1 className="text-white">OB39</h1>
           </a>
         </div>
 
@@ -105,23 +126,29 @@ export default function Header() {
           </button>
         </div>
 
-        {/* DESKTOP NAV */}
+        {/* DESKTOP NAVIGATION */}
         <PopoverGroup className="hidden lg:flex lg:items-center lg:gap-x-10">
-          <a
-            href="/"
-            className="relative text-sm/6 font-semibold text-badges group"
+          {/* HOME */}
+          
+           <a href="/"
+            className={getDesktopLinkClasses(currentPath === '/')}
           >
             Home
-            <span className="absolute -bottom-1 left-0 h-px w-full bg-badges" />
           </a>
 
           {/* SERVICES DROPDOWN */}
           <Popover className="relative">
-            <PopoverButton className="group flex items-center gap-x-1 text-sm/6 font-medium text-gray-400 hover:text-white transition-colors outline-none cursor-pointer">
+            <PopoverButton
+              className={`group flex items-center gap-x-1 text-sm/6 font-medium transition-colors outline-none cursor-pointer ${
+                isServicesActive ? 'text-badges' : 'text-gray-400 hover:text-white'
+              }`}
+            >
               Services
               <ChevronDownIcon
                 aria-hidden="true"
-                className="size-4 flex-none text-gray-500 transition-transform duration-200 group-data-open:rotate-180 group-data-open:text-badges"
+                className={`size-4 flex-none transition-transform duration-200 group-data-open:rotate-180 ${
+                  isServicesActive ? 'text-badges' : 'text-gray-500 group-data-open:text-badges'
+                }`}
               />
             </PopoverButton>
 
@@ -155,8 +182,8 @@ export default function Header() {
               </div>
               <div className="grid grid-cols-1 divide-x divide-white/10 bg-white/[0.03] border-t border-white/10">
                 {callsToAction.map((item) => (
-                  <a
-                    key={item.name}
+                  
+                  <a  key={item.name}
                     href={item.href}
                     className="flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-white hover:bg-white/5 transition-colors"
                   >
@@ -168,23 +195,31 @@ export default function Header() {
             </PopoverPanel>
           </Popover>
 
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="relative text-sm/6 font-medium text-gray-400 hover:text-white transition-colors after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-badges after:transition-all after:duration-300 hover:after:w-full"
-            >
-              {link.name}
-            </a>
-          ))}
+          {/* WHO WE ARE / CONTACT US */}
+          {navLinks
+            .filter((link) => link.name !== 'Home')
+            .map((link) => (
+              
+              <a  key={link.name}
+                href={link.href}
+                className={getDesktopLinkClasses(currentPath === link.href)}
+              >
+                {link.name}
+              </a>
+            ))}
         </PopoverGroup>
 
+        {/* REGISTRATION LINKS */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center gap-3">
-          <a href="/login" className="text-sm/6 font-medium text-gray-400 hover:text-white px-3 py-1 transition-colors">
+          
+           <a href="/login"
+            className="text-sm/6 font-medium text-gray-400 hover:text-white px-3 py-1 transition-colors"
+          >
             Log in
           </a>
+
           
-          <a  href="/signup"
+           <a href="/signup"
             className="text-sm/6 font-semibold text-background bg-button-bg hover:bg-button-hover px-5 py-2 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-badges/20 hover:-translate-y-0.5"
           >
             Sign Up
@@ -214,15 +249,17 @@ export default function Header() {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-white/10">
               <div className="space-y-2 py-6">
-                <a
-                  href="/"
-                  className="-mx-3 flex items-center gap-2 rounded-lg px-3 py-2.5 text-base/7 font-medium text-badges hover:bg-white/5"
-                >
+                {/* HOME */}
+                <a href="/" className={getMobileLinkClasses(currentPath === '/')}>
                   Home
                 </a>
 
                 <Disclosure as="div" className="-mx-3">
-                  <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2.5 pr-3.5 pl-3 text-base/7 font-light text-gray-400 hover:bg-white/5 hover:text-white transition-colors">
+                  <DisclosureButton
+                    className={`group flex w-full items-center justify-between rounded-lg py-2.5 pr-3.5 pl-3 text-base/7 font-light hover:bg-white/5 transition-colors ${
+                      isServicesActive ? 'text-badges' : 'text-gray-400 hover:text-white'
+                    }`}
+                  >
                     Our Services
                     <ChevronDownIcon
                       aria-hidden="true"
@@ -244,27 +281,30 @@ export default function Header() {
                   </DisclosurePanel>
                 </Disclosure>
 
-                {navLinks.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.href}
-                    className="-mx-3 flex items-center gap-2 rounded-lg px-3 py-2.5 text-base/7 font-light text-gray-400 hover:bg-white/5 hover:text-white transition-colors"
-                  >
-                    {link.name}
-                  </a>
-                ))}
+                {navLinks
+                  .filter((link) => link.name !== 'Home')
+                  .map((link) => (
+                    
+                   <a   key={link.name}
+                      href={link.href}
+                      className={getMobileLinkClasses(currentPath === link.href)}
+                    >
+                      {link.name}
+                    </a>
+                  ))}
               </div>
 
               {/* MOBILE AUTH BUTTONS */}
               <div className="border-t border-white/10 py-6 space-y-3">
-                <a
-                  href="/login"
+                
+                 <a href="/login"
                   className="block rounded-lg bg-button-bg px-3 py-3 text-center text-sm font-semibold text-background hover:bg-button-hover transition-colors"
                 >
                   Log In
                 </a>
+
                 
-               <a  href="/signup"
+                <a  href="/signup"
                   className="block rounded-lg border border-white/20 px-3 py-3 text-center text-sm font-semibold text-white hover:bg-white/10 transition-colors"
                 >
                   Sign Up

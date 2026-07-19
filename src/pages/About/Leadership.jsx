@@ -32,7 +32,7 @@ export default function LeadershipQuote() {
 
           {/* Main Quote */}
           <blockquote className="relative text-center">
-            <p className="text-lg sm:text-xl lg:text-2xl font-medium leading-relaxed text-heading">
+            <p className="text-base sm:text-xl lg:text-2xl font-medium leading-relaxed text-heading">
               "We are proving that you can build{' '}
               <span className="relative inline-block">
                 <span className="relative z-10 border-b-2 border-badges/30">world-class technology</span>

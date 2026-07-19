@@ -94,13 +94,13 @@ export default function ContactSection() {
                   <a  href="tel:+256701234567"
                     className="mt-1 block text-sm text-gray-600 transition-colors hover:text-badges"
                   >
-                    +256 701 234 567
+                    +256 783380569
                   </a>
                   
-                   <a href="tel:+256782000000"
+                   <a href="tel:+256783380569"
                     className="mt-0.5 block text-sm text-gray-600 transition-colors hover:text-badges"
                   >
-                    +256 782 000 000
+                    +256 783380569
                   </a>
                 </div>
               </div>
@@ -118,13 +118,13 @@ export default function ContactSection() {
                   <a  href="mailto:info@ob39.co.ug"
                     className="mt-1 block text-sm text-gray-600 transition-colors hover:text-badges"
                   >
-                    info@ob39.co.ug
+                    ob39@gmail.com
                   </a>
                   
                    <a href="mailto:support@ob39.co.ug"
                     className="mt-0.5 block text-sm text-gray-600 transition-colors hover:text-badges"
                   >
-                    support@ob39.co.ug
+                    ob39@gmail.co.ug
                   </a>
                 </div>
               </div>

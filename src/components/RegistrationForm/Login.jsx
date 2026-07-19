@@ -21,8 +21,11 @@ export default function Login() {
 
       {/* Form */}
       <form className="mt-8 space-y-4">
+
+        {/**EMAIL INPUT */}
         <Field label="Email Address" type="email" placeholder="" />
 
+        {/**PASSWORD INPUT */}
         <div className="group relative rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 transition-colors focus-within:border-badges/50 focus-within:bg-white/[0.06]">
           <label className="block text-xs font-medium tracking-wide text-gray-500">
             Password
@@ -47,7 +50,7 @@ export default function Login() {
           </div>
         </div>
 
-        {/* Remember me / forgot password */}
+        {/* FORGET PASSWORD LINK */}
         <div className="flex items-center justify-between pt-1">
           <label className="flex items-center gap-2.5 text-sm text-gray-400">
             <input
@@ -62,6 +65,9 @@ export default function Login() {
           </a>
         </div>
 
+
+
+        {/** SUBMIT BUTTON*/}
         <button type="submit"
           className="mt-2 w-full rounded-lg bg-button-bg py-3.5 text-sm font-semibold uppercase tracking-wider text-background transition-all duration-300 hover:bg-button-hover hover:shadow-lg hover:shadow-badges/25 hover:-translate-y-0.5"
         >

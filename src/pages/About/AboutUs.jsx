@@ -57,12 +57,12 @@ export default function AboutSection() {
 
           <h2 className="mt-6 text-4xl font-semibold tracking-tight text-pretty text-white sm:text-5xl">
             Driving Uganda's{' '}
-            <span className="bg-gradient-to-r from-white via-white to-badges bg-clip-text text-transparent">
+            <span className="text-white">
               Growth
             </span>
           </h2>
 
-          <p className="mt-4 text-lg leading-relaxed text-gray-400">
+          <p className="mt-4 text-base leading-relaxed text-gray-400">
             We are building the digital and financial infrastructure needed
             to empower local communities and connect them to the global
             economy.

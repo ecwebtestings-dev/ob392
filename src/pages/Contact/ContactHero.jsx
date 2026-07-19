@@ -1,21 +1,22 @@
-import { PhoneIcon, EnvelopeIcon } from "@heroicons/react/24/solid";
 import images from "../../assets/assets";
 import AnimatedButton from "../../components/ui/Buttons";
 
 export default function ContactHero() {
   return (
-    <section className="relative min-h-[85vh] overflow-hidden bg-background">
+    <section className="relative min-h-[50vh] md:min-h-[60vh] lg:min-h-[100vh] overflow-hidden">
 
-      {/* Full-bleed background image */}
+      {/* background image */}
       <div
-        className="absolute inset-0 -z-20 scale-105 bg-cover bg-center bg-no-repeat"
+        className="absolute inset-0 -z-20 scale-105 bg-cover bg-center bg-no-repeat bg-fixed"
         style={{ backgroundImage: `url('${images.ContactHeroImage}')` }}
       />
 
-      {/* Layered gradient overlays for depth */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-background via-background/85 to-background/40" />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-background via-transparent to-background/60" />
-      <div className="absolute inset-0 -z-10 bg-background/20" />
+     
+
+      {/* Layered gradient overlays */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-background via-background/85 to-background/30" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-background via-transparent to-background/50" />
+      <div className="absolute inset-0 -z-10 bg-background/30" />
 
       {/* Ambient glow accents, consistent with rest of site */}
       <div className="pointer-events-none absolute -left-24 top-1/4 -z-10 h-96 w-96 rounded-full bg-badges/10 blur-3xl" />
@@ -51,34 +52,13 @@ export default function ContactHero() {
           {/* CTAs */}
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
              
-             <AnimatedButton href="#contact-form">Get in Touch</AnimatedButton>
+             <AnimatedButton href="/contact#contact-form">Start A Conservation</AnimatedButton>
             
             
           </div>
         </div>
 
-        {/* Floating glass contact card */}
-        <div className="mt-16 flex flex-col gap-4 sm:flex-row sm:flex-wrap lg:absolute lg:bottom-16 lg:right-8 lg:mt-0 lg:max-w-sm lg:flex-col">
-          <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.05] px-5 py-4 backdrop-blur-xl transition-colors duration-300 hover:border-badges/30">
-            <span className="flex size-11 flex-none items-center justify-center rounded-xl border border-white/10 bg-white/5">
-              <PhoneIcon className="size-5 text-badges" />
-            </span>
-            <div>
-              <p className="text-xs tracking-wide text-gray-400">Call us anytime</p>
-              <p className="text-sm font-semibold text-white">+256 701 234 567</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.05] px-5 py-4 backdrop-blur-xl transition-colors duration-300 hover:border-badges/30">
-            <span className="flex size-11 flex-none items-center justify-center rounded-xl border border-white/10 bg-white/5">
-              <EnvelopeIcon className="size-5 text-badges" />
-            </span>
-            <div>
-              <p className="text-xs tracking-wide text-gray-400">Email us</p>
-              <p className="text-sm font-semibold text-white">info@ob39.co.ug</p>
-            </div>
-          </div>
-        </div>
+        
       </div>
     </section>
   );

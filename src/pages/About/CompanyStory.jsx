@@ -25,11 +25,11 @@ export default function Story() {
               Our Journey
             </span>
 
-            <h2 className="mt-6 text-3xl font-semibold tracking-tight text-heading sm:text-4xl lg:text-5xl">
+            <h2 className="mt-6 text-lg font-bold tracking-tight text-heading sm:text-4xl lg:text-5xl">
               Our Story
             </h2>
 
-            <p className="mt-6 text-lg leading-8 text-text-color">
+            <p className="mt-6 text-base md:text-md leading-8 text-gray-600">
               OB39 was founded to solve a critical challenge: the high
               failure rate of young businesses and the untapped potential of
               small-scale farmers. We recognized that hard work wasn't enough
@@ -48,7 +48,7 @@ export default function Story() {
                 <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
               </svg>
 
-              <p className="relative text-lg italic leading-8 text-heading">
+              <p className="relative  text-base sm:text-md italic leading-relaxed text-gray-600">
                 "Real transformation happens when communities own the tools,
                 knowledge, and opportunities that shape their future."
               </p>
@@ -73,7 +73,7 @@ export default function Story() {
               </h3>
             </div>
 
-            <p className="relative mt-7 text-lg leading-8 text-text-color">
+            <p className="relative mt-7 text-baase  sm:text-md leading-relaxed text-gray-600">
               Instead of solving these problems individually, we built one
               integrated ecosystem. We combine cooperative finance, business
               incubation, and digital marketplaces to help entrepreneurs and
@@ -87,12 +87,11 @@ export default function Story() {
 
               <div className="mt-5 grid gap-3 sm:grid-cols-2">
                 {highlights.map((item) => (
-                  <div
-                    key={item}
+                  <div key={item}
                     className="group flex items-center gap-3 rounded-xl border border-transparent bg-badge-bg px-4 py-3.5 transition-all duration-300 hover:border-badges/20 hover:bg-badges/10 hover:shadow-md hover:shadow-badges/10"
                   >
                     <CheckCircleIcon className="h-5 w-5 flex-shrink-0 text-badges transition-transform duration-300 group-hover:scale-110" />
-                    <span className="text-sm font-semibold text-heading">
+                    <span className="text-sm font-semibold text-gray-600">
                       {item}
                     </span>
                   </div>
