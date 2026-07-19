@@ -87,7 +87,9 @@ export default function Header() {
         <div className="flex lg:flex-1">
           <a href="/" className="-m-1.5 flex items-center gap-2 p-1.5 text-2xl">
             <img alt="Logo" src={images.logo} className="h-8 w-auto" />
-            <h1 className="text-white">OB39</h1>
+            <h1 className="text-white">OB39
+             
+            </h1>
           </a>
         </div>
 

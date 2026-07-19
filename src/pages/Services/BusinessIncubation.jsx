@@ -33,7 +33,7 @@ export default function BusinessIncubation() {
             <p className="text-stone-600 leading-relaxed mb-8">
               Many small businesses fail not from lack of ambition, but from lack of
               capital, structure, and support. OB39 Ltd organizes entrepreneurs into
-              units of roughly <strong>5 businesses</strong> that pool a share of daily profits
+              units of roughly <strong>60 businesses</strong> that pool a share of daily profits
               — 10%, 20%, or 30% — into a secure, tripartite-authorized fund. These
               funds are then redistributed to members for verified business expansion,
               giving every entrepreneur a real shot at growth without predatory interest
@@ -46,7 +46,7 @@ export default function BusinessIncubation() {
             <div className="bg-gradient-to-br from-green-50 to-amber-50 rounded-2xl p-8 border border-stone-200">
               <div className="text-center mb-6">
                 <div className="inline-flex items-center justify-center w-20 h-20 bg-green-800 text-white rounded-full text-2xl font-bold mb-3">
-                  05
+                  60
                 </div>
                 <p className="text-sm font-semibold text-green-900">Businesses per Unit</p>
               </div>

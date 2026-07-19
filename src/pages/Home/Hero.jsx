@@ -27,7 +27,7 @@ export default function Hero() {
           <div className="relative z-10 gap-5">
             <span className="inline-flex items-center gap-2 rounded-full border border-badges/30 bg-badges/10 px-4 py-1.5 text-sm font-medium tracking-wide text-badges">
               <span className="h-1.5 w-1.5 rounded-full bg-badges animate-pulse" />
-              Building Africa's Entrepreneurs Future
+              Transforming Africa
             </span>
 
             <h1 className="mt-6 max-w-3xl text-4xl font-extrabold leading-tight text-white lg:text-5xl lg:leading-[1.1]">

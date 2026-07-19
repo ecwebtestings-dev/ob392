@@ -1,4 +1,4 @@
-import logo from "./logo1.png";
+import logo from "./logo.jpeg";
 import Hero from './hero-img.jpg';
 import HeroLeftImage from './countryside-workers-out-field.jpg';
 import Farmers from './Farmers.jpg';
