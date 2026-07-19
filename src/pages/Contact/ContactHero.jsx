@@ -52,9 +52,6 @@ export default function ContactHero() {
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
              
              <AnimatedButton href="#contact-form">Get in Touch</AnimatedButton>
-             
-             
-
             
             <a  href="tel:+256701234567"
               className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/[0.03] px-7 py-3.5 text-base font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:border-badges/40 hover:bg-white/10"

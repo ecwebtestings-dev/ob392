@@ -180,7 +180,7 @@ export default function Header() {
         </PopoverGroup>
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center gap-3">
-          <a href="/" className="text-sm/6 font-medium text-gray-400 hover:text-white px-3 py-1 transition-colors">
+          <a href="/login" className="text-sm/6 font-medium text-gray-400 hover:text-white px-3 py-1 transition-colors">
             Log in
           </a>
           

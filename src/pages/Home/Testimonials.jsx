@@ -115,15 +115,15 @@ export default function Testimonials() {
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className={`transition-all duration-700 ease-out ${
+                className={`transition-all duration-400 ease-out ${
                   index === currentSlide
                     ? "relative z-10 translate-x-0 opacity-100"
                     : "pointer-events-none absolute inset-0 p-10 opacity-0 lg:p-16"
                 } ${
                   index !== currentSlide
                     ? direction === 1
-                      ? "translate-x-6"
-                      : "-translate-x-6"
+                      ? "translate-x-2"
+                      : "-translate-x-4"
                     : ""
                 }`}
               >
