@@ -4,7 +4,8 @@ import Home from "./pages/Home/Home";
 import About from "./pages/About/About";
 import Services from "./pages/Services/Services";
 import MainContact from "./pages/Contact/MainContact";
-import AuthPage from "./pages/Contact/SignUpPage";
+import Signup from "./components/RegistrationForm/Signup";
+import LogIn from './components/RegistrationForm/Login';
 
 
 
@@ -20,7 +21,8 @@ function App() {
         </Route>
 
         <Route>
-          <Route path="/login" element={<AuthPage/>}/>
+          <Route path="/login" element={<LogIn/>}/>
+          <Route path="/signup" element={<Signup/>}/>
         </Route>
         
       </Routes>
