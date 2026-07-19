@@ -1,4 +1,4 @@
-import AboutOverview from "../../components/ui/SectionContentLayout";
+import AboutOverview from "./SectionContentLayout";
 import WhatsApp from "../../components/ui/Whatsapp";
 import ProblemsWeSolve from "./AboutReview";
 import CallToAction from "./CallToAction";

@@ -35,7 +35,7 @@ export default function AboutOverview() {
           <div className="lg:pr-4">
             <div className="lg:max-w-lg">
               <p className="text-base/7 font-semibold text-badges">About OB39 Ltd</p>
-              <h1 className="mt-2 text-4xl font-semibold tracking text-lg text-heading sm:text-5xl">
+              <h1 className="mt-2 text-3xl font-semibold tracking  text-heading sm:text-5xl">
                 Transforming African Potential into Global Competitiveness
               </h1>
               <p className="mt-6 text-base leading-relaxed text-gray-600">
