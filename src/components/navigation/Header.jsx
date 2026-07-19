@@ -184,7 +184,7 @@ export default function Header() {
             Log in
           </a>
           
-          <a  href="/"
+          <a  href="/signup"
             className="text-sm/6 font-semibold text-background bg-button-bg hover:bg-button-hover px-5 py-2 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-badges/20 hover:-translate-y-0.5"
           >
             Sign Up
@@ -258,13 +258,13 @@ export default function Header() {
               {/* MOBILE AUTH BUTTONS */}
               <div className="border-t border-white/10 py-6 space-y-3">
                 <a
-                  href="#"
+                  href="/login"
                   className="block rounded-lg bg-button-bg px-3 py-3 text-center text-sm font-semibold text-background hover:bg-button-hover transition-colors"
                 >
                   Log In
                 </a>
                 
-               <a  href="#"
+               <a  href="/signup"
                   className="block rounded-lg border border-white/20 px-3 py-3 text-center text-sm font-semibold text-white hover:bg-white/10 transition-colors"
                 >
                   Sign Up
