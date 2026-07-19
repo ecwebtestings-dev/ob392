@@ -20,6 +20,13 @@ const countryCodes = [
   { code: "+44", country: "United Kingdom", flag: "🇬🇧" },
 ];
 
+// const Subject =[
+//   'Select a reason',
+//   'Technical Support',
+//   'Partnership Opportunity',
+//   'General Inquiry'
+// ];
+
 export default function ContactSection() {
   const [selectedCode, setSelectedCode] = useState(countryCodes[0]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -223,7 +230,7 @@ export default function ContactSection() {
 function Field({ label, type, placeholder }) {
   return (
     <div>
-      <label className="mb-1.5 block text-xs font-medium tracking-wide text-gray-500">
+      <label className="mb-1.5 block text-sm font-medium tracking-wide text-gray-500">
         {label}
       </label>
       <input
