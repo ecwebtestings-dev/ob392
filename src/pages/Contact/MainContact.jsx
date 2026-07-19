@@ -46,7 +46,7 @@ export default function ContactSection() {
     <section className="relative overflow-hidden bg-white py-24 sm:py-32">
 
       
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
         <div className="grid gap-16 lg:grid-cols-5 lg:gap-12">
 
           {/*  Contact Info */}
@@ -133,7 +133,7 @@ export default function ContactSection() {
 
           {/* Right Column: Form */}
           <div className="lg:col-span-3">
-            <div className="rounded-3xl border border-gray-200 bg-white p-8 shadow-xl shadow-gray-200/60 sm:p-10">
+            <div className="rounded-3xl border border-gray-200 bg-white p-4 sm:p-8 shadow-xl shadow-gray-200/60 sm:p-10">
               <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
 
                 <div className="grid gap-5 sm:grid-cols-2">
