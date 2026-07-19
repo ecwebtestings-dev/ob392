@@ -3,7 +3,7 @@ import AnimatedButton from "../../components/ui/Buttons";
 
 export default function CallToAction() {
   return (
-    <section className="py-24 sm:py-28 lg:py-32">
+    <section className="py-15 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-0 lg:px-8">
         <div
           className="relative overflow-hidden lg:rounded-[32px]"
@@ -25,11 +25,11 @@ export default function CallToAction() {
               Join the Movement
             </span>
 
-            <h2 className="mx-auto mt-8 max-w-4xl text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            <h2 className="mx-auto mt-8 max-w-4xl text-4xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
               Building Africa&rsquo;s Future, One Community at a Time.
             </h2>
 
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-hero-text/85">
+            <p className="mx-auto mt-6 max-w-2xl text-md leading-relaxed text-hero-text/85">
               Whether you&rsquo;re a farmer, entrepreneur, investor or
               development partner, OB39 Ltd gives you the platform to grow,
               strengthen communities and unlock global opportunities.

@@ -22,7 +22,7 @@ export default function ContactHero() {
       <div className="pointer-events-none absolute right-0 top-0 -z-10 h-72 w-72 rounded-full bg-badges/5 blur-3xl" />
 
       <div className="mx-auto flex min-h-[85vh] max-w-7xl flex-col justify-center px-6 py-32 lg:px-8">
-        <div className="max-w-2xl">
+        <div className="max-w-4xl">
 
           {/* Status badge */}
           <span className="inline-flex w-fit items-center gap-2 rounded-full border border-badges/30 bg-badges/10 px-4 py-1.5 text-sm font-medium tracking-wide text-badges backdrop-blur-sm">
@@ -33,9 +33,9 @@ export default function ContactHero() {
             We're Online
           </span>
 
-          <h1 className="mt-8 text-5xl font-extrabold leading-[1.05] tracking-tight text-white lg:text-6xl">
+          <h1 className="mt-8 text-4xl font-extrabold leading-[1.05] tracking-tight text-white lg:text-5xl">
             Let's Build{" "}
-            <span className="bg-gradient-to-r from-white via-white to-badges bg-clip-text text-transparent">
+            <span className="text-white">
               Impact
             </span>{" "}
             Together
@@ -53,11 +53,7 @@ export default function ContactHero() {
              
              <AnimatedButton href="#contact-form">Get in Touch</AnimatedButton>
             
-            <a  href="tel:+256701234567"
-              className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/[0.03] px-7 py-3.5 text-base font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:border-badges/40 hover:bg-white/10"
-            >
-              Call Us
-            </a>
+            
           </div>
         </div>
 

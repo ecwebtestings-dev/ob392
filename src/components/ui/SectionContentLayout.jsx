@@ -38,7 +38,7 @@ export default function AboutOverview() {
               <h1 className="mt-2 text-4xl font-semibold tracking text-lg text-heading sm:text-5xl">
                 Transforming African Potential into Global Competitiveness
               </h1>
-              <p className="mt-6 text-md/8 text-text-color">
+              <p className="mt-6 text-base leading-relaxed text-gray-600">
                 OB39 empowers farmers and businesses across Uganda through cooperative investment, business advisory, modern training, and market access. We focus on agriculture and enterprise sectors that contribute over <strong>60%</strong> of Uganda's GDP. MSMEs form over  <strong>90%</strong>of Uganda's private sector and provide millions of jobs, making them a cornerstone of inclusive economic growth. Through innovation and strategic partnerships, OB39 is helping build globally competitive Ugandan enterprises.
               </p>
 
@@ -59,19 +59,19 @@ export default function AboutOverview() {
               <ul role="list" className="mt-8 space-y-6 text-text-color">
                 <li className="flex gap-x-3">
                   <BeakerIcon aria-hidden="true" className="mt-1 size-6 flex-none text-icons" />
-                  <span>
+                  <span className='text-base leading-relaxed text-gray-600'>
                     <strong className="font-semibold text-heading">Agribusiness Development.</strong> Cooperative farming units with tested seeds, training, and direct export access.
                   </span>
                 </li>
                 <li className="flex gap-x-3">
                   <ChartBarIcon aria-hidden="true" className="mt-1 size-5 flex-none text-icons" />
-                  <span>
+                  <span  className='text-base leading-relaxed text-gray-600'>
                     <strong className="font-semibold text-heading">Business Incubation.</strong> Structured profit pooling and growth capital without high-interest loans.
                   </span>
                 </li>
                 <li className="flex gap-x-3">
                   <GlobeAltIcon aria-hidden="true" className="mt-1 size-5 flex-none text-icons" />
-                  <span>
+                  <span  className='text-base leading-relaxed text-gray-600'>
                     <strong className="font-semibold text-heading">Global Market Access.</strong> Digital marketplaces and partnerships for regional and international trade.
                   </span>
                 </li>

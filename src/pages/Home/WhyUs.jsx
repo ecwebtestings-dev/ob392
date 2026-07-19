@@ -21,23 +21,23 @@ export default function InvestmentOpportunity() {
             <div className="relative z-10 space-y-6">
               {/* Stat 1 */}
               <div className="rounded-2xl bg-white p-6 shadow-sm">
-                <p className="text-sm/6 text-text-color">Total Addressable Market</p>
+                <p className="text-base leading-relaxed text-gray-600">Total Addressable Market</p>
                 <p className="mt-1 text-4xl font-bold text-heading">4M+</p>
-                <p className="mt-1 text-sm/6 text-text-color">Unbanked farmers & entrepreneurs in Uganda</p>
+                <p className="mt-1 text-base leading-relaxed text-gray-600">Unbanked farmers & entrepreneurs in Uganda</p>
               </div>
 
               {/* Stat 2 */}
               <div className="rounded-2xl bg-white p-6 shadow-sm">
-                <p className="text-sm/6 text-text-color">Capital Deployed</p>
+                <p className="text-base leading-relaxed text-gray-600">Capital Deployed</p>
                 <p className="mt-1 text-4xl font-bold text-heading">10M+</p>
-                <p className="mt-1 text-sm/6 text-text-color">In fair trade value distributed through direct market access</p>
+                <p className="mt-1 text-base leading-relaxed text-gray-600">In fair trade value distributed through direct market access</p>
               </div>
 
               {/* Stat 3 */}
               <div className="rounded-2xl bg-white p-6 shadow-sm">
-                <p className="text-sm/6 text-text-color">Market Coverage</p>
+                <p className="text-base leading-relaxed text-gray-600">Market Coverage</p>
                 <p className="mt-1 text-4xl font-bold text-heading">10M</p>
-                <p className="mt-1 text-sm/6 text-text-color">Farmers and businesses to empower by 2030</p>
+                <p className="mt-1 text-base leading-relaxed text-gray-600">Farmers and businesses to empower by 2030</p>
               </div>
             </div>
           </div>
@@ -67,7 +67,7 @@ export default function InvestmentOpportunity() {
                 </div>
                 <div>
                   <h3 className="text-base font-semibold text-heading">Dual Market Leadership</h3>
-                  <p className="mt-0.5 text-sm/6 text-text-color">
+                  <p className="mt-0.5 text-base leading-relaxed text-gray-600">
                     Dominant in both agribusiness cooperatives and SME incubation across African markets.
                   </p>
                 </div>

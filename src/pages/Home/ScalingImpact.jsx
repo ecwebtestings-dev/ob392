@@ -40,7 +40,7 @@ export default function ScalingImpact() {
               <p className="mt-4 text-4xl font-semibold tracking-tight text-pretty text-heading sm:text-5xl">
                 Building Uganda&rsquo;s Next Economic Ecosystem
               </p>
-              <p className="mt-6 text-lg/8 text-text-color">
+              <p className="mt-6 text-base leading-relaxed text-gray-600">
                 We&rsquo;ve already empowered thousands of farmers and
                 businesses across Uganda. Now we&rsquo;re scaling to reach 2
                 million African farmers and entrepreneurs with growth
@@ -57,7 +57,7 @@ export default function ScalingImpact() {
                       />
                       {feature.name}
                     </dt>{' '}
-                    <dd className="inline text-text-color">{feature.description}</dd>
+                    <dd className="inline text-base leading-relaxed text-gray-600">{feature.description}</dd>
                   </div>
                 ))}
               </dl>
