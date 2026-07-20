@@ -1,24 +1,17 @@
 import { CheckCircleIcon } from '@heroicons/react/24/solid'
-import images from '../../assets/assets'
 import AnimatedButton from '../../components/ui/Buttons'
 
 export default function InvestmentOpportunity() {
   return (
     <div className="bg-white py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
+      <div className="mx-auto max-w-6xl px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16 lg:items-start">
 
-          {/* Stats column — renders on the left at lg and up */}
-          <div
-            className="relative order-2 overflow-hidden rounded-3xl bg-cover bg-center bg-no-repeat p-4 sm:p-6 md:p-8 lg:order-1 lg:p-12"
-            style={{
-              backgroundImage: `url(${images.Ugx2})`,
-            }}
-          >
-            {/* Dark Overlay */}
-            <div className="absolute inset-0 bg-black/40" />
+          {/* Statisticss column */}
+              
+          <div className="relative order-2 overflow-hidden rounded-3xl bg-sky-100 p-4 sm:p-5 md:p-6 lg:order-1 lg:p-8">
 
-            <div className="relative z-10 space-y-6">
+            <div className="relative z-10 space-y-4">
               {/* Stat 1 */}
               <div className="rounded-2xl bg-white p-6 shadow-sm">
                 <p className="text-base leading-relaxed text-gray-600">Total Addressable Market</p>
@@ -29,7 +22,7 @@ export default function InvestmentOpportunity() {
               {/* Stat 2 */}
               <div className="rounded-2xl bg-white p-6 shadow-sm">
                 <p className="text-base leading-relaxed text-gray-600">Capital Deployed</p>
-                <p className="mt-1 text-4xl font-bold text-heading">10M+</p>
+                <p className="mt-1 text-4xl font-bold text-heading">5M+</p>
                 <p className="mt-1 text-base leading-relaxed text-gray-600">In fair trade value distributed through direct market access</p>
               </div>
 
@@ -42,7 +35,7 @@ export default function InvestmentOpportunity() {
             </div>
           </div>
 
-          {/* Text column — renders on the right at lg and up */}
+          {/* Text column */}
           <div className="order-1 lg:order-2">
             <span className="inline-flex items-center rounded-full bg-badge-bg px-3 py-1 text-sm font-medium text-badges">
               For Investors

@@ -8,13 +8,13 @@ export default function CallToAction() {
         <div
           className="relative overflow-hidden lg:rounded-[32px]"
           style={{
-            backgroundImage: `url(${images.CallToActionImage})`,
+            backgroundImage: `url(${images.excitedFarmers})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
         >
           {/* Overlay */}
-          <div className="absolute inset-0 bg-heading/80" />
+          <div className="absolute inset-0 bg-heading/60" />
 
           {/* Decorative Glow */}
           <div className="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-badges/20 blur-3xl" />
