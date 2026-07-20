@@ -20,17 +20,12 @@ import AnimatedButton from "../../components/ui/Buttons";
         {/* header/testimonials styling */}
         <div className="pointer-events-none absolute -top-32 right-0 -z-10 h-96 w-96 rounded-full bg-badges/10 blur-3xl" />
 
-        <div className="mx-auto flex min-h-screen max-w-7xl items-center px-6 pt-32 pb-16 lg:px-8 lg:pt-40">
+        <div className="mx-auto flex min-h-screen max-w-7xl items-center px-6 pt-32 pb-16 lg:px-8 lg:pt-33">
           <div className="grid w-full items-center gap-10 lg:grid-cols-[2fr_1fr]">
-
             {/* Left Content */}
             <div className="relative z-10 gap-5">
-              <span className="inline-flex items-center gap-2 rounded-full border border-badges/30 bg-badges/10 px-4 py-1.5 text-sm font-medium tracking-wide text-badges">
-                <span className="h-1.5 w-1.5 rounded-full bg-badges animate-pulse" />
-                Transforming Africa
-              </span>
-
-              <h1 className="mt-6 max-w-3xl text-4xl font-extrabold leading-tight text-white lg:text-5xl lg:leading-[1.1]">
+              
+              <h1 className="mt-4 max-w-3xl text-4xl font-extrabold leading-tight text-white lg:text-5xl lg:leading-[1.1]">
                 Empowering Africa's Farmers & Entrepreneurs for Global Markets
               </h1>
 
@@ -42,7 +37,7 @@ import AnimatedButton from "../../components/ui/Buttons";
               </p>
 
               <div className="mt-12 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-6">
-                <AnimatedButton>Lend With Us</AnimatedButton>
+                <AnimatedButton>Join Us</AnimatedButton>
 
                 <a
                   href="/services"

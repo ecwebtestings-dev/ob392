@@ -110,7 +110,14 @@ export default function Header() {
         <div className="flex lg:flex-1">
           <a href="/" className="-m-1.5 flex items-center gap-2 p-1.5 text-2xl">
             <img alt="Logo" src={images.logo} className="h-8 w-auto" />
-            <h1 className="text-white">OB39</h1>
+            <div className="flex flex-col leading-none">
+              <h1 className="text-lg font-bold tracking-tight text-badges leading-none">
+                OB39
+              </h1>
+              <span className="mt-0.5 text-[10px] font-medium uppercase tracking-widest text-white leading-none">
+                Transforming Africa
+              </span>
+            </div>
           </a>
         </div>
 
@@ -232,10 +239,17 @@ export default function Header() {
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm" />
         <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-background p-6 sm:max-w-sm sm:ring-1 sm:ring-white/10">
           <div className="flex items-center justify-between">
-            <a href="/" className="-m-1.5 flex items-center gap-2 p-1.5">
-              <img alt="Logo" src={images.logo} className="h-8 w-auto" />
-              <h1 className="text-white text-xl">OB39</h1>
-            </a>
+           <a href="/" className="-m-1.5 flex items-center gap-2 p-1.5 text-2xl">
+            <img alt="Logo" src={images.logo} className="h-8 w-auto" />
+            <div className="flex flex-col leading-none">
+              <h1 className="text-lg font-bold tracking-tight text-badges leading-none">
+                OB39
+              </h1>
+              <span className="mt-0.5 text-[10px] font-medium uppercase tracking-widest text-white leading-none">
+                Transforming Africa
+              </span>
+            </div>
+          </a>
             <button
               type="button"
               onClick={() => setMobileMenuOpen(false)}
