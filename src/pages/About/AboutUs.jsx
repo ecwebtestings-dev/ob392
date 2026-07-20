@@ -76,7 +76,7 @@ export default function AboutSection() {
               key={item.id}
               className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-8 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-badges/30 hover:bg-white/[0.07] hover:shadow-2xl hover:shadow-badges/10"
             >
-              {/* Card glow on hover */}
+              {/* Card glow  */}
               <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-badges/0 blur-2xl transition-colors duration-500 group-hover:bg-badges/15" />
 
               {/* Category tag */}
@@ -104,7 +104,7 @@ export default function AboutSection() {
               {/* Bottom accent line */}
               <div className="relative z-10 mt-6 h-px w-full bg-gradient-to-r from-badges/0 via-white/10 to-badges/0" />
 
-              {/* Full-card click overlay (now works, since parent is `relative`) */}
+              {/* Full-card click overla */}
               <a href="#" className="absolute inset-0 z-0" aria-hidden="true">
                 <span className="sr-only">{item.title}</span>
               </a>

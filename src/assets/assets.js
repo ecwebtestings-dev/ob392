@@ -15,6 +15,7 @@ import TeamPhoto from "./teamphoto.jpg";
 import Export from './export.jpg';
 import Export2 from './Export2.jpg';
 import ContactHeroImage from './contact.jpg';
+import UserIcon from './userIcon.png';
 
 const images ={
     logo,
@@ -33,7 +34,8 @@ const images ={
     TeamPhoto,
     Export,
     Export2,
-    ContactHeroImage
+    ContactHeroImage,
+    UserIcon
     
 }
 

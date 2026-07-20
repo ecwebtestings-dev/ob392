@@ -4,6 +4,7 @@ import AboutSection from "./AboutUs";
 import JoinUsCTA from "./CallToJoin";
 import CompanyStory from "./CompanyStory";
 import LocationSection from "./GoogleMap";
+import MsmeImpact from "./Impact";
 import LeadershipQuote from "./Leadership";
 import TeamPhoto from "./Team";
 
@@ -16,6 +17,7 @@ export default function About() {
       <CompanyStory/>
       <WhatsApp/>
       <LeadershipQuote/>
+      <MsmeImpact/>
       <TeamPhoto/>
       <JoinUsCTA/>
       <LocationSection/>

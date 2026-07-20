@@ -8,8 +8,7 @@ const testimonials = [
       "Before joining OB39, I struggled to get fair prices for my crops. The middlemen took most of my profits. Today, through our cooperative, we access international buyers directly. My income has grown significantly, allowing me to invest in my family and farm with confidence.",
     author: "Grace Nakato",
     role: "Small-Scale Farmer • Uganda",
-    image:
-      "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=256&h=256&fit=crop&crop=face",
+    image:`url(${images.UserIcon})`,
   },
   {
     body:
@@ -17,7 +16,7 @@ const testimonials = [
     author: "Samuel",
     role: "Micro Enterprise Owner • Uganda",
     image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=256&h=256&fit=crop&crop=face",
+      `url(${images.UserIcon})`,
   },
   {
     body:
@@ -25,7 +24,7 @@ const testimonials = [
     author: "Amara Diallo",
     role: "Cooperative Leader • Ghana",
     image:
-      "https://images.unsplash.com/photo-1589156280159-27698a70f64e?w=256&h=256&fit=crop&crop=face",
+      `url(${images.UserIcon})`,
   },
 ];
 
@@ -86,7 +85,7 @@ export default function Testimonials() {
           <h2 className="mt-6 text-4xl font-bold tracking-tight text-white sm:text-5xl">
             Real People.
             <br />
-            <span className="bg-gradient-to-r from-white via-white to-badges bg-clip-text text-transparent">
+            <span className="text-white">
               Real Transformation.
             </span>
           </h2>

@@ -41,7 +41,7 @@ export default function ScalingImpact() {
                 Building Uganda&rsquo;s Next Economic Ecosystem
               </p>
               <p className="mt-6 text-base leading-relaxed text-gray-600">
-                We&rsquo;ve already empowered thousands of farmers and
+                We&rsquo;re already empowering thousands of farmers and
                 businesses across Uganda. Now we&rsquo;re scaling to reach 2
                 million African farmers and entrepreneurs with growth
                 capital, training, and global markets by 2030 &ndash; on

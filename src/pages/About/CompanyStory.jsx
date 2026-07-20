@@ -74,8 +74,8 @@ export default function Story() {
             </div>
 
             <p className="relative mt-7 text-baase  sm:text-md leading-relaxed text-gray-600">
-              Instead of solving these problems individually, we built one
-              integrated ecosystem. We combine cooperative finance, business
+              Instead of solving these problems individually, we are building one
+              integrated ecosystem. We is combining cooperative finance, business
               incubation, and digital marketplaces to help entrepreneurs and
               farming communities thrive sustainably.
             </p>

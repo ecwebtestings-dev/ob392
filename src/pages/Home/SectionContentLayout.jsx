@@ -39,8 +39,12 @@ export default function AboutOverview() {
                 Transforming African Potential into Global Competitiveness
               </h1>
               <p className="mt-6 text-base leading-relaxed text-gray-600">
-                OB39 empowers farmers and businesses across Uganda through cooperative investment, business advisory, modern training, and market access. We focus on agriculture and enterprise sectors that contribute over <strong>60%</strong> of Uganda's GDP. MSMEs form over  <strong>90%</strong>of Uganda's private sector and provide millions of jobs, making them a cornerstone of inclusive economic growth. Through innovation and strategic partnerships, OB39 is helping build globally competitive Ugandan enterprises.
+                OB39 is empowering farmers and enterprises across Uganda through cooperative investment, business development, modern training, and market access. We operate in agriculture and enterprise sectors that collectively contribute more than 60% of Uganda's GDP. Agriculture contributes about 24% of the country's GDP, while the services sector contributes over 40%.  
               </p>
+
+               <p className='mt-6 text-base leading-relaxed text-gray-600'>
+                Micro, Small and Medium Enterprises (MSMEs)—the backbone of Uganda's economy—account for over 90% of the private sector and provide millions of jobs, making them a vital driver of economic growth, innovation, and sustainable livelihoods.Through innovation and strategic partnerships, OB39 is committed to strengthening Uganda's competitiveness in regional and global markets.
+                 </p>
 
               <p className='mt-3 text-md/8 text-badges font-bold italic'>"Together we can stand and win."</p>
             </div>

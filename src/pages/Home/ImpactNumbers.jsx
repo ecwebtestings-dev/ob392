@@ -27,7 +27,7 @@ const stats = [
 
 const impact = [
   {
-    value: "5M+",
+    value: "2M+",
     title: "Capital Deployed",
     description: "From cooperative and partner financing.",
   },
