@@ -17,6 +17,7 @@ import Export2 from './Export2.jpg';
 import ContactHeroImage from './contact.jpg';
 import UserIcon from './userIcon.png';
 import excitedFarmers from './excitedFarmers.jpg';
+import AfricanFarmers from './AfricanFarmers.jpg';
 
 const images ={
     logo,
@@ -37,6 +38,7 @@ const images ={
     ContactHeroImage,
     UserIcon,
     excitedFarmers,
+    AfricanFarmers,
     
 }
 

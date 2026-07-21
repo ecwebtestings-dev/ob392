@@ -53,7 +53,7 @@ export default function AboutOverview() {
         <div className="-mt-12 -ml-12 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-4 lg:row-start-1 lg:overflow-hidden">
           <img
             alt="OB39 Ltd empowering African farmers and entrepreneurs"
-            src={images.countrysidefarmers}
+            src={images.AfricanFarmers}
             className="w-3xl max-w-none rounded-xl bg-card-background shadow-xl ring-1 ring-badges/10 sm:w-228"
           />
         </div>
