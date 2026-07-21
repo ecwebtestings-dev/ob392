@@ -7,7 +7,7 @@ import AnimatedButton from "../../components/ui/Buttons";
       <section className="relative overflow-hidden min-h-screen">
         {/* Background Image */}
         <div
-          className="absolute inset-0 -z-20 bg-cover bg-center bg-no-repeat bg-fixed scale-105"
+          className="absolute inset-0 -z-20 bg-cover bg-center bg-no-repeat bg-fixed scale-105 "
           style={{
             backgroundImage: `url('${images.Ugx}')`,
           }}

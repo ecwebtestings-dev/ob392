@@ -16,13 +16,15 @@ export default function AgribusinessExport() {
       <div className="max-w-6xl mx-auto">
         {/* Two-column layout */}
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-14">
-          {/* Image column (left on desktop) */}
+          {/* Image column */}
           <div className="order-2 lg:order-1">
             <div className="rounded-2xl overflow-hidden shadow-lg aspect-[4/3] bg-gradient-to-br from-green-200 to-amber-100 flex items-center justify-center">
               <img
                 src={images.Export2}
                 alt="Farmers working cooperatively in a field"
                 className="w-full h-full object-cover"
+                loading='lazy'
+                decoding='async'
               />
             </div>
           </div>

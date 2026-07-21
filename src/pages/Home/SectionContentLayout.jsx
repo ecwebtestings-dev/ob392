@@ -54,6 +54,8 @@ export default function AboutOverview() {
           <img
             alt="OB39 Ltd empowering African farmers and entrepreneurs"
             src={images.AfricanFarmers}
+            loading='lazy'
+            decoding='async'
             className="w-3xl max-w-none rounded-xl bg-card-background shadow-xl ring-1 ring-badges/10 sm:w-228"
           />
         </div>

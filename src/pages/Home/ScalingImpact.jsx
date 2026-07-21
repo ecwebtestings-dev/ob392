@@ -71,6 +71,8 @@ export default function ScalingImpact() {
                 src={images.Money}
                 width={2432}
                 height={1442}
+                loading='lazy'
+                decoding='async'
                 className="aspect-[4/3] w-full object-cover transition-transform duration-500 hover:scale-[1.03] sm:aspect-[16/11]"
               />
             </div>
