@@ -19,7 +19,7 @@ const pillars = [
     icon: Globe,
     title: 'Digital Marketplace (Project OM)',
     description:
-      'A growing digital ecosystem connecting member farmers and businesses to buyers locally and internationally.',
+      'A growing digital ecosystem connecting member farmers and businesses to buy from each other and  from other buyers locally and internationally.',
     link: '#digital-marketplace',
   },
 ];

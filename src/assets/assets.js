@@ -1,5 +1,5 @@
 import logo from "./logo.jpeg";
-import Hero from './hero-img.jpg';
+
 import HeroLeftImage from './countryside-workers-out-field.jpg';
 import Farmers from './Farmers.jpg';
 import countrysidefarmers from './full-shot-smiley-women-working.jpg';
@@ -20,7 +20,6 @@ import excitedFarmers from './excitedFarmers.jpg';
 
 const images ={
     logo,
-    Hero,
     HeroLeftImage,
     Farmers,
     countrysidefarmers,

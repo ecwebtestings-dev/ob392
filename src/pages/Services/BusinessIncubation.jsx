@@ -34,10 +34,7 @@ export default function BusinessIncubation() {
               Many small businesses fail not from lack of ambition, but from lack of
               capital, structure, and support. OB39 Ltd organizes entrepreneurs into
               units of roughly <strong>60 businesses</strong> that pool a share of daily profits
-              — 10%, 20%, or 30% — into a secure, tripartite-authorized fund. These
-              funds are then redistributed to members for verified business expansion,
-              giving every entrepreneur a real shot at growth without predatory interest
-              rates.
+              — 10%, 20%, or 30% — into a secure, tripartite-authorized fund. This funds are distributed to members, one at a time until the cycle is complete, 6 times annually
             </p>
           </div>
 

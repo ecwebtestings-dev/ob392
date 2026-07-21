@@ -43,6 +43,27 @@ const impact = [
   },
 ];
 
+const inclusion = [
+  {
+    value: "45%",
+    title: "Women-Led Enterprises",
+    description:
+      "Nearly half of all capital cycles are directed to women-owned businesses and cooperatives.",
+  },
+  {
+    value: "60%",
+    title: "Youth Under 35",
+    description:
+      "The majority of new members onboarded are young entrepreneurs and first-time farmers.",
+  },
+  {
+    value: "0%",
+    title: "Collateral Barriers",
+    description:
+      "No land titles or traditional collateral required to access cooperative capital.",
+  },
+];
+
 export default function ImpactNumbers() {
   return (
     <section className="bg-white py-24 sm:py-32">
@@ -76,7 +97,7 @@ export default function ImpactNumbers() {
                 {item.title}
               </p>
 
-              <p className="mt-1 text-xs font-medium text-badges/80">
+              <p className="mt-1 text-xs font-medium text-gray-600">
                 {item.description}
               </p>
             </div>
@@ -85,7 +106,7 @@ export default function ImpactNumbers() {
 
         {/* Green Panel */}
         <div className="mt-8">
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br bg-green-700 via-green-800 to-green-900 px-6 py-14 sm:px-12 sm:py-16 lg:px-16">
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-green-700 via-green-800 to-green-900 px-6 py-14 sm:px-12 sm:py-16 lg:px-16">
 
             {/* Decorative glow */}
             <div className="absolute -left-16 -top-16 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
@@ -117,6 +138,45 @@ export default function ImpactNumbers() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+
+        {/* Youth & Women Empowerment */}
+        <div className="mt-16">
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="inline-flex items-center gap-2 rounded-full bg-badges/10 px-4 py-1.5 text-sm font-semibold uppercase tracking-widest text-badges">
+              <span className="h-1.5 w-1.5 rounded-full bg-badges" />
+              Inclusive by Design
+            </span>
+
+            <h3 className="mt-6 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+              A Fair Shot for Youth & Women
+            </h3>
+
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-gray-500">
+              OB39's cooperative model is built to remove the traditional
+              barriers that keep young people and women locked out of
+              capital — no land titles, no collateral, no gatekeepers.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-6 sm:grid-cols-3">
+            {inclusion.map((item) => (
+              <div
+                key={item.title}
+                className="rounded-2xl border border-badges/20 bg-badges/[0.04] p-6 text-center transition-all duration-300 hover:border-badges/40 hover:bg-badges/[0.07] hover:shadow-lg hover:shadow-gray-100"
+              >
+                <p className="text-3xl font-extrabold tracking-tight text-badges sm:text-4xl">
+                  {item.value}
+                </p>
+                <p className="mt-2 text-base font-semibold text-gray-900">
+                  {item.title}
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                  {item.description}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
