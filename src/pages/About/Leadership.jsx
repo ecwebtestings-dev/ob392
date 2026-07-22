@@ -1,3 +1,4 @@
+import images from "../../assets/assets";
 
 export default function LeadershipQuote() {
   return (
@@ -41,8 +42,13 @@ export default function LeadershipQuote() {
             </p>
 
             {/* Founder */}
-            <div className="mt-10">
+            <div className="mt-10 flex flex-col items-center">
               <div className="h-px w-16 bg-gray-200 mx-auto"></div>
+                <img
+                  src={images.Farmers}
+                  alt="CEO"
+                  className="h-30 w-30 object-cover rounded-full border-2 border-gray-500 p-1"
+                />
               <p className="mt-6 text-lg font-bold text-heading">
                 Ocaa Joshua Solomon
               </p>
