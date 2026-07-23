@@ -18,6 +18,7 @@ import ContactHeroImage from './contact.jpg';
 import UserIcon from './userIcon.png';
 import excitedFarmers from './excitedFarmers.jpg';
 import AfricanFarmers from './AfricanFarmers.jpg';
+import ceo_ob39 from './ceoob39.jpg';
 
 const images ={
     logo,
@@ -39,6 +40,7 @@ const images ={
     UserIcon,
     excitedFarmers,
     AfricanFarmers,
+    ceo_ob39,
     
 }
 

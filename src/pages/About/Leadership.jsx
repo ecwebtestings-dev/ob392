@@ -45,7 +45,7 @@ export default function LeadershipQuote() {
             <div className="mt-10 flex flex-col items-center">
               <div className="h-px w-16 bg-gray-200 mx-auto"></div>
                 <img
-                  src={images.Farmers}
+                  src={images.ceo_ob39}
                   alt="CEO"
                   className="h-30 w-30 object-cover rounded-full border-2 border-gray-500 p-1"
                 />
