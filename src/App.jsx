@@ -9,7 +9,6 @@ import Signup from "./components/RegistrationForm/Signup";
 import LogIn from './components/RegistrationForm/Login';
 import Dashboard from "./Dashboard/Dashbord";
 import EventManagement from "./Dashboard/Eventmanagement";
-import AdminManagement from "./Dashboard/Adminmanagement";
 import UserManagement from "./Dashboard/UserManagement";
 import DashboardLayout from "./Dashboard/DashBoardLayout";
 
@@ -76,7 +75,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="inquiries" element={<Dashboard />} />
           <Route path="users" element={<UserManagement/>} />
-          <Route path="admin" element={<AdminManagement/>} />
+
           <Route path="events" element={<EventManagement />} />
         </Route>
       </Routes>

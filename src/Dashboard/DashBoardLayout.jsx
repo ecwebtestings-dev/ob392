@@ -2,14 +2,13 @@ import { NavLink, Outlet } from "react-router-dom";
 import {
   EnvelopeIcon,
   UsersIcon,
-  ShieldCheckIcon,
   CalendarDaysIcon,
 } from "@heroicons/react/24/outline";
 
 const navItems = [
   { to: "/dashboard/inquiries", label: "Inquiries", icon: EnvelopeIcon },
   { to: "/dashboard/users", label: "Users", icon: UsersIcon },
-  { to: "/dashboard/admin", label: "Admin & Roles", icon: ShieldCheckIcon },
+  
   { to: "/dashboard/events", label: "Events", icon: CalendarDaysIcon },
 ];
 
@@ -23,6 +22,7 @@ export default function DashboardLayout() {
             OB39 <span className="text-badges">Admin</span>
           </span>
         </div>
+
 
         <nav className="space-y-1 px-3 py-4">
           {navItems.map((item) => (
@@ -43,6 +43,9 @@ export default function DashboardLayout() {
           ))}
         </nav>
       </aside>
+
+
+
 
       {/* MAIN CONTENT */}
       <div className="flex flex-1 flex-col">
