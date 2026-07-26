@@ -1,10 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import {
-  MapPinIcon,
-  PhoneIcon,
-  EnvelopeIcon,
-  ChevronDownIcon,
-} from "@heroicons/react/24/solid";
+import {MapPinIcon,PhoneIcon,EnvelopeIcon,ChevronDownIcon} from "@heroicons/react/24/solid";
+import toast from "react-hot-toast";
 
 const countryCodes = [
   { code: "+256", country: "Uganda", flag: "🇺🇬" },
@@ -20,12 +16,10 @@ const countryCodes = [
   { code: "+44", country: "United Kingdom", flag: "🇬🇧" },
 ];
 
-// const Subject =[
-//   'Select a reason',
-//   'Technical Support',
-//   'Partnership Opportunity',
-//   'General Inquiry'
-// ];
+
+
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 
 export default function ContactSection() {
   const [selectedCode, setSelectedCode] = useState(countryCodes[0]);
@@ -42,10 +36,87 @@ export default function ContactSection() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+
+
+//CONTROLLED FORM STATE
+const [formData,setFormData]=useState({
+  fullName:"",
+  email:'',
+  phone:'',
+  organization:'',
+  subject:'',
+  message:'',
+})
+
+const [submitting,setSubmitting]=useState(false);
+
+//INPUT CHANGE HANDLER
+function handleChange(e){
+  const {name,value}=e.target;
+  setFormData((prev)=>({...prev,[name]:value}));
+}
+
+//HANDLE SUBMIT FUNCTION
+async function handleSubmit(e) {
+  e.preventDefault();
+    if(!formData.fullName || !formData.email || !formData.message){
+      toast.error('Please fill in your name,email and message')
+      return;
+    }
+
+    setSubmitting(true)
+    try{
+      const res = await fetch(`${BASE_URL}/inquiry/create`,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          full_name:formData.fullName,
+          email:formData.email,
+          phone:formData.phone ? `${selectedCode.code}${formData.phone}`:"",
+          organization:formData.organization,
+          subject: formData.subject,
+          message:formData.message,
+        })
+      })
+
+      if(!res.ok){
+        const errorBody = await res.json().catch(()=>null);
+        console.log("ERROR DETAILS",errorBody);
+        throw new Error(errorBody.message||'Failed to submit your message');
+      }
+      //SUCESS MESSAGE
+      toast.success("Message sent! We'll get back to you soon");
+
+      //RESET FORM AFTER SUCCESSFULL SUBMITION
+      setFormData({
+        fullName:"",
+        email:"",
+        phone:"",
+        organization:"",
+        subject:"",
+        message:"",
+      });
+      setSelectedCode(countryCodes[0]);
+    }
+    catch(err){
+      toast.error(err.message || "Sorry something went wrong. Please try again");
+    }finally{
+      setSubmitting(false);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
   return (
     <section className="relative overflow-hidden bg-white py-24 sm:py-32">
-
-      
       <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
         <div className="grid gap-16 lg:grid-cols-5 lg:gap-12">
 
@@ -131,18 +202,41 @@ export default function ContactSection() {
             </div>
           </div>
 
+
+
           {/* Right Column: Form */}
           <div className="lg:col-span-3">
             <div className="rounded-3xl border border-gray-200 bg-white p-4 sm:p-8 shadow-xl shadow-gray-200/60 sm:p-10">
-              <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
-
+              
+              
+              <form className="space-y-5" onSubmit={handleSubmit}>
+                
                 <div className="grid gap-5 sm:grid-cols-2">
-                  <Field label="Full Name" type="text" placeholder="" />
-                  <Field label="Email Address" type="email" placeholder="" />
+                  {/**FULLNAME */}
+                  <Field 
+                    label="Full name" 
+                    type="text" 
+                    placeholder=""
+                    name="fullName" 
+                    onChange={handleChange}
+                    value={formData.fullName}
+        
+                    />
+
+                    {/**EMAIL ADDRESS */}
+                  <Field
+                    label="Email Address" 
+                    type="email" 
+                    placeholder=""
+                    value={formData.email}
+                    onChange={handleChange}
+                    name="email"
+                   
+                   />
                 </div>
 
-                <div className="grid gap-5 sm:grid-cols-2">
                   {/* Phone with country code dropdown */}
+                <div className="grid gap-5 sm:grid-cols-2">
                   <div className="relative" ref={dropdownRef}>
                     <label className="mb-1.5 block text-xs font-medium tracking-wide text-gray-500">
                       Phone Number
@@ -166,6 +260,9 @@ export default function ContactSection() {
                       <input
                         type="tel"
                         placeholder="701 234 567"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        name="phone"
                         className="w-full min-w-0 bg-transparent px-4 py-3 text-sm font-medium text-gray-900 placeholder:text-gray-400 focus:outline-none"
                       />
                     </div>
@@ -195,10 +292,22 @@ export default function ContactSection() {
                     label="Organization / Company Name"
                     type="text"
                     placeholder="Your organization"
+                    value={formData.organization}
+                    onChange={handleChange}
+                    name='organization'
+
                   />
                 </div>
 
-                <Field label="Subject" type="text" placeholder="How can we help?" />
+                <Field 
+                  label="Subject" 
+                  type="text" 
+                  placeholder="How can we help?"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  name='subject'
+                  
+                  />
 
                 {/* Message */}
                 <div>
@@ -206,6 +315,9 @@ export default function ContactSection() {
                     Message
                   </label>
                   <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
                     rows={5}
                     placeholder="Tell us more about your enquiry..."
                     className="w-full resize-none rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-900 placeholder:text-gray-400 transition-colors focus:border-badges/50 focus:outline-none"
@@ -213,10 +325,11 @@ export default function ContactSection() {
                 </div>
 
                 <button
+                  disabled={submitting}
                   type="submit"
                   className="w-full rounded-lg bg-button-bg py-3.5 text-sm font-semibold uppercase tracking-wider text-white transition-all duration-300 hover:bg-button-hover hover:shadow-lg hover:shadow-badges/25 hover:-translate-y-0.5 sm:w-auto sm:px-10"
                 >
-                  Send Message
+                  {submitting ? 'Sending...':"Send Message"}
                 </button>
               </form>
             </div>
@@ -227,7 +340,9 @@ export default function ContactSection() {
   );
 }
 
-function Field({ label, type, placeholder }) {
+
+//FORM INPUT FIELD ACCEPTS 
+function Field({ label,name,value,onChange, type, placeholder }) {
   return (
     <div>
       <label className="mb-1.5 block text-sm font-medium tracking-wide text-gray-500">
@@ -235,6 +350,9 @@ function Field({ label, type, placeholder }) {
       </label>
       <input
         type={type}
+        value={value}
+        onChange={onChange}
+        name={name}
         placeholder={placeholder}
         className="w-full rounded-md border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-900 placeholder:text-gray-400 transition-colors focus:border-badges/50 focus:outline-none"
       />
