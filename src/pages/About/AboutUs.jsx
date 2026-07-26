@@ -16,7 +16,7 @@ const aboutItems = [
     id: 2,
     title: 'Our Mission',
     description:
-      'To empower young developing businesses and African farmers through structured micro-capital cycles, modern technical knowledge, automated peer-to-peer transaction visibility, cooperative resource sharing, and direct, un-interrupted access to high-value domestic and international markets via proprietary digital ecosystems.',
+      'To empower young developing businesses and African Youth & women through structured micro-capital cycles, modern technical knowledge, automated peer-to-peer transaction visibility, cooperative resource sharing, and direct, un-interrupted access to high-value domestic and international markets via proprietary digital ecosystems.',
     category: 'The Action',
     icon: (
       <svg className="size-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">

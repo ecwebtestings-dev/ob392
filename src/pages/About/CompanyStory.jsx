@@ -30,7 +30,7 @@ export default function Story() {
             </h2>
 
             <p className="mt-6 text-base md:text-md leading-8 text-gray-600">
-              OB39 was founded to solve a critical challenge: the high
+              OB39 was founded to support youth and women as well as solve a critical challenge: the high
               failure rate of young businesses and the untapped potential of
               small-scale farmers. We recognized that hard work wasn't enough
               without access to capital, knowledge, and organized markets.

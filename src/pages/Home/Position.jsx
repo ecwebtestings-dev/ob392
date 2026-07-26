@@ -48,14 +48,12 @@ export default function PositioningSection() {
       ref={sectionRef}
       className="relative overflow-hidden bg-white py-24 sm:py-15"
     >
-      {/* Ambient depth — a single soft green wash, kept subtle */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -right-40 top-0 size-[32rem] rounded-full bg-badge-bg/60 blur-[120px]"
       />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Eyebrow + headline + intro */}
         <div
           className={`mx-auto max-w-3xl text-center transition-all duration-700 ${
             inView ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
@@ -80,9 +78,7 @@ export default function PositioningSection() {
           </p>
         </div>
 
-        {/* THE BRIDGE — signature element */}
         <div className="relative mt-16 lg:mt-20">
-          {/* Connecting line, desktop only, sits behind the three nodes */}
           <div
             aria-hidden="true"
             className={`absolute top-1/2 left-[16.5%] right-[16.5%] hidden h-px -translate-y-1/2 bg-gradient-to-r from-badges/60 via-badges to-badges/60 transition-opacity duration-700 lg:block ${
@@ -91,7 +87,7 @@ export default function PositioningSection() {
           />
 
           <div className="relative grid grid-cols-1 gap-6 lg:grid-cols-3 lg:items-center lg:gap-8">
-            {/* Shore A — Programmes */}
+            {/* Programmes */}
             <BridgeCard
               inView={inView}
               delay="delay-100"
@@ -112,7 +108,6 @@ export default function PositioningSection() {
             {/* Mobile-only connector */}
             <Connector inView={inView} />
 
-            {/* The bridge itself — OB39, carrying its real workflow */}
             <div
               className={`relative z-10 flex flex-col rounded-3xl bg-background px-6 py-7 shadow-[0_20px_60px_-15px_rgba(0,2,56,0.4)] transition-all duration-700 lg:scale-105 ${
                 inView ? "translate-y-0 opacity-100 delay-200" : "translate-y-4 opacity-0"
@@ -148,7 +143,7 @@ export default function PositioningSection() {
             {/* Mobile-only connector */}
             <Connector inView={inView} />
 
-            {/* Shore B — Entrepreneurs & farmers */}
+            {/* Entrepreneurs & farmers */}
             <BridgeCard
               inView={inView}
               delay="delay-300"
@@ -167,7 +162,7 @@ export default function PositioningSection() {
   );
 }
 
-// Shared "shore" card — the two endpoints the bridge connects.
+//  endpoints the bridge connects.
 function BridgeCard({ label, children, inView, delay }) {
   return (
     <div
@@ -183,8 +178,6 @@ function BridgeCard({ label, children, inView, delay }) {
   );
 }
 
-// Vertical connector shown only below lg — removed from grid flow entirely on lg via lg:hidden,
-// so it doesn't consume a column in the 3-col desktop layout.
 function Connector({ inView }) {
   return (
     <div
