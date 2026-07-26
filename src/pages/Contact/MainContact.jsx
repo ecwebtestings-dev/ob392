@@ -73,7 +73,7 @@ async function handleSubmit(e) {
           full_name:formData.fullName,
           email:formData.email,
           phone:formData.phone ? `${selectedCode.code}${formData.phone}`:"",
-          organization:formData.organization,
+          organisation:formData.organisation,
           subject: formData.subject,
           message:formData.message,
         })
@@ -92,7 +92,7 @@ async function handleSubmit(e) {
         fullName:"",
         email:"",
         phone:"",
-        organization:"",
+        organisation:"",
         subject:"",
         message:"",
       });
@@ -292,7 +292,7 @@ async function handleSubmit(e) {
                     label="Organization / Company Name"
                     type="text"
                     placeholder="Your organization"
-                    value={formData.organization}
+                    value={formData.organisation}
                     onChange={handleChange}
                     name='organization'
 

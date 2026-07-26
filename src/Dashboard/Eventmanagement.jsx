@@ -3,23 +3,14 @@ import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import {
   PlusIcon,
   TrashIcon,
-  CalendarDaysIcon,
-  MapPinIcon,
   ExclamationTriangleIcon,
   XMarkIcon,
+  PhotoIcon,
 } from "@heroicons/react/24/outline";
 import toast from "react-hot-toast";
 import { api } from "../Authentication/api";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
-
-const EMPTY_FORM = {
-  title: "",
-  description: "",
-  date: "",
-  time: "",
-  location: "",
-};
 
 export default function EventManagement() {
   const [events, setEvents] = useState([]);
@@ -125,42 +116,41 @@ export default function EventManagement() {
             No events scheduled yet.
           </div>
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {events.map((ev) => (
               <div
                 key={ev.id}
-                className="flex flex-col rounded-2xl border border-gray-200 bg-white p-5 shadow-sm"
+                className="group flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm"
               >
-                <div className="flex items-start justify-between gap-2">
-                  <h3 className="text-sm font-semibold text-gray-900">
-                    {ev.title}
-                  </h3>
+                <div className="relative aspect-video w-full flex-none bg-gray-100">
+                  {ev.image ? (
+                    <img
+                      src={ev.image}
+                      alt={ev.title}
+                      className="size-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex size-full items-center justify-center text-gray-300">
+                      <PhotoIcon className="size-10" />
+                    </div>
+                  )}
+
                   <button
                     onClick={() => setPendingDelete(ev)}
-                    className="flex-none rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-500"
+                    className="absolute right-2 top-2 rounded-lg bg-white/90 p-1.5 text-gray-500 opacity-0 shadow-sm backdrop-blur transition-opacity hover:bg-red-50 hover:text-red-500 group-hover:opacity-100"
                     aria-label="Delete event"
                   >
                     <TrashIcon className="size-4" />
                   </button>
                 </div>
 
-                {ev.description && (
-                  <p className="mt-2 text-sm leading-relaxed text-gray-500">
-                    {ev.description}
-                  </p>
-                )}
-
-                <div className="mt-4 space-y-1.5 border-t border-gray-100 pt-4 text-xs text-gray-500">
-                  {(ev.date || ev.time) && (
-                    <p className="flex items-center gap-1.5">
-                      <CalendarDaysIcon className="size-3.5 flex-none text-icons" />
-                      {[ev.date, ev.time].filter(Boolean).join(" · ")}
-                    </p>
-                  )}
-                  {ev.location && (
-                    <p className="flex items-center gap-1.5">
-                      <MapPinIcon className="size-3.5 flex-none text-icons" />
-                      {ev.location}
+                <div className="flex flex-1 flex-col p-5">
+                  <h3 className="text-sm font-semibold text-gray-900">
+                    {ev.title}
+                  </h3>
+                  {ev.description && (
+                    <p className="mt-2 text-sm leading-relaxed text-gray-500">
+                      {ev.description}
                     </p>
                   )}
                 </div>
@@ -189,18 +179,31 @@ export default function EventManagement() {
 }
 
 function CreateEventModal({ onClose, onCreated }) {
-  const [formData, setFormData] = useState(EMPTY_FORM);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const [submitting, setSubmitting] = useState(false);
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  function handleImageChange(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
   }
+
+  // Release the object URL when the modal unmounts or the file changes, to avoid leaking memory
+  useEffect(() => {
+    return () => {
+      if (imagePreview) URL.revokeObjectURL(imagePreview);
+    };
+  }, [imagePreview]);
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (!formData.title) {
+    if (!title) {
       toast.error("Please give the event a title.");
       return;
     }
@@ -208,13 +211,18 @@ function CreateEventModal({ onClose, onCreated }) {
     setSubmitting(true);
     try {
       const token = api.getToken();
+
+      // multipart/form-data — don't set Content-Type manually, the browser
+      // sets the correct boundary header automatically for FormData bodies
+      const body = new FormData();
+      body.append("title", title);
+      body.append("description", description);
+      if (imageFile) body.append("image", imageFile);
+
       const res = await fetch(`${BASE_URL}/api/event/create`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(formData),
+        headers: { Authorization: `Bearer ${token}` },
+        body,
       });
 
       if (!res.ok) {
@@ -226,7 +234,13 @@ function CreateEventModal({ onClose, onCreated }) {
       const created = data.data ?? data;
 
       toast.success("Event created");
-      onCreated({ id: created.id ?? Date.now(), ...formData, ...created });
+      onCreated({
+        id: created.id ?? Date.now(),
+        title,
+        description,
+        image: created.image ?? imagePreview,
+        ...created,
+      });
     } catch (err) {
       toast.error(err.message || "Something went wrong. Please try again.");
     } finally {
@@ -253,51 +267,56 @@ function CreateEventModal({ onClose, onCreated }) {
           </div>
 
           <form className="mt-5 space-y-4" onSubmit={handleSubmit}>
-            <Field
-              label="Title"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              placeholder="Cooperative training day"
-            />
+            <div>
+              <label className="mb-1.5 block text-xs font-medium tracking-wide text-gray-500">
+                Image
+              </label>
+              <label className="flex aspect-video w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl border border-dashed border-gray-300 bg-gray-50 transition-colors hover:border-badges/50 hover:bg-badge-bg/40">
+                {imagePreview ? (
+                  <img
+                    src={imagePreview}
+                    alt="Preview"
+                    className="size-full object-cover"
+                  />
+                ) : (
+                  <span className="flex flex-col items-center gap-1.5 text-gray-400">
+                    <PhotoIcon className="size-8" />
+                    <span className="text-xs font-medium">Click to upload an image</span>
+                  </span>
+                )}
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="hidden"
+                />
+              </label>
+            </div>
+
+            <div>
+              <label className="mb-1.5 block text-xs font-medium tracking-wide text-gray-500">
+                Title
+              </label>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Cooperative training day"
+                className="w-full rounded-md border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-badges/50 focus:outline-none"
+              />
+            </div>
 
             <div>
               <label className="mb-1.5 block text-xs font-medium tracking-wide text-gray-500">
                 Description
               </label>
               <textarea
-                name="description"
                 rows={3}
-                value={formData.description}
-                onChange={handleChange}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
                 className="w-full resize-none rounded-md border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-badges/50 focus:outline-none"
               />
             </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <Field
-                label="Date"
-                name="date"
-                type="date"
-                value={formData.date}
-                onChange={handleChange}
-              />
-              <Field
-                label="Time"
-                name="time"
-                type="time"
-                value={formData.time}
-                onChange={handleChange}
-              />
-            </div>
-
-            <Field
-              label="Location"
-              name="location"
-              value={formData.location}
-              onChange={handleChange}
-              placeholder="Kampala, Uganda"
-            />
 
             <div className="mt-6 flex justify-end gap-2">
               <button
@@ -372,23 +391,5 @@ function ConfirmDeleteModal({ event, onConfirm, onCancel }) {
         </DialogPanel>
       </div>
     </Dialog>
-  );
-}
-
-function Field({ label, name, type = "text", value, onChange, placeholder }) {
-  return (
-    <div>
-      <label className="mb-1.5 block text-xs font-medium tracking-wide text-gray-500">
-        {label}
-      </label>
-      <input
-        type={type}
-        name={name}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        className="w-full rounded-md border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-badges/50 focus:outline-none"
-      />
-    </div>
   );
 }
