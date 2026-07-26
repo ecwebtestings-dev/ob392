@@ -294,7 +294,7 @@ async function handleSubmit(e) {
                     placeholder="Your organization"
                     value={formData.organisation}
                     onChange={handleChange}
-                    name='organization'
+                    name='organisation'
 
                   />
                 </div>
