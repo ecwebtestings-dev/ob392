@@ -20,7 +20,7 @@ export default function UserManagement() {
     async function fetchUsers() {
       try {
         const token = api.getToken();
-        const res = await fetch(`${BASE_URL}/api/users`, {
+        const res = await fetch(`${BASE_URL}/users`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -78,7 +78,6 @@ export default function UserManagement() {
                 <tr>
                   <Th>Name</Th>
                   <Th>Email</Th>
-                  <Th>Phone</Th>
                   <Th>Role</Th>
                   <Th>Joined</Th>
                   <Th>
@@ -91,7 +90,6 @@ export default function UserManagement() {
                   <tr key={u.id} className="hover:bg-gray-50">
                     <Td>{u.name}</Td>
                     <Td>{u.email}</Td>
-                    <Td>{u.phone || "—"}</Td>
                     <Td>
                       <span className="inline-flex items-center rounded-full bg-badge-bg px-2.5 py-0.5 text-xs font-medium text-icons">
                         {u.role || "user"}
@@ -143,7 +141,7 @@ function UserEditModal({ userId, onClose, onUpdated }) {
     async function fetchUser() {
       try {
         const token = api.getToken();
-        const res = await fetch(`${BASE_URL}/api/users/${userId}`, {
+        const res = await fetch(`${BASE_URL}/users/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -188,7 +186,7 @@ function UserEditModal({ userId, onClose, onUpdated }) {
 
     try {
       const token = api.getToken();
-      const res = await fetch(`${BASE_URL}/api/users/update/${userId}`, {
+      const res = await fetch(`${BASE_URL}/users/update/${userId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

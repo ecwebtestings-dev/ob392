@@ -26,7 +26,7 @@ export default function EventManagement() {
     async function fetchEvents() {
       try {
         const token = api.getToken();
-        const res = await fetch(`${BASE_URL}/api/events`, {
+        const res = await fetch(`${BASE_URL}/events`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -61,7 +61,7 @@ export default function EventManagement() {
     try {
       const token = api.getToken();
       const res = await fetch(
-        `${BASE_URL}/api/event/destroy/${pendingDelete.id}`,
+        `${BASE_URL}/event/destroy/${pendingDelete.id}`,
         {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` },
@@ -219,7 +219,7 @@ function CreateEventModal({ onClose, onCreated }) {
       body.append("description", description);
       if (imageFile) body.append("image", imageFile);
 
-      const res = await fetch(`${BASE_URL}/api/event/create`, {
+      const res = await fetch(`${BASE_URL}/event/create`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body,
