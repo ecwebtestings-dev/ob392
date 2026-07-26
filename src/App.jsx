@@ -7,6 +7,7 @@ import Services from "./pages/Services/Services";
 import Contact from "./pages/Contact/Contact";
 import Signup from "./components/RegistrationForm/Signup";
 import LogIn from './components/RegistrationForm/Login';
+import Dashboard from "./Dashboard/Dashbord";
 
 
 
@@ -64,6 +65,7 @@ function App() {
         <Route>
           <Route path="/login" element={<LogIn/>}/>
           <Route path="/signup" element={<Signup/>}/>
+          <Route path="/dashboard" element={<Dashboard/>}/>
         </Route>
         
       </Routes>

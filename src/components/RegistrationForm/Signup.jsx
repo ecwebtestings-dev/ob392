@@ -67,7 +67,7 @@ export default function Signup() {
     try {
       await register(form); //register, stores token
       toast.success("Account created!");
-      navigate("/login");
+      navigate("/dashboard");
     } catch (err) {
       setError(err.message);
       toast.error(err.message || "Something went wrong. Please try again.");

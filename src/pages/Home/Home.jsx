@@ -7,6 +7,7 @@ import ImpactNumbers from "./ImpactNumbers";
 import ScalingImpact from "./ScalingImpact";
 import Testimonials from "./Testimonials";
 import InvestmentOpportunity from "./WhyUs";
+import PositioningSection from "./Position";
 
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
     <div>
       <Hero/>
       <AboutOverview/>
+      <PositioningSection/>
       <ProblemsWeSolve/>
       <ImpactNumbers/>
       <ScalingImpact/>
