@@ -43,7 +43,7 @@ const [formData,setFormData]=useState({
   fullName:"",
   email:'',
   phone:'',
-  organization:'',
+  organisation:'',
   subject:'',
   message:'',
 })
