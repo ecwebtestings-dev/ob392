@@ -2,39 +2,29 @@ import { useState, useEffect } from "react";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { PencilSquareIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import toast from "react-hot-toast";
-import { api } from "../Authentication/api";
-
-const BASE_URL = import.meta.env.VITE_API_URL;
+import { getUsers, getUser, updateUser } from "../Authentication/UserService";
 
 export default function UserManagement() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Which user is currently open in the edit modal (null = modal closed)
+  // Which user is currently open in the edit modal 
   const [activeUserId, setActiveUserId] = useState(null);
-
   useEffect(() => {
     let cancelled = false;
-
     async function fetchUsers() {
       try {
-        const token = api.getToken();
-        const res = await fetch(`${BASE_URL}/users`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (!res.ok) throw new Error("Failed to load users");
-
-        const data = await res.json();
-        // Adjust if your API wraps the array differently, e.g. data.data or data.users
+        const data = await getUsers();
         if (!cancelled) setUsers(Array.isArray(data) ? data : data.data ?? []);
-      } catch (err) {
+      } 
+      catch (err) {
         if (!cancelled) {
           setError(err.message);
           toast.error(err.message || "Could not load users");
         }
-      } finally {
+      } 
+      finally {
         if (!cancelled) setLoading(false);
       }
     }
@@ -45,8 +35,10 @@ export default function UserManagement() {
     };
   }, []);
 
-  // Called by the modal after a successful update — patches the row in the local list
-  // so the table reflects the change without a full refetch.
+  
+
+
+  // REFRESHS THE TABLE WITHOUT REFETCH
   function handleUserUpdated(updatedUser) {
     setUsers((prev) =>
       prev.map((u) => (u.id === updatedUser.id ? { ...u, ...updatedUser } : u))
@@ -79,6 +71,7 @@ export default function UserManagement() {
                   <Th>Name</Th>
                   <Th>Email</Th>
                   <Th>Role</Th>
+                  <Th>Status</Th>
                   <Th>Joined</Th>
                   <Th>
                     <span className="sr-only">Actions</span>
@@ -94,6 +87,15 @@ export default function UserManagement() {
                       <span className="inline-flex items-center rounded-full bg-badge-bg px-2.5 py-0.5 text-xs font-medium text-icons">
                         {u.role || "user"}
                       </span>
+                    </Td>
+                    <Td>
+                      {u.status === "suspended" ? (
+                        <span className="inline-flex items-center rounded-full bg-red-50 px-2.5 py-0.5 text-xs font-medium text-red-600">
+                          Suspended
+                        </span>
+                      ) : (
+                        <span className="text-xs text-gray-400">Active</span>
+                      )}
                     </Td>
                     <Td>
                       {u.created_at
@@ -140,14 +142,7 @@ function UserEditModal({ userId, onClose, onUpdated }) {
 
     async function fetchUser() {
       try {
-        const token = api.getToken();
-        const res = await fetch(`${BASE_URL}/users/${userId}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (!res.ok) throw new Error("Failed to load user details");
-
-        const data = await res.json();
+        const data = await getUser(userId);
         const user = data.data ?? data; // handle either a wrapped or bare object
 
         if (!cancelled) {
@@ -180,36 +175,21 @@ function UserEditModal({ userId, onClose, onUpdated }) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
-
-
-  //SAVES UPDATES
   async function handleSave(e) {
     e.preventDefault();
     setSaving(true);
 
     try {
-      const token = api.getToken();
-      const res = await fetch(`${BASE_URL}/users/update/${userId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({id: userId, ...formData}),
-      });
-
-      if (!res.ok) {
-        const errBody = await res.json().catch(() => null);
-        throw new Error(errBody?.message || "Failed to update user");
-      }
-
-      const data = await res.json();
-      const updatedUser = data.data ?? data ?? {};
+      // updateUser() stringifies this internally (see api.js) — pass a plain object
+      const data = await updateUser(userId, { id: userId, ...formData });
+      const updatedUser = data?.data ?? data ?? {};
 
       toast.success("User updated");
       onUpdated({ id: userId, ...formData, ...updatedUser });
       onClose();
     } catch (err) {
+      // err.message here is whatever the backend's JSON `message` field said —
+      // if this still 500s, the toast text IS the backend's actual error detail
       toast.error(err.message || "Something went wrong. Please try again.");
     } finally {
       setSaving(false);

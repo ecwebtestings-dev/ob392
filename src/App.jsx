@@ -11,6 +11,7 @@ import Dashboard from "./Dashboard/Dashbord";
 import EventManagement from "./Dashboard/Eventmanagement";
 import UserManagement from "./Dashboard/UserManagement";
 import DashboardLayout from "./Dashboard/DashBoardLayout";
+import Notification from "./Dashboard/Notifications/Notifications";
 
 
 
@@ -75,7 +76,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="inquiries" element={<Dashboard />} />
           <Route path="users" element={<UserManagement/>} />
-
+          <Route path="notifictaions" element={<Notification/>}/>
           <Route path="events" element={<EventManagement />} />
         </Route>
       </Routes>

@@ -3,7 +3,6 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import {
   EnvelopeIcon,
   UsersIcon,
-  ShieldCheckIcon,
   CalendarDaysIcon,
   ArrowRightStartOnRectangleIcon,
   Bars3Icon,
@@ -14,12 +13,11 @@ import toast from "react-hot-toast";
 import images from "../assets/assets";
 import { getCurrentUser, logout } from "../Authentication/authService";
 import { api } from "../Authentication/api";
+import Notification from "./Notifications/Notifications";
 
 const navItems = [
   { to: "/dashboard/inquiries", label: "Inquiries", icon: EnvelopeIcon },
   { to: "/dashboard/users", label: "Users", icon: UsersIcon },
-  // adminOnly items are filtered out of the sidebar entirely for non-admin users below
-  { to: "/dashboard/admin", label: "Admin & Roles", icon: ShieldCheckIcon, adminOnly: true },
   { to: "/dashboard/events", label: "Events", icon: CalendarDaysIcon },
 ];
 
@@ -110,6 +108,11 @@ export default function DashboardLayout() {
 
       {/* MAIN COLUMN */}
       <div className="flex flex-1 flex-col">
+        {/* DESKTOP TOP BAR — hosts the notification bell (and room for breadcrumbs/search later) */}
+        <header className="hidden h-16 flex-none items-center justify-end border-b border-gray-200 bg-white px-6 lg:flex">
+          <Notification />
+        </header>
+
         {/* MOBILE TOP BAR */}
         <header className="flex h-16 flex-none items-center justify-between border-b border-gray-200 bg-white px-4 lg:hidden">
           <div className="flex items-center gap-2">
@@ -119,16 +122,20 @@ export default function DashboardLayout() {
             </span>
           </div>
 
-          <button
-            onClick={() => setMobileNavOpen((o) => !o)}
-            className="rounded-lg p-2 text-gray-500 hover:bg-gray-100"
-          >
-            {mobileNavOpen ? (
-              <XMarkIcon className="size-5" />
-            ) : (
-              <Bars3Icon className="size-5" />
-            )}
-          </button>
+          <div className="flex items-center gap-1">
+            <Notification />
+
+            <button
+              onClick={() => setMobileNavOpen((o) => !o)}
+              className="rounded-lg p-2 text-gray-500 hover:bg-gray-100"
+            >
+              {mobileNavOpen ? (
+                <XMarkIcon className="size-5" />
+              ) : (
+                <Bars3Icon className="size-5" />
+              )}
+            </button>
+          </div>
         </header>
 
         {/* MOBILE NAV — toggled open/closed rather than always visible */}
