@@ -20,8 +20,8 @@ const WhatsApp = () => {
 
 const StyledWrapper = styled.div`
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
+  bottom: 1rem;
+  right: 6rem;
   z-index: 9999;
 
   @media (max-width: 768px) {

@@ -8,10 +8,11 @@ import Contact from "./pages/Contact/Contact";
 import Signup from "./components/RegistrationForm/Signup";
 import LogIn from './components/RegistrationForm/Login';
 import Dashboard from "./Dashboard/Dashbord";
-import EventManagement from "./Dashboard/Eventmanagement";
+
 import UserManagement from "./Dashboard/UserManagement";
 import DashboardLayout from "./Dashboard/DashBoardLayout";
 import Notification from "./Dashboard/Notifications/Notifications";
+import EventManagement from "./Dashboard/Events/useEventManagement";
 
 
 
@@ -77,7 +78,7 @@ function App() {
           <Route path="inquiries" element={<Dashboard />} />
           <Route path="users" element={<UserManagement/>} />
           <Route path="notifictaions" element={<Notification/>}/>
-          <Route path="events" element={<EventManagement />} />
+          <Route path="events" element={<EventManagement/>} />
         </Route>
       </Routes>
       
