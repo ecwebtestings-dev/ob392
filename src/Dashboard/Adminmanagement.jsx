@@ -3,7 +3,7 @@ import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import {
   ShieldCheckIcon,
   ShieldExclamationIcon,
-  TrashIcon,
+  NoSymbolIcon,
   ExclamationTriangleIcon,
 } from "@heroicons/react/24/outline";
 import toast from "react-hot-toast";
@@ -14,17 +14,17 @@ const BASE_URL = import.meta.env.VITE_API_URL;
 // The three destructive actions this screen can take, and which API route/verb each uses.
 // Centralized here so the confirm modal can stay generic and just read from this config.
 const ACTIONS = {
-  delete: {
-    verb: "delete",
-    endpoint: (id) => `/api/users/delete/${id}`,
-    title: "Delete user",
-    body: (name) => `This will soft-delete "${name}". They'll lose access immediately.`,
-    confirmLabel: "Delete user",
+  suspend: {
+    verb: "suspend",
+    endpoint: (id) => `/users/delete/${id}`,
+    title: "Suspend user",
+    body: (name) => `This will suspend "${name}"'s account. They'll lose access immediately.`,
+    confirmLabel: "Suspend user",
     confirmClass: "bg-red-600 hover:bg-red-700",
   },
   promote: {
     verb: "promote",
-    endpoint: (id) => `/api/users/create_admin/${id}`,
+    endpoint: (id) => `/users/create_admin/${id}`,
     title: "Grant admin access",
     body: (name) => `"${name}" will gain administrative permissions.`,
     confirmLabel: "Grant admin",
@@ -32,7 +32,7 @@ const ACTIONS = {
   },
   demote: {
     verb: "demote",
-    endpoint: (id) => `/api/users/demote_admin/${id}`,
+    endpoint: (id) => `/users/demote_admin/${id}`,
     title: "Remove admin access",
     body: (name) => `"${name}" will lose administrative permissions.`,
     confirmLabel: "Remove admin",
@@ -45,7 +45,7 @@ export default function AdminManagement() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // { type: 'delete' | 'promote' | 'demote', user: {...} } | null
+  // { type: 'suspend' | 'promote' | 'demote', user: {...} } | null
   const [pendingAction, setPendingAction] = useState(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -55,7 +55,7 @@ export default function AdminManagement() {
     async function fetchUsers() {
       try {
         const token = api.getToken();
-        const res = await fetch(`${BASE_URL}/api/users`, {
+        const res = await fetch(`${BASE_URL}/users`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -101,7 +101,7 @@ export default function AdminManagement() {
       setUsers((prev) =>
         prev.map((u) => {
           if (u.id !== user.id) return u;
-          if (type === "delete") return { ...u, deleted: true };
+          if (type === "suspend") return { ...u, status: "suspended" };
           if (type === "promote") return { ...u, role: "admin" };
           if (type === "demote") return { ...u, role: "user" };
           return u;
@@ -109,8 +109,8 @@ export default function AdminManagement() {
       );
 
       toast.success(
-        type === "delete"
-          ? "User deleted"
+        type === "suspend"
+          ? "User suspended"
           : type === "promote"
           ? "Admin access granted"
           : "Admin access removed"
@@ -122,8 +122,6 @@ export default function AdminManagement() {
       setSubmitting(false);
     }
   }
-
-  const visibleUsers = users.filter((u) => !u.deleted);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
@@ -141,7 +139,7 @@ export default function AdminManagement() {
           </div>
         ) : error ? (
           <div className="p-10 text-center text-sm text-red-500">{error}</div>
-        ) : visibleUsers.length === 0 ? (
+        ) : users.length === 0 ? (
           <div className="p-10 text-center text-sm text-gray-500">
             No users yet.
           </div>
@@ -153,15 +151,17 @@ export default function AdminManagement() {
                   <Th>Name</Th>
                   <Th>Email</Th>
                   <Th>Role</Th>
+                  <Th>Status</Th>
                   <Th>
                     <span className="sr-only">Actions</span>
                   </Th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
-                {visibleUsers.map((u) => {
+                {users.map((u) => {
                   const isAdmin = u.role === "admin" || u.role === "super_admin";
                   const isSuperAdmin = u.role === "super_admin";
+                  const isSuspended = u.status === "suspended";
 
                   return (
                     <tr key={u.id} className="hover:bg-gray-50">
@@ -172,10 +172,21 @@ export default function AdminManagement() {
                           {u.role || "user"}
                         </span>
                       </Td>
+                      <Td>
+                        {isSuspended ? (
+                          <span className="inline-flex items-center rounded-full bg-red-50 px-2.5 py-0.5 text-xs font-medium text-red-600">
+                            Suspended
+                          </span>
+                        ) : (
+                          <span className="text-xs text-gray-400">Active</span>
+                        )}
+                      </Td>
                       <Td className="text-right">
                         <div className="flex justify-end gap-2">
-                          {/* Super admins are left alone here — no demote/delete on them from this screen */}
-                          {!isSuperAdmin && (
+                          {/* Super admins are left alone here — no demote/suspend on them from this screen.
+                              Already-suspended users get no further actions until they're reactivated
+                              (no reactivate endpoint currently documented). */}
+                          {!isSuperAdmin && !isSuspended && (
                             <>
                               {isAdmin ? (
                                 <ActionButton
@@ -197,11 +208,11 @@ export default function AdminManagement() {
                                 />
                               )}
                               <ActionButton
-                                icon={TrashIcon}
-                                label="Delete"
+                                icon={NoSymbolIcon}
+                                label="Suspend"
                                 className="text-red-500 hover:bg-red-50"
                                 onClick={() =>
-                                  setPendingAction({ type: "delete", user: u })
+                                  setPendingAction({ type: "suspend", user: u })
                                 }
                               />
                             </>

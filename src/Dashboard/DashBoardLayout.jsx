@@ -1,86 +1,192 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import {
   EnvelopeIcon,
   UsersIcon,
+  ShieldCheckIcon,
   CalendarDaysIcon,
+  ArrowRightStartOnRectangleIcon,
+  Bars3Icon,
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
+import toast from "react-hot-toast";
+
+import images from "../assets/assets";
+import { getCurrentUser, logout } from "../Authentication/authService";
+import { api } from "../Authentication/api";
 
 const navItems = [
   { to: "/dashboard/inquiries", label: "Inquiries", icon: EnvelopeIcon },
   { to: "/dashboard/users", label: "Users", icon: UsersIcon },
-  
+  // adminOnly items are filtered out of the sidebar entirely for non-admin users below
+  { to: "/dashboard/admin", label: "Admin & Roles", icon: ShieldCheckIcon, adminOnly: true },
   { to: "/dashboard/events", label: "Events", icon: CalendarDaysIcon },
 ];
 
+const ADMIN_ROLES = ["admin", "super_admin"];
+
+// Turns a full name into up-to-2-letter initials, e.g. "Jane Doe" -> "JD"
+function getInitials(fullName) {
+  if (!fullName) return "";
+  const parts = fullName.trim().split(/\s+/);
+  const first = parts[0]?.[0] ?? "";
+  const last = parts.length > 1 ? parts[parts.length - 1][0] : "";
+  return (first + last).toUpperCase();
+}
+
 export default function DashboardLayout() {
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
+  useEffect(() => {
+    const token = api.getToken();
+    if (!token) return;
+
+    getCurrentUser()
+      .then(setUser)
+      .catch(() => setUser(null));
+  }, []);
+
+  async function handleLogout() {
+    try {
+      await logout();
+      toast.success("Logged out");
+      navigate("/login");
+    } catch (err) {
+      toast.error(err.message || "Failed to log out");
+    }
+  }
+
+  // While `user` is still null (not yet loaded), isAdmin is false — this means the
+  // Admin & Roles link stays hidden until we've confirmed the role, rather than
+  // briefly flashing it for a non-admin user before the check resolves.
+  const isAdmin = ADMIN_ROLES.includes(user?.role);
+  const visibleNavItems = navItems.filter((item) => !item.adminOnly || isAdmin);
+
   return (
     <div className="flex min-h-screen bg-gray-50">
-      {/* SIDEBAR */}
-      <aside className="hidden w-64 flex-none border-r border-gray-200 bg-white lg:block">
-        <div className="flex h-16 items-center px-6">
-          <span className="text-lg font-bold tracking-tight text-heading">
-            OB39 <span className="text-badges">Admin</span>
-          </span>
+      {/* DESKTOP SIDEBAR */}
+      <aside className="hidden w-64 flex-none flex-col bg-background lg:flex">
+        <div className="flex h-16 flex-none items-center gap-2 px-6">
+          <img alt="Logo" src={images.logo} className="h-7 w-auto" />
+          <div className="flex flex-col leading-none">
+            <span className="text-sm font-bold tracking-tight text-badges">OB39</span>
+            <span className="text-[10px] font-medium uppercase tracking-widest text-hero-text/60">
+              Admin
+            </span>
+          </div>
         </div>
 
-
-        <nav className="space-y-1 px-3 py-4">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) =>
-                `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
-                  isActive
-                    ? "bg-badge-bg text-icons"
-                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                }`
-              }
-            >
-              <item.icon className="size-5 flex-none" />
-              {item.label}
-            </NavLink>
+        <nav className="flex-1 space-y-1 px-3 py-4">
+          {visibleNavItems.map((item) => (
+            <SidebarLink key={item.to} item={item} />
           ))}
         </nav>
+
+        {/* User + logout, pinned to the bottom of the sidebar */}
+        <div className="flex-none border-t border-white/10 p-3">
+          <div className="flex items-center gap-2.5 rounded-lg px-2 py-2">
+            <span className="flex size-8 flex-none items-center justify-center rounded-full bg-badges text-xs font-semibold text-background">
+              {getInitials(user?.name) || "?"}
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-medium text-white">
+                {user?.name || "..."}
+              </p>
+              <p className="truncate text-xs text-hero-text/60">{user?.email}</p>
+            </div>
+          </div>
+
+          <button
+            onClick={handleLogout}
+            className="mt-1 flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-sm font-medium text-red-400 transition-colors hover:bg-red-500/10 hover:text-red-300"
+          >
+            <ArrowRightStartOnRectangleIcon className="size-4" />
+            Log out
+          </button>
+        </div>
       </aside>
 
-
-
-
-      {/* MAIN CONTENT */}
+      {/* MAIN COLUMN */}
       <div className="flex flex-1 flex-col">
-        {/* Simple top bar — mainly useful for a mobile menu trigger later if needed */}
-        <header className="flex h-16 items-center border-b border-gray-200 bg-white px-4 lg:hidden">
-          <span className="text-base font-bold tracking-tight text-heading">
-            OB39 <span className="text-badges">Admin</span>
-          </span>
+        {/* MOBILE TOP BAR */}
+        <header className="flex h-16 flex-none items-center justify-between border-b border-gray-200 bg-white px-4 lg:hidden">
+          <div className="flex items-center gap-2">
+            <img alt="Logo" src={images.logo} className="h-7 w-auto" />
+            <span className="text-sm font-bold tracking-tight text-heading">
+              OB39 <span className="text-badges">Admin</span>
+            </span>
+          </div>
+
+          <button
+            onClick={() => setMobileNavOpen((o) => !o)}
+            className="rounded-lg p-2 text-gray-500 hover:bg-gray-100"
+          >
+            {mobileNavOpen ? (
+              <XMarkIcon className="size-5" />
+            ) : (
+              <Bars3Icon className="size-5" />
+            )}
+          </button>
         </header>
 
-        {/* Mobile nav — simple horizontal scroll row since there's no off-canvas menu yet */}
-        <nav className="flex gap-1 overflow-x-auto border-b border-gray-200 bg-white px-3 py-2 lg:hidden">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) =>
-                `flex flex-none items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
-                  isActive
-                    ? "bg-badge-bg text-icons"
-                    : "text-gray-600 hover:bg-gray-50"
-                }`
-              }
+        {/* MOBILE NAV — toggled open/closed rather than always visible */}
+        {mobileNavOpen && (
+          <nav className="flex flex-col gap-1 border-b border-gray-200 bg-white px-3 py-3 lg:hidden">
+            {visibleNavItems.map((item) => (
+              <SidebarLink
+                key={item.to}
+                item={item}
+                light
+                onClick={() => setMobileNavOpen(false)}
+              />
+            ))}
+            <button
+              onClick={handleLogout}
+              className="mt-1 flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium text-red-500 transition-colors hover:bg-red-50"
             >
-              <item.icon className="size-4" />
-              {item.label}
-            </NavLink>
-          ))}
-        </nav>
+              <ArrowRightStartOnRectangleIcon className="size-4" />
+              Log out
+            </button>
+          </nav>
+        )}
 
         <main className="flex-1">
-          {/* Each dashboard screen renders here based on the active nested route */}
-          <Outlet />
+          {/* Active dashboard screen renders here based on the matched child route.
+              `user` is passed down so child screens (e.g. AdminManagement) can read
+              the current user's role without fetching it again themselves. */}
+          <Outlet context={{ user }} />
         </main>
       </div>
     </div>
+  );
+}
+
+// Shared nav link — `light` swaps the styling for the mobile (white background) context,
+// since the desktop sidebar sits on the dark navy background instead.
+function SidebarLink({ item, light = false, onClick }) {
+  return (
+    <NavLink
+      to={item.to}
+      onClick={onClick}
+      className={({ isActive }) => {
+        if (light) {
+          return `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+            isActive
+              ? "bg-badge-bg text-icons"
+              : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+          }`;
+        }
+        return `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+          isActive
+            ? "bg-badges/15 text-badges"
+            : "text-hero-text/70 hover:bg-white/5 hover:text-white"
+        }`;
+      }}
+    >
+      <item.icon className="size-5 flex-none" />
+      {item.label}
+    </NavLink>
   );
 }

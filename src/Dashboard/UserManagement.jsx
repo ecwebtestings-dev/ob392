@@ -180,6 +180,9 @@ function UserEditModal({ userId, onClose, onUpdated }) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
+
+
+  //SAVES UPDATES
   async function handleSave(e) {
     e.preventDefault();
     setSaving(true);
@@ -192,7 +195,7 @@ function UserEditModal({ userId, onClose, onUpdated }) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({id: userId, ...formData}),
       });
 
       if (!res.ok) {
