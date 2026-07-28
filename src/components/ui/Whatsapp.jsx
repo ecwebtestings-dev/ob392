@@ -4,7 +4,7 @@ const WhatsApp = () => {
     <a  href="https://wa.me/256783380569"
       target="_blank"
       rel="noopener noreferrer"
-      className="group fixed bottom-5 right-20 md:right-5 z-[9999] flex h-[58px] w-[58px] items-center overflow-hidden rounded-full bg-[#25d366] shadow-[0_12px_30px_rgba(37,211,102,0.35),0_4px_10px_rgba(0,0,0,0.15)] transition-all duration-[350ms] ease-in-out hover:-translate-y-[3px] active:scale-[0.96] max-[425px]:hover:w-[58px] min-[425px]:hover:w-[180px] md:bottom-4 md:right-24"
+      className="group fixed bottom-5 right-25 md:right-5 z-[9999] flex h-[58px] w-[58px] items-center overflow-hidden rounded-full bg-[#25d366] shadow-[0_12px_30px_rgba(37,211,102,0.35),0_4px_10px_rgba(0,0,0,0.15)] transition-all duration-[350ms] ease-in-out hover:-translate-y-[3px] active:scale-[0.96] max-[425px]:hover:w-[58px] min-[425px]:hover:w-[180px] md:bottom-4 md:right-24"
     >
       {/* Pulse ring */}
       <span className="pointer-events-none absolute -inset-1.5 rounded-full border-2 border-[#25d366]/35 animate-whatsapp-pulse" />

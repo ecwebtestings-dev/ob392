@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import { api } from "../../Authentication/api"; // Adjust path as needed
+import { api } from "../../Authentication/api"; 
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 

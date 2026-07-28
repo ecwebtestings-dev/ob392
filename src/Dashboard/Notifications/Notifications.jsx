@@ -1,9 +1,9 @@
 import { Bell, Check, X, Loader2, AlertCircle } from "lucide-react";
-import { useNotifications } from "./UseNotifcations"; 
+import { useNotifications } from "./UseNotifcations";
 
 const TYPE_DOT = {
   info: "bg-blue-500",
-  success: "bg-green-500",
+  success: "bg-badges",
   warning: "bg-yellow-500",
   error: "bg-red-500",
 };
@@ -33,14 +33,14 @@ export default function Notification() {
         aria-label={`Notifications${unreadCount ? `, ${unreadCount} unread` : ""}`}
         className={`relative flex h-10 w-10 items-center justify-center rounded-xl border transition-all duration-200 ${
           open
-            ? "border-[#2d3949] bg-[#151c28]"
-            : "border-[#1f2733] bg-[#0d1219] hover:border-[#2d3949]"
+            ? "border-badges/30 bg-white/10"
+            : "border-white/10 bg-white/5 hover:border-badges/30"
         }`}
       >
         <Bell size={18} className="text-gray-400" />
 
         {unreadCount > 0 && (
-          <span className="absolute -right-1 -top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-indigo-600 px-1 text-[11px] font-bold text-white">
+          <span className="absolute -right-1 -top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-badges px-1 text-[11px] font-bold text-white">
             {unreadCount > 9 ? "9+" : unreadCount}
           </span>
         )}
@@ -49,7 +49,7 @@ export default function Notification() {
       {open && (
         <div
           ref={panelRef}
-          className="absolute right-0 top-12 z-50 flex max-h-[500px] w-[370px] flex-col overflow-hidden rounded-2xl border border-[#1f2733] bg-[#0a0e17] shadow-2xl"
+          className="fixed inset-x-4 top-20 z-50 flex max-h-[500px] flex-col overflow-hidden rounded-2xl border border-white/10 bg-background shadow-2xl sm:absolute sm:inset-x-auto sm:right-0 sm:top-12 sm:w-[370px]"
         >
           <NotificationHeader
             unreadCount={unreadCount}
@@ -97,12 +97,12 @@ export default function Notification() {
 }
 
 // ===========================================================================
-// Subcomponents (Presentational Only)
+// Subcomponents 
 // ===========================================================================
 
 export function NotificationHeader({ unreadCount, marking, onMarkAllRead }) {
   return (
-    <div className="flex items-center justify-between border-b border-[#1a2230] px-4 py-3">
+    <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
       <div>
         <h2 className="text-sm font-semibold text-white">Notifications</h2>
         <p className="text-xs text-gray-500">{unreadCount} unread</p>
@@ -111,7 +111,7 @@ export function NotificationHeader({ unreadCount, marking, onMarkAllRead }) {
       <button
         onClick={onMarkAllRead}
         disabled={!unreadCount || marking}
-        className="flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium text-indigo-400 transition hover:bg-indigo-500/10 disabled:cursor-not-allowed disabled:opacity-50"
+        className="flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium text-badges transition hover:bg-badges/10 disabled:cursor-not-allowed disabled:opacity-50"
       >
         {marking ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />}
         Mark all
@@ -133,8 +133,8 @@ export function EmptyState() {
 export function NotificationItem({ notification, removing, onDelete }) {
   return (
     <div
-      className={`flex gap-3 border-b border-[#161c26] px-4 py-3 transition-all duration-200 ${
-        notification.read ? "bg-transparent" : "bg-[#101725]"
+      className={`flex gap-3 border-b border-white/5 px-4 py-3 transition-all duration-200 ${
+        notification.read ? "bg-transparent" : "bg-white/[0.04]"
       } ${removing ? "translate-x-3 opacity-0" : "translate-x-0 opacity-100"}`}
     >
       <span
@@ -164,12 +164,12 @@ export function NotificationItem({ notification, removing, onDelete }) {
 
 export function NotificationFooter({ loading, onRefresh, onClose }) {
   return (
-    <div className="border-t border-[#1a2230] bg-[#0d1219] px-4 py-3">
+    <div className="border-t border-white/10 bg-white/[0.03] px-4 py-3">
       <div className="flex gap-2">
         <button
           onClick={onRefresh}
           disabled={loading}
-          className="flex-1 rounded-lg border border-[#2d3949] py-2 text-sm font-medium text-gray-300 transition-all hover:bg-[#151c28] hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex-1 rounded-lg border border-white/10 py-2 text-sm font-medium text-gray-300 transition-all hover:border-badges/30 hover:bg-white/5 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
         >
           {loading ? (
             <span className="flex items-center justify-center gap-2">
@@ -183,7 +183,7 @@ export function NotificationFooter({ loading, onRefresh, onClose }) {
 
         <button
           onClick={onClose}
-          className="rounded-lg border border-[#2d3949] px-4 py-2 text-sm font-medium text-gray-300 transition-all hover:bg-[#151c28] hover:text-white"
+          className="rounded-lg border border-white/10 px-4 py-2 text-sm font-medium text-gray-300 transition-all hover:border-badges/30 hover:bg-white/5 hover:text-white"
         >
           Close
         </button>

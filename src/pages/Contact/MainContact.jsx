@@ -53,7 +53,16 @@ const [submitting,setSubmitting]=useState(false);
 //INPUT CHANGE HANDLER
 function handleChange(e){
   const {name,value}=e.target;
+
+  if(name === 'message'){
+    const words = value.trim().split(/\s+/).filter(Boolean);
+    if(words.length>15){
+      return;
+    }
+  }
   setFormData((prev)=>({...prev,[name]:value}));
+
+
 }
 
 //HANDLE SUBMIT FUNCTION
@@ -319,9 +328,13 @@ async function handleSubmit(e) {
                     value={formData.message}
                     onChange={handleChange}
                     rows={5}
+                    
                     placeholder="Tell us more about your enquiry..."
                     className="w-full resize-none rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-900 placeholder:text-gray-400 transition-colors focus:border-badges/50 focus:outline-none"
                   />
+                  <p className="mt-1 text-xs text-gray-500">
+                     {formData.message.trim().split(/\s+/).filter(Boolean).length}/20 words
+                  </p>
                 </div>
 
                 <button

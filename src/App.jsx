@@ -7,13 +7,13 @@ import Services from "./pages/Services/Services";
 import Contact from "./pages/Contact/Contact";
 import Signup from "./components/RegistrationForm/Signup";
 import LogIn from './components/RegistrationForm/Login';
-import Dashboard from "./Dashboard/Dashbord";
 
-import UserManagement from "./Dashboard/UserManagement";
 import DashboardLayout from "./Dashboard/DashBoardLayout";
 import Notification from "./Dashboard/Notifications/Notifications";
 import EventManagement from "./Dashboard/Events/useEventManagement";
 import { AiWidget } from "./AiWidget/WidgetLayout";
+import Inquiries from "./Dashboard/Inquires/InQuiries";
+import UserManagement from "./Dashboard/UserManagement/userManagement";
 
 
 
@@ -75,8 +75,8 @@ function App() {
         </Route>
         
         <Route path="/dashboard" element={<DashboardLayout/>}>
-          <Route index element={<Dashboard />} />
-          <Route path="inquiries" element={<Dashboard />} />
+          <Route index element={<Inquiries />} />
+          <Route path="inquiries" element={<Inquiries/>} />
           <Route path="users" element={<UserManagement/>} />
           <Route path="notifictaions" element={<Notification/>}/>
           <Route path="events" element={<EventManagement/>} />

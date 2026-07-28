@@ -89,9 +89,19 @@ export default function EventManagement() {
                 </div>
 
                 <div className="flex flex-1 flex-col p-5">
-                  <h3 className="text-sm font-semibold text-gray-900">{ev.title}</h3>
+                  <h3
+                    title={ev.title}
+                    className="line-clamp-1 break-words text-sm font-semibold text-gray-900"
+                  >
+                    {ev.title}
+                  </h3>
                   {ev.description && (
-                    <p className="mt-2 text-sm leading-relaxed text-gray-500">{ev.description}</p>
+                    <p
+                      title={ev.description}
+                      className="mt-2 line-clamp-3 break-words text-sm leading-relaxed text-gray-500"
+                    >
+                      {ev.description}
+                    </p>
                   )}
                 </div>
               </div>
