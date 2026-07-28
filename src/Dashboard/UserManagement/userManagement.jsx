@@ -165,8 +165,8 @@ function UserRow({ user, onEdit, onAction }) {
 }
 
 // Confirmation dialog shown before running a suspend/promote/demote action.
-// Content (title, body copy, confirm button label/color) comes from the
-// ACTIONS config in useUser.js, keyed by action type.
+// Content 
+// ACTIONS 
 function ConfirmActionDialog({ action, user, submitting, onCancel, onConfirm }) {
   return (
     <Dialog open onClose={onCancel} className="relative z-50">

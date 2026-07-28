@@ -1,90 +1,82 @@
 import { useState, useEffect } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { api } from "../../Authentication/api"; 
+import { api } from "../../Authentication/api";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
+const FIVE_MINUTES = 5 * 60 * 1000;
+
+async function fetchEvents() {
+  const token = api.getToken();
+  const res = await fetch(`${BASE_URL}/events`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  if (!res.ok) throw new Error("Failed to load events");
+
+  const data = await res.json();
+  return Array.isArray(data) ? data : data.data ?? [];
+}
 
 // ---------------------------------------------------------------------
 // Main List Logic
 // ---------------------------------------------------------------------
 export function useEventManagement() {
-  const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const queryClient = useQueryClient();
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["events"],
+    queryFn: fetchEvents,
+    staleTime: FIVE_MINUTES,
+  });
+
   const [showCreate, setShowCreate] = useState(false);
   const [pendingDelete, setPendingDelete] = useState(null);
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function fetchEvents() {
-      try {
-        const token = api.getToken();
-        const res = await fetch(`${BASE_URL}/events`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (!res.ok) throw new Error("Failed to load events");
-
-        const data = await res.json();
-        if (!cancelled) setEvents(Array.isArray(data) ? data : data.data ?? []);
-      } catch (err) {
-        if (!cancelled) {
-          setError(err.message);
-          toast.error(err.message || "Could not load events");
-        }
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }
-
-    fetchEvents();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   function handleEventCreated(newEvent) {
-    setEvents((prev) => [newEvent, ...prev]);
+    queryClient.setQueryData(["events"], (prev = []) => [newEvent, ...prev]);
     setShowCreate(false);
   }
 
-  async function handleDelete() {
-    if (!pendingDelete) return;
-    
-    setIsDeleting(true);
-    try {
+  const deleteMutation = useMutation({
+    mutationFn: async (eventId) => {
       const token = api.getToken();
-      const res = await fetch(`${BASE_URL}/event/destroy/${pendingDelete.id}`, {
+      const res = await fetch(`${BASE_URL}/event/destroy/${eventId}`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       });
-
+      
       if (!res.ok) {
         const errBody = await res.json().catch(() => null);
         throw new Error(errBody?.message || "Failed to delete event");
       }
-
-      setEvents((prev) => prev.filter((e) => e.id !== pendingDelete.id));
+    },
+    onSuccess: (_, eventId) => {
+      queryClient.setQueryData(["events"], (prev = []) =>
+        prev.filter((e) => e.id !== eventId)
+      );
       toast.success("Event removed");
       setPendingDelete(null);
-    } catch (err) {
+    },
+    onError: (err) => {
       toast.error(err.message || "Something went wrong. Please try again.");
-    } finally {
-      setIsDeleting(false);
-    }
+    },
+  });
+
+  async function handleDelete() {
+    if (!pendingDelete) return;
+    deleteMutation.mutate(pendingDelete.id);
   }
 
   return {
-    events,
-    loading,
-    error,
+    events: data ?? [],
+    loading: isLoading,
+    error: error?.message ?? null,
     showCreate,
     setShowCreate,
     pendingDelete,
     setPendingDelete,
-    isDeleting,
+    isDeleting: deleteMutation.isPending,
     handleEventCreated,
     handleDelete,
   };

@@ -1,51 +1,39 @@
-import { useState, useEffect } from "react";
-import toast from "react-hot-toast";
+import { useQuery } from "@tanstack/react-query";
 import { api } from "../../Authentication/api";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
+const FIVE_MINUTES = 5 * 60 * 1000;
 
+
+//fUNCTION THAT FETCHES INQUIRIES
+async function fetchInquiries() {
+  const token = api.getToken();
+  const res = await fetch(`${BASE_URL}/inquiry`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  if (!res.ok) throw new Error("Failed to load inquiries");
+
+  const data = await res.json();
+  return Array.isArray(data) ? data : data.data ?? [];
+}
+
+
+
+//CATCHING INQUIRIES
 export function useInquiries() {
-  const [inquiries, setInquiries] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["inquiries"],
+    queryFn: fetchInquiries,
+    staleTime: FIVE_MINUTES,
+  });
 
-  useEffect(() => {
-    let cancelled = false;
+  const inquiries = data ?? [];
 
-    async function fetchInquiries() {
-      try {
-        const token = api.getToken();
-        const res = await fetch(`${BASE_URL}/inquiry`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+  
+  
 
-        if (!res.ok) {
-          throw new Error("Failed to load inquiries");
-        }
-
-        const data = await res.json();
-
-        // Adjust this line if your API wraps the array, e.g. data.data or data.inquiries
-        if (!cancelled) setInquiries(Array.isArray(data) ? data : data.data ?? []);
-      } catch (err) {
-        if (!cancelled) {
-          setError(err.message);
-          toast.error(err.message || "Could not load inquiries");
-        }
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }
-
-    fetchInquiries();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  // Derived stats, computed from whatever's currently loaded
+  // DERIVED STATISTICS
   const total = inquiries.length;
 
   const thisWeek = inquiries.filter((inq) => {
@@ -56,12 +44,13 @@ export function useInquiries() {
     return created >= weekAgo;
   }).length;
 
+  
   const withOrg = inquiries.filter((inq) => inq.organisation).length;
 
   return {
     inquiries,
-    loading,
-    error,
+    loading: isLoading,
+    error: error?.message ?? null,
     stats: { total, thisWeek, withOrg },
   };
 }

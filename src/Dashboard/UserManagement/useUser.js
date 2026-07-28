@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { getUsers } from "../../Authentication/UserService";
 import { api } from "../../Authentication/api";
@@ -30,50 +31,28 @@ export const ACTIONS = {
   },
 };
 
-// Fetches the user list, tracks it in state, and exposes handlers for
-// editing a single user (via the edit modal) and for suspend/promote/demote
-// actions (via a confirmation dialog).
 export function useUsers() {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const queryClient = useQueryClient();
 
-  // Which action (suspend/promote/demote) is awaiting confirmation, and on whom
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const data = await getUsers();
+      return Array.isArray(data) ? data : data.data ?? [];
+    },
+    staleTime: 5 * 60 * 1000, // won't refetch on remount/focus within 5 min
+  });
+
   const [pendingAction, setPendingAction] = useState(null);
   const [submitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
-    let cancelled = false;
-
-    async function fetchUsers() {
-      try {
-        const data = await getUsers();
-        if (!cancelled) setUsers(Array.isArray(data) ? data : data.data ?? []);
-      } catch (err) {
-        if (!cancelled) {
-          setError(err.message);
-          toast.error(err.message || "Could not load users");
-        }
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }
-
-    fetchUsers();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  // Refreshes the table without a full refetch, after a single user is edited
+  // Refreshes the cache directly instead of a full refetch
   function handleUserUpdated(updatedUser) {
-    setUsers((prev) =>
+    queryClient.setQueryData(["users"], (prev = []) =>
       prev.map((u) => (u.id === updatedUser.id ? { ...u, ...updatedUser } : u))
     );
   }
 
-  // Runs whichever action is currently pending confirmation (suspend/promote/
-  // demote), updates the affected user locally, and shows a success/error toast.
   async function confirmAction() {
     if (!pendingAction) return;
     const { type, user } = pendingAction;
@@ -83,8 +62,7 @@ export function useUsers() {
     try {
       await api.post(action.endpoint(user.id));
 
-      // Reflect the change locally instead of refetching the whole list
-      setUsers((prev) =>
+      queryClient.setQueryData(["users"], (prev = []) =>
         prev.map((u) => {
           if (u.id !== user.id) return u;
           if (type === "suspend") return { ...u, status: "suspended" };
@@ -110,9 +88,9 @@ export function useUsers() {
   }
 
   return {
-    users,
-    loading,
-    error,
+    users: data ?? [],
+    loading: isLoading,
+    error: error?.message ?? null,
     handleUserUpdated,
     pendingAction,
     setPendingAction,
