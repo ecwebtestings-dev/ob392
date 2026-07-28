@@ -1,7 +1,22 @@
-import {Sparkles, X, Send, Trash2, Bot, User, AlertCircle } from "lucide-react";
-import { useAIWidget } from "./Widget"; 
+import { Sparkles, X, Send, Trash2, Bot, User, AlertCircle } from "lucide-react";
+import { useAIWidget } from "./Widget";
 
-export  function AiWidget() {
+// Lightweight markdown renderer — handles **bold** only.
+// Swap for react-markdown if you need links/lists/code blocks later.
+function renderMessageContent(content) {
+  const parts = content.split(/(\*\*.*?\*\*)/g);
+  return parts.map((part, i) =>
+    part.startsWith("**") && part.endsWith("**") ? (
+      <strong key={i} className="font-semibold">
+        {part.slice(2, -2)}
+      </strong>
+    ) : (
+      <span key={i}>{part}</span>
+    )
+  );
+}
+
+export function AiWidget() {
   const {
     isOpen,
     toggleOpen,
@@ -19,30 +34,32 @@ export  function AiWidget() {
     <div className="fixed bottom-5 right-6 z-50 flex flex-col items-end">
       {/* Chat Window */}
       {isOpen && (
-        <div className="mb-4 flex h-[300px] w-[380px] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl dark:border-gray-800 dark:bg-[#0a0e17] sm:w-[420px]">
-          
+        <div className="mb-4 flex h-[300px] w-[380px] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl sm:w-[420px]">
+
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-gray-200 bg-gray-50 px-4 py-3 dark:border-gray-800 dark:bg-[#151c28]">
+          <div className="flex items-center justify-between border-b border-gray-200 bg-badge-bg px-4 py-3">
             <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-badges">
                 <Bot className="h-4 w-4 text-white" />
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-gray-900 dark:text-white">OB39  Assistant</h3>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Always here to help</p>
+                <h3 className="text-sm font-semibold text-heading">
+                  OB39 Assistant
+                </h3>
+                <p className="text-xs text-text-color">Always here to help</p>
               </div>
             </div>
             <div className="flex items-center gap-1">
               <button
                 onClick={clearChat}
-                className="rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-200 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                className="rounded-lg p-1.5 text-text-color transition-colors hover:bg-badges/10 hover:text-badges"
                 title="Clear chat"
               >
                 <Trash2 className="h-4 w-4" />
               </button>
               <button
                 onClick={toggleOpen}
-                className="rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-200 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                className="rounded-lg p-1.5 text-text-color transition-colors hover:bg-badges/10 hover:text-badges"
                 title="Close"
               >
                 <X className="h-4 w-4" />
@@ -51,7 +68,7 @@ export  function AiWidget() {
           </div>
 
           {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto px-4 py-4 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700">
+          <div className="flex-1 overflow-y-auto px-4 py-4 scrollbar-thin scrollbar-thumb-gray-300">
             {messages.map((msg) => (
               <div
                 key={msg.id}
@@ -62,19 +79,16 @@ export  function AiWidget() {
                     msg.role === "user" ? "flex-row-reverse" : "flex-row"
                   }`}
                 >
-
                   {/* Avatar */}
                   <div
                     className={`flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full ${
-                      msg.role === "user"
-                        ? "bg-indigo-600"
-                        : "bg-gray-200 dark:bg-gray-700"
+                      msg.role === "user" ? "bg-background" : "bg-badge-bg"
                     }`}
                   >
                     {msg.role === "user" ? (
                       <User className="h-4 w-4 text-white" />
                     ) : (
-                      <Bot className="h-4 w-4 text-gray-600 dark:text-gray-300" />
+                      <Bot className="h-4 w-4 text-icons" />
                     )}
                   </div>
 
@@ -82,11 +96,11 @@ export  function AiWidget() {
                   <div
                     className={`rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
                       msg.role === "user"
-                        ? "rounded-tr-sm bg-indigo-600 text-white"
-                        : "rounded-tl-sm bg-gray-100 text-gray-800 dark:bg-[#1a2230] dark:text-gray-200"
+                        ? "rounded-tr-sm bg-background text-white"
+                        : "rounded-tl-sm bg-card-background text-heading"
                     }`}
                   >
-                    {msg.content}
+                    {renderMessageContent(msg.content)}
                   </div>
                 </div>
               </div>
@@ -96,14 +110,14 @@ export  function AiWidget() {
             {isLoading && (
               <div className="mb-4 flex justify-start">
                 <div className="flex max-w-[85%] gap-2">
-                  <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700">
-                    <Bot className="h-4 w-4 text-gray-600 dark:text-gray-300" />
+                  <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-badge-bg">
+                    <Bot className="h-4 w-4 text-icons" />
                   </div>
-                  <div className="rounded-2xl rounded-tl-sm bg-gray-100 px-4 py-3 dark:bg-[#1a2230]">
+                  <div className="rounded-2xl rounded-tl-sm bg-card-background px-4 py-3">
                     <div className="flex gap-1">
-                      <span className="h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:-0.3s]"></span>
-                      <span className="h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:-0.15s]"></span>
-                      <span className="h-2 w-2 animate-bounce rounded-full bg-gray-400"></span>
+                      <span className="h-2 w-2 animate-bounce rounded-full bg-badges [animation-delay:-0.3s]" />
+                      <span className="h-2 w-2 animate-bounce rounded-full bg-badges [animation-delay:-0.15s]" />
+                      <span className="h-2 w-2 animate-bounce rounded-full bg-badges" />
                     </div>
                   </div>
                 </div>
@@ -112,7 +126,7 @@ export  function AiWidget() {
 
             {/* Error Message */}
             {error && (
-              <div className="mb-4 flex items-center gap-2 rounded-lg bg-red-50 px-3 py-2 text-xs text-red-600 dark:bg-red-900/20 dark:text-red-400">
+              <div className="mb-4 flex items-center gap-2 rounded-lg bg-red-50 px-3 py-2 text-xs text-red-600">
                 <AlertCircle className="h-4 w-4 flex-shrink-0" />
                 {error}
               </div>
@@ -123,7 +137,7 @@ export  function AiWidget() {
           </div>
 
           {/* Input Area */}
-          <div className="border-t border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-[#0d1219]">
+          <div className="border-t border-gray-200 bg-white p-3">
             <form onSubmit={handleSendMessage} className="flex items-end gap-2">
               <input
                 type="text"
@@ -131,12 +145,12 @@ export  function AiWidget() {
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="Type your message..."
                 disabled={isLoading}
-                className="flex-1 resize-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 disabled:opacity-50 dark:border-gray-700 dark:bg-[#151c28] dark:text-white dark:placeholder:text-gray-500"
+                className="flex-1 resize-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-heading placeholder:text-gray-400 focus:border-badges focus:outline-none focus:ring-1 focus:ring-badges disabled:opacity-50"
               />
               <button
                 type="submit"
                 disabled={isLoading || !inputValue.trim()}
-                className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-indigo-600 text-white transition-colors hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
+                className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-button-bg text-white transition-colors hover:bg-button-hover disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <Send className="h-4 w-4" />
               </button>
@@ -145,30 +159,21 @@ export  function AiWidget() {
         </div>
       )}
 
+      {/* Toggle Button + Tooltip */}
+      <div className="group relative">
+        <div className="absolute bottom-full left-1/2 mb-2 -translate-x-1/2 transform whitespace-nowrap rounded-lg bg-background px-3 py-1.5 text-sm text-white opacity-0 shadow-lg transition-all duration-200 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0">
+          OB39 Assistant
+          <div className="absolute -bottom-1 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 bg-background" />
+        </div>
 
-
-      {/* Tooltip */}
-    <div className="group relative">
-      {/* Tooltip */}
-      <div className="absolute bottom-full left-1/2 mb-2 -translate-x-1/2 transform whitespace-nowrap rounded-lg bg-gray-900 px-3 py-1.5 text-sm text-white opacity-0 shadow-lg transition-all duration-200 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 pointer-events-none">
-        0B39 Assistant
-        {/* Tooltip Arrow */}
-        <div className="absolute -bottom-1 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 bg-gray-900"></div>
+        <button
+          onClick={toggleOpen}
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-button-bg text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-button-hover hover:shadow-xl"
+          aria-label="Toggle OB39 Assistant"
+        >
+          {isOpen ? <X className="h-6 w-6" /> : <Sparkles className="h-6 w-6" />}
+        </button>
       </div>
-
-      {/* Button */}
-      <button
-        onClick={toggleOpen}
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-indigo-600 text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-indigo-700 hover:shadow-xl"
-        aria-label="Toggle OB39 Assistant"
-      >
-        {isOpen ? (
-          <X className="h-6 w-6" />
-        ) : (
-          <Sparkles className="h-6 w-6" />
-        )}
-      </button>
-    </div>
     </div>
   );
 }

@@ -8,7 +8,6 @@ import ScalingImpact from "./ScalingImpact";
 import Testimonials from "./Testimonials";
 import InvestmentOpportunity from "./WhyUs";
 import PositioningSection from "./Position";
-import { AiWidget } from "../../AiWidget/WidgetLayout";
 
 
 export default function Home() {
@@ -24,7 +23,8 @@ export default function Home() {
       <InvestmentOpportunity/>
       <Testimonials/>
       <WhatsApp/>
-      <AiWidget/>
+      
+      
     </div>
   )
 }

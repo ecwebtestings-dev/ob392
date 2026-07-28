@@ -13,6 +13,7 @@ import UserManagement from "./Dashboard/UserManagement";
 import DashboardLayout from "./Dashboard/DashBoardLayout";
 import Notification from "./Dashboard/Notifications/Notifications";
 import EventManagement from "./Dashboard/Events/useEventManagement";
+import { AiWidget } from "./AiWidget/WidgetLayout";
 
 
 
@@ -81,7 +82,7 @@ function App() {
           <Route path="events" element={<EventManagement/>} />
         </Route>
       </Routes>
-      
+      <AiWidget/>
     </BrowserRouter>
     </>
   );
