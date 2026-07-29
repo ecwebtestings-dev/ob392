@@ -7,15 +7,27 @@ const BASE_URL = import.meta.env.VITE_API_URL;
 
 const FIVE_MINUTES = 5 * 60 * 1000;
 
-//CACHING USERS
+//CACHING USERS (fetches every page)
 export function useUsers(){
     const {data, isLoading, error} = useQuery({
-        queryKey: ['users'],
+        queryKey: ['users', 'all'],
         queryFn: async()=>{
-            const data = await getUsers();
-            return Array.isArray(data) ? data : data.data ?? [];
+            let page = 1;
+            let allUsers = [];
+            let lastPage =1;
+
+            do {
+                const res = await getUsers(page); // getUsers must accept & forward a page param
+                const pageUsers = Array.isArray(res) ? res : res.data ?? [];
+                allUsers = allUsers.concat(pageUsers);
+                lastPage = res.last_page ?? 1; // fallback to 1 if API isn't paginated
+                page++;
+            } 
+            while (page <= lastPage);
+
+            return allUsers;
         },
-        staleTime: FIVE_MINUTES, // stays fresh, won't auto-refetch
+        staleTime: FIVE_MINUTES,
     });
 
     return {
@@ -47,7 +59,7 @@ export function useUpdateUsr(){
         mutationFn: ({userid, FormData}) => updateUser(userid, {id: userid, ...FormData}),
         onSuccess: () => {
             toast.success('User updated');
-            queryClient.invalidateQueries({queryKey: ['users']});
+            queryClient.invalidateQueries({queryKey: ['users']}); // invalidates ['users','all'] and ['users', id] too
         },
         onError: (err) => {
             toast.error(err.message || 'Something went wrong. Please try again')

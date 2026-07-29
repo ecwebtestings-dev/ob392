@@ -11,10 +11,12 @@ async function fetchEvents() {
   const res = await fetch(`${BASE_URL}/events`, {
     headers: { Authorization: `Bearer ${token}` },
   });
+  console.log(res)
 
   if (!res.ok) throw new Error("Failed to load events");
 
   const data = await res.json();
+  
   return Array.isArray(data) ? data : data.data ?? [];
 }
 
@@ -45,6 +47,7 @@ export function useEventManagement() {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       });
+      
       
       if (!res.ok) {
         const errBody = await res.json().catch(() => null);
@@ -126,6 +129,7 @@ export function useCreateEvent(onCreated) {
         headers: { Authorization: `Bearer ${token}` },
         body,
       });
+      
 
       if (!res.ok) {
         const errBody = await res.json().catch(() => null);

@@ -27,14 +27,7 @@ const navItems = [
 
 const ADMIN_ROLES = ["admin", "super_admin"];
 
-// Turns a full name into up-to-2-letter initials, e.g. "Jane Doe" -> "JD"
-function getInitials(fullName) {
-  if (!fullName) return "";
-  const parts = fullName.trim().split(/\s+/);
-  const first = parts[0]?.[0] ?? "";
-  const last = parts.length > 1 ? parts[parts.length - 1][0] : "";
-  return (first + last).toUpperCase();
-}
+
 
 export default function DashboardLayout() {
   const navigate = useNavigate();
@@ -175,9 +168,7 @@ export default function DashboardLayout() {
                 onClick={() => setUserMenuOpen((o) => !o)}
                 className="flex items-center gap-2 rounded-lg py-1.5 pl-1.5 pr-2.5 transition-colors hover:bg-gray-50"
               >
-                <span className="flex size-8 flex-none items-center justify-center rounded-full bg-badges text-xs font-semibold text-white">
-                  {getInitials(user?.name) || "?"}
-                </span>
+              
                 <span className="text-sm font-medium text-heading">
                   {user?.name || "..."}
                 </span>
@@ -261,9 +252,7 @@ export default function DashboardLayout() {
                   onClick={() => setUserMenuOpen((o) => !o)}
                   className="flex items-center gap-2 rounded-lg py-1.5 pl-1.5 pr-2.5 transition-colors hover:bg-gray-50"
                 >
-                  <span className="flex size-8 flex-none items-center justify-center rounded-full bg-badges text-xs font-semibold text-white">
-                    {getInitials(user?.name) || "?"}
-                  </span>
+                
                   <span className="text-sm font-medium text-heading">
                     {user?.name || "..."}
                   </span>

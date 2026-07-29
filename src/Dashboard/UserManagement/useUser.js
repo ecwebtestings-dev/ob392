@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { getUsers } from "../../Authentication/UserService";
 import { api } from "../../Authentication/api";
+
+const FIVE_MINUTES = 5 * 60 * 1000;
 
 export const ACTIONS = {
   suspend: {
@@ -31,47 +33,47 @@ export const ACTIONS = {
   },
 };
 
-export function useUsers() {
-  const queryClient = useQueryClient();
-
+// PAGINATED USERS — powers the table + its pagination controls
+export function useUsersTable(page = 1) {
   const { data, isLoading, error } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["users", "page", page],
     queryFn: async () => {
-      const data = await getUsers();
-      return Array.isArray(data) ? data : data.data ?? [];
+      const res = await getUsers(page); // must forward page to the API as ?page=
+      return res; // keep the full paginated shape
     },
-    staleTime: 5 * 60 * 1000, // won't refetch on remount/focus within 5 min
+    staleTime: FIVE_MINUTES,
+    keepPreviousData: true, // no flash-to-empty when flipping pages
   });
 
-  const [pendingAction, setPendingAction] = useState(null);
-  const [submitting, setSubmitting] = useState(false);
+  return {
+    users: data?.data ?? [],
+    currentPage: data?.current_page ?? page,
+    lastPage: data?.last_page ?? 1,
+    total: data?.total ?? 0,
+    loading: isLoading,
+    error: error?.message ?? null,
+  };
+}
 
-  // Refreshes the cache directly instead of a full refetch
-  function handleUserUpdated(updatedUser) {
-    queryClient.setQueryData(["users"], (prev = []) =>
-      prev.map((u) => (u.id === updatedUser.id ? { ...u, ...updatedUser } : u))
-    );
+// USER ACTIONS — edit callback + suspend/promote/demote, independent of page
+export function useUserActions() {
+  const queryClient = useQueryClient();
+  const [pendingAction, setPendingAction] = useState(null);
+
+  // Since data is paginated across multiple cache entries (one per page),
+  // we can't patch a single flat array — invalidate all user pages instead
+  // so whichever page is visible refetches with the updated user.
+  function handleUserUpdated() {
+    queryClient.invalidateQueries({ queryKey: ["users"] });
   }
 
-  async function confirmAction() {
-    if (!pendingAction) return;
-    const { type, user } = pendingAction;
-    const action = ACTIONS[type];
-
-    setSubmitting(true);
-    try {
-      await api.post(action.endpoint(user.id));
-
-      queryClient.setQueryData(["users"], (prev = []) =>
-        prev.map((u) => {
-          if (u.id !== user.id) return u;
-          if (type === "suspend") return { ...u, status: "suspended" };
-          if (type === "promote") return { ...u, role: "admin" };
-          if (type === "demote") return { ...u, role: "user" };
-          return u;
-        })
-      );
-
+  const actionMutation = useMutation({
+    mutationFn: ({ type, user }) => {
+      const action = ACTIONS[type];
+      return api.post(action.endpoint(user.id));
+    },
+    onSuccess: (_, { type }) => {
+      queryClient.invalidateQueries({ queryKey: ["users"] });
       toast.success(
         type === "suspend"
           ? "User suspended"
@@ -80,22 +82,23 @@ export function useUsers() {
           : "Admin access removed"
       );
       setPendingAction(null);
-    } catch (err) {
+    },
+    onError: (err) => {
       toast.error(err.message || "Something went wrong. Please try again.");
-    } finally {
-      setSubmitting(false);
-    }
+    },
+  });
+
+  async function confirmAction() {
+    if (!pendingAction) return;
+    actionMutation.mutate(pendingAction);
   }
 
   return {
-    users: data ?? [],
-    loading: isLoading,
-    error: error?.message ?? null,
-    handleUserUpdated,
     pendingAction,
     setPendingAction,
-    submitting,
+    submitting: actionMutation.isPending,
     confirmAction,
+    handleUserUpdated,
     ACTIONS,
   };
 }

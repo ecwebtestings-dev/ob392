@@ -11,9 +11,8 @@ import LogIn from './components/RegistrationForm/Login';
 import DashboardLayout from "./Dashboard/DashBoardLayout";
 import Notification from "./Dashboard/Notifications/Notifications";
 import EventManagement from "./Dashboard/Events/useEventManagement";
-import { AiWidget } from "./AiWidget/WidgetLayout";
 import Inquiries from "./Dashboard/Inquires/InQuiries";
-import UserManagement from "./Dashboard/UserManagement/userManagement";
+import { UsersTable } from "./Dashboard/UserManagement/userManagement";
 
 
 
@@ -67,6 +66,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services/>}/>
           <Route path="/contact" element={<Contact/>}/>
+           
         </Route>
 
         <Route>
@@ -77,12 +77,12 @@ function App() {
         <Route path="/dashboard" element={<DashboardLayout/>}>
           <Route index element={<Inquiries />} />
           <Route path="inquiries" element={<Inquiries/>} />
-          <Route path="users" element={<UserManagement/>} />
+          <Route path="users" element={<UsersTable/>} />
           <Route path="notifictaions" element={<Notification/>}/>
           <Route path="events" element={<EventManagement/>} />
         </Route>
       </Routes>
-      <AiWidget/>
+     
     </BrowserRouter>
     </>
   );

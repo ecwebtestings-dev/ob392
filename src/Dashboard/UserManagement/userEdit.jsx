@@ -79,44 +79,103 @@ function useEditModal(userId, { onClose, onUpdated }) {
   return { loading, saving, formData, handleChange, handleSave };
 }
 
-// Modal dialog for editing a single user's details (name, email, phone, role).
-// Delegates all data/logic to useEditModal and just renders the UI.
+
 export default function UserEditModal({ userId, onClose, onUpdated }) {
-  const { loading, saving, formData, handleChange, handleSave } = useEditModal(userId, {
+  const {
+    loading,
+    saving,
+    formData,
+    handleChange,
+    handleSave,
+  } = useEditModal(userId, {
     onClose,
     onUpdated,
   });
 
   return (
-    <Dialog open onClose={onClose} className="relative z-50">
-      <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" aria-hidden="true" />
+    <Dialog
+      open
+      onClose={onClose}
+      className="relative z-50"
+    >
+      {/* Backdrop */}
+      <div
+        className="fixed inset-0 bg-black/40 backdrop-blur-sm"
+        aria-hidden="true"
+      />
 
-      <div className="fixed inset-0 flex items-center justify-center p-4">
-        <DialogPanel className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
-          <div className="flex items-center justify-between">
-            <DialogTitle className="text-lg font-semibold text-gray-900">
+      {/* Modal wrapper */}
+      <div className="fixed inset-0 flex items-center justify-center overflow-y-auto p-3 sm:p-4">
+
+        <DialogPanel
+          className="
+            w-full
+            max-w-md
+            overflow-y-auto
+            rounded-xl
+            bg-white
+            p-4
+            shadow-2xl
+            sm:rounded-2xl
+            sm:p-6
+            max-h-[calc(100dvh-1.5rem)]
+            sm:max-h-[calc(100dvh-2rem)]
+          "
+        >
+
+          {/* Header */}
+          <div className="flex items-center justify-between gap-3">
+
+            <DialogTitle className="min-w-0 text-base font-semibold text-gray-900 sm:text-lg">
               Edit user
             </DialogTitle>
+
             <button
+              type="button"
               onClick={onClose}
-              className="rounded-lg p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
+              aria-label="Close modal"
+              className="
+                flex
+                size-8
+                shrink-0
+                items-center
+                justify-center
+                rounded-lg
+                text-gray-400
+                transition-colors
+                hover:bg-gray-100
+                hover:text-gray-600
+              "
             >
               <XMarkIcon className="size-5" />
             </button>
+
           </div>
 
+
+          {/* Content */}
           {loading || !formData ? (
-            <div className="py-10 text-center text-sm text-gray-500">
+
+            <div className="flex min-h-[250px] items-center justify-center text-center text-sm text-gray-500">
               Loading user...
             </div>
+
           ) : (
-            <form className="mt-5 space-y-4" onSubmit={handleSave}>
+
+            <form
+              className="mt-5 space-y-3.5 sm:space-y-4"
+              onSubmit={handleSave}
+            >
+
+              {/* Full Name */}
               <ModalField
                 label="Full name"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
               />
+
+              {/* Email */}
               <ModalField
                 label="Email"
                 name="email"
@@ -124,6 +183,8 @@ export default function UserEditModal({ userId, onClose, onUpdated }) {
                 value={formData.email}
                 onChange={handleChange}
               />
+
+              {/* Phone */}
               <ModalField
                 label="Phone"
                 name="phone"
@@ -132,60 +193,159 @@ export default function UserEditModal({ userId, onClose, onUpdated }) {
                 onChange={handleChange}
               />
 
-              <div>
+              {/* Role */}
+              <div className="min-w-0">
                 <label className="mb-1.5 block text-xs font-medium tracking-wide text-gray-500">
                   Role
                 </label>
+
                 <select
                   name="role"
                   value={formData.role}
                   onChange={handleChange}
-                  className="w-full rounded-md border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-900 focus:border-badges/50 focus:outline-none"
+                  className="
+                    w-full
+                    min-w-0
+                    rounded-md
+                    border
+                    border-gray-200
+                    bg-white
+                    px-3
+                    py-2.5
+                    text-sm
+                    text-gray-900
+                    focus:border-badges/50
+                    focus:outline-none
+                  "
                 >
-                  <option value="user">User</option>
-                  <option value="admin">Admin</option>
-                  <option value="super_admin">Super Admin</option>
+                  <option value="user">
+                    User
+                  </option>
+
+                  <option value="admin">
+                    Admin
+                  </option>
+
+                  <option value="super_admin">
+                    Super Admin
+                  </option>
                 </select>
               </div>
 
-              <div className="mt-6 flex justify-end gap-2">
+
+              {/* Actions */}
+              <div
+                className="
+                  mt-5
+                  flex
+                  flex-col-reverse
+                  gap-2
+                  sm:mt-6
+                  sm:flex-row
+                  sm:justify-end
+                "
+              >
+
                 <button
                   type="button"
                   onClick={onClose}
-                  className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50"
+                  disabled={saving}
+                  className="
+                    w-full
+                    rounded-lg
+                    border
+                    border-gray-200
+                    px-4
+                    py-2.5
+                    text-sm
+                    font-medium
+                    text-gray-600
+                    transition-colors
+                    hover:bg-gray-50
+                    disabled:cursor-not-allowed
+                    disabled:opacity-60
+                    sm:w-auto
+                  "
                 >
                   Cancel
                 </button>
+
                 <button
                   type="submit"
                   disabled={saving}
-                  className="rounded-lg bg-button-bg px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-button-hover disabled:cursor-not-allowed disabled:opacity-60"
+                  className="
+                    w-full
+                    rounded-lg
+                    bg-button-bg
+                    px-4
+                    py-2.5
+                    text-sm
+                    font-semibold
+                    text-white
+                    transition-colors
+                    hover:bg-button-hover
+                    disabled:cursor-not-allowed
+                    disabled:opacity-60
+                    sm:w-auto
+                  "
                 >
                   {saving ? "Saving..." : "Save changes"}
                 </button>
+
               </div>
+
             </form>
           )}
+
         </DialogPanel>
       </div>
     </Dialog>
   );
 }
 
-// Reusable labeled text input used for each editable field in the modal.
-function ModalField({ label, name, type = "text", value, onChange }) {
+
+// ============================================================
+// RESPONSIVE FORM FIELD
+// ============================================================
+
+function ModalField({
+  label,
+  name,
+  type = "text",
+  value,
+  onChange,
+}) {
   return (
-    <div>
+    <div className="min-w-0">
+
       <label className="mb-1.5 block text-xs font-medium tracking-wide text-gray-500">
         {label}
       </label>
+
       <input
         type={type}
         name={name}
         value={value}
         onChange={onChange}
-        className="w-full rounded-md border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-badges/50 focus:outline-none"
+        className="
+          block
+          w-full
+          min-w-0
+          rounded-md
+          border
+          border-gray-200
+          bg-white
+          px-3
+          py-2.5
+          text-sm
+          text-gray-900
+          placeholder:text-gray-400
+          focus:border-badges/50
+          focus:outline-none
+        "
       />
+
     </div>
   );
 }
+

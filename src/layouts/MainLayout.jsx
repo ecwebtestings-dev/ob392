@@ -10,7 +10,7 @@ export default function MainLayout() {
       <main>
         <Outlet />
       </main>
-
+      
       <Footer />
     </div>
   );
