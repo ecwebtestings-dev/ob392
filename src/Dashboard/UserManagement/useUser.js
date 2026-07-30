@@ -1,23 +1,32 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { getUsers } from "../../Authentication/UserService";
-import { api } from "../../Authentication/api";
+import { getUsers,suspendUser, unsuspendUser, promoteUser, demoteUser } from "../../Authentication/UserService";
+
 
 const FIVE_MINUTES = 5 * 60 * 1000;
+
 
 export const ACTIONS = {
   suspend: {
     verb: "suspend",
-    endpoint: (id) => `/users/delete/${id}`,
+    request: suspendUser,  
     title: "Suspend user",
-    body: (name) => `This will suspend "${name}"'s account. They'll lose access immediately.`,
+    body: (name) => `This will suspend "${name}"'s account. He/She will lose access immediately.`,
     confirmLabel: "Suspend user",
     confirmClass: "bg-red-600 hover:bg-red-700",
   },
+  unsuspend: {
+    verb: "unsuspend",
+    request: unsuspendUser,
+    title: "Unsuspend user",
+    body: (name) => `This will grant "${name}" access to his account. He/she will gain access immediately.`,
+    confirmLabel: "Unsuspend user",
+    confirmClass: "bg-green-600 hover:bg-green-700",
+  },
   promote: {
     verb: "promote",
-    endpoint: (id) => `/users/create_admin/${id}`,
+    request: promoteUser,
     title: "Grant admin access",
     body: (name) => `"${name}" will gain administrative permissions.`,
     confirmLabel: "Grant admin",
@@ -25,7 +34,7 @@ export const ACTIONS = {
   },
   demote: {
     verb: "demote",
-    endpoint: (id) => `/users/demote_admin/${id}`,
+    request: demoteUser,
     title: "Remove admin access",
     body: (name) => `"${name}" will lose administrative permissions.`,
     confirmLabel: "Remove admin",
@@ -33,16 +42,23 @@ export const ACTIONS = {
   },
 };
 
-// PAGINATED USERS — powers the table + its pagination controls
+const SUCCESS_MESSAGES = {
+  suspend: "User suspended",
+  unsuspend: "User unsuspended",
+  promote: "Admin access granted",
+  demote: "Admin access removed",
+};
+
+// PAGINATED USERS
 export function useUsersTable(page = 1) {
   const { data, isLoading, error } = useQuery({
     queryKey: ["users", "page", page],
     queryFn: async () => {
-      const res = await getUsers(page); // must forward page to the API as ?page=
+      const res = await getUsers(page);
       return res; // keep the full paginated shape
     },
     staleTime: FIVE_MINUTES,
-    keepPreviousData: true, // no flash-to-empty when flipping pages
+    keepPreviousData: true,
   });
 
   return {
@@ -55,32 +71,26 @@ export function useUsersTable(page = 1) {
   };
 }
 
-// USER ACTIONS — edit callback + suspend/promote/demote, independent of page
+// USER ACTIONS
 export function useUserActions() {
   const queryClient = useQueryClient();
   const [pendingAction, setPendingAction] = useState(null);
 
-  // Since data is paginated across multiple cache entries (one per page),
-  // we can't patch a single flat array — invalidate all user pages instead
-  // so whichever page is visible refetches with the updated user.
+  
   function handleUserUpdated() {
     queryClient.invalidateQueries({ queryKey: ["users"] });
   }
 
+
+
   const actionMutation = useMutation({
     mutationFn: ({ type, user }) => {
-      const action = ACTIONS[type];
-      return api.post(action.endpoint(user.id));
-    },
+    const action = ACTIONS[type];
+    return action.request(user.id);  
+  },
     onSuccess: (_, { type }) => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
-      toast.success(
-        type === "suspend"
-          ? "User suspended"
-          : type === "promote"
-          ? "Admin access granted"
-          : "Admin access removed"
-      );
+      toast.success(SUCCESS_MESSAGES[type] ?? "Action completed");
       setPendingAction(null);
     },
     onError: (err) => {

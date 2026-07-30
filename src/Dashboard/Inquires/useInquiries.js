@@ -33,24 +33,10 @@ export function useInquiries() {
   
   
 
-  // DERIVED STATISTICS
-  const total = inquiries.length;
-
-  const thisWeek = inquiries.filter((inq) => {
-    if (!inq.created_at) return false;
-    const created = new Date(inq.created_at);
-    const weekAgo = new Date();
-    weekAgo.setDate(weekAgo.getDate() - 7);
-    return created >= weekAgo;
-  }).length;
-
-  
-  const withOrg = inquiries.filter((inq) => inq.organisation).length;
 
   return {
     inquiries,
     loading: isLoading,
-    error: error?.message ?? null,
-    stats: { total, thisWeek, withOrg },
+    error: error?.message ?? null
   };
 }

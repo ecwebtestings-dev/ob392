@@ -62,7 +62,15 @@ export default function Login() {
     try {
       const user = await login(form); 
       toast.success(`Welcome back, ${user.name}!`);
-      navigate('/dashboard');
+
+
+      //ROLE BASED ACCESS
+       if (user.role === 'user'){
+        navigate('/');
+       }else{
+          navigate('/dashboard');
+       }
+      
     } catch (err) {
       setError(err.message);
       toast.error(err.message || 'Invalid email or password.');

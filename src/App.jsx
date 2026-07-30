@@ -13,6 +13,8 @@ import Notification from "./Dashboard/Notifications/Notifications";
 import EventManagement from "./Dashboard/Events/useEventManagement";
 import Inquiries from "./Dashboard/Inquires/InQuiries";
 import { UsersTable } from "./Dashboard/UserManagement/userManagement";
+import DashboardOverview from "./Dashboard/Statatics/DashboardOverview";
+//import SearchResults from "./Dashboard/GlobalSearch/SearchResults";
 
 
 
@@ -75,11 +77,12 @@ function App() {
         </Route>
         
         <Route path="/dashboard" element={<DashboardLayout/>}>
-          <Route index element={<Inquiries />} />
+          <Route index element={<DashboardOverview/>} />
           <Route path="inquiries" element={<Inquiries/>} />
           <Route path="users" element={<UsersTable/>} />
           <Route path="notifictaions" element={<Notification/>}/>
           <Route path="events" element={<EventManagement/>} />
+          {/** <Route path="search" element={<SearchResults/>}/>*/}
         </Route>
       </Routes>
      

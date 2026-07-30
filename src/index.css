@@ -1,22 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import 'tailwindcss';
+@theme {
+  --color-background: #000238;
+  --color-heading: #000000;
+  --color-badges: #59B947;
+  --color-badge-bg: #EEF8EC;
+  --color-icons: #016630;
+  --color-card-background: #EAF5FA;
+  --color-text-color: #364153;
+  --color-footer-text: #364153;
+  --color-hero-text: #E5E7EB;
+  --color-button-bg: #59B947;
+  --color-button-hover: #7AC76C;
 
-@theme{
-    --color-background:#000238;
-    --color-heading:#000;
-    --color-badges:#59B947;
-    --color-badge-bg:#EEF8EC;
-    --color-icons:#016630;
-    --color-card-background:#EAF5FA;
-    --color-text-color:##364153;
-    --color-footer-text:#364153;
-    --color-hero-text:#E5E7EB;
-    --color-button-bg:#59B947;
-    --color-button-hover:#7AC76C;
-
-    --font-sans: "Montserrat", sans-serif;
-    
-
+  --font-sans: "Montserrat", sans-serif;
 }
 ::-webkit-scrollbar{
     display: none;

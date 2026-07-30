@@ -1,9 +1,6 @@
 
 import { useState } from "react";
 import {
-  EnvelopeIcon,
-  ClockIcon,
-  BuildingOfficeIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "@heroicons/react/24/outline";
@@ -19,7 +16,7 @@ const PAGE_SIZE = 15;
 // ============================================================
 
 export default function Inquiries() {
-  const { inquiries, loading, error, stats } = useInquiries();
+  const { inquiries, loading, error} = useInquiries();
   //SORTING ACCORDINGLY
   const sortedInquiries = [...inquiries].sort(
     (a,b)=> new Date(b.created_at)-new Date(a.created_at)
@@ -59,36 +56,12 @@ export default function Inquiries() {
         </h1>
 
         <p className="mt-1 max-w-2xl text-xs leading-5 text-gray-500 sm:text-sm">
-          Messages submitted through the website contact form.
+          Inquiriessubmitted through the website contact form.
         </p>
       </div>
 
 
-      {/* ======================================================
-          STATISTICS CARDS
-      ====================================================== */}
-
-      <div className="mt-5 grid grid-cols-1 gap-3 sm:mt-6 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
-
-        <StatCard
-          icon={EnvelopeIcon}
-          label="Total Inquiries"
-          value={stats.total}
-        />
-
-        <StatCard
-          icon={ClockIcon}
-          label="This Week"
-          value={stats.thisWeek}
-        />
-
-        <StatCard
-          icon={BuildingOfficeIcon}
-          label="From Organisations"
-          value={stats.withOrg}
-        />
-
-      </div>
+      
 
 
       {/* ======================================================
@@ -299,47 +272,6 @@ function InquiryRow({ inquiry }) {
 }
 
 
-// ============================================================
-// STAT CARD
-// ============================================================
-
-function StatCard({ icon: Icon, label, value }) {
-  return (
-    <div
-      className="
-        flex
-        items-center
-        gap-3
-        rounded-xl
-        border
-        border-gray-200
-        bg-white
-        p-4
-        sm:block
-        sm:rounded-2xl
-        sm:p-5
-      "
-    >
-
-      <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-badge-bg sm:size-11 sm:rounded-xl">
-        <Icon className="size-5 text-icons" />
-      </div>
-
-      <div className="min-w-0 sm:mt-4">
-
-        <p className="text-xs text-gray-500 sm:text-sm">
-          {label}
-        </p>
-
-        <p className="mt-0.5 text-xl font-bold text-heading sm:mt-1 sm:text-2xl">
-          {value}
-        </p>
-
-      </div>
-
-    </div>
-  );
-}
 
 
 // ============================================================
