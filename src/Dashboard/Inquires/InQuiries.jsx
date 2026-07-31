@@ -68,7 +68,7 @@ export default function Inquiries() {
           TABLE CONTAINER
       ====================================================== */}
 
-      <div className="mt-6 w-full min-w-0 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm sm:mt-8 sm:rounded-2xl">
+      <div className="mt-6 w-full min-w-0 overflow-hidden  border border-gray-200 bg-white shadow-sm sm:mt-8">
 
         {/* LOADING */}
         {loading ? (
@@ -126,12 +126,12 @@ export default function Inquiries() {
 
                     <Th>Name</Th>
 
-                    <Th>Contact</Th>
-
+                    <Th>Email</Th>
+                    <Th>Phone</Th>
                     <Th>Organisation</Th>
 
                     <Th>Subject</Th>
-                    <Th>Phone</Th>
+                    
                     <Th>Message</Th>
 
                     <Th>Received</Th>

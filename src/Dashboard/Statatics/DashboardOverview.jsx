@@ -19,7 +19,7 @@ import {
   ArrowPathIcon,
   ArrowUpRightIcon,
   ExclamationCircleIcon,
-  SparklesIcon,
+  HandRaisedIcon
 } from "@heroicons/react/24/outline";
 
 import { api } from "../../Authentication/api";
@@ -142,14 +142,15 @@ function WelcomeBanner({ name }) {
     <div className="relative mb-6 overflow-hidden rounded-2xl bg-gradient-to-br from-[#12855A] via-[#0F6B45] to-[#063822] p-6 shadow-sm">
       <div className="relative flex items-center gap-4">
         <div className="flex size-12 flex-none items-center justify-center rounded-xl bg-white/15">
-          <SparklesIcon className="size-6 text-[#FFD230]" />
+          <HandRaisedIcon className="size-6 text-[#FFD230]" />
         </div>
         <div className="min-w-0">
           <h1 className="text-lg font-semibold text-white sm:text-xl">
-            Welcome back Mr/Mrs{firstName ? `, ${firstName}` : ""}!
+            Welcome  
+            {firstName && <span className="text-[#FFD230]"> Mr/Mrs {firstName}!</span>}
           </h1>
           <p className="mt-0.5 text-xs text-white/70 sm:text-[13px]">
-            Here&apos;s what&apos;s happening with your dashboard today.
+            Here&apos;s what&apos;s happening with OB39 today.
           </p>
         </div>
       </div>
