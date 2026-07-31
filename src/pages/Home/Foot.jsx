@@ -69,7 +69,7 @@ export default function Footer() {
                 <AnimatedButton href="/contact">Join Us</AnimatedButton>
 
                 <a
-                  href="/"
+                  href="tel:+256772840840"
                   className="inline-flex items-center justify-center rounded-lg border border-badges/40 px-3 py-3 text-base font-semibold text-white transition-colors duration-300 hover:border-badges hover:bg-badges/10"
                 >
                   Talk to Our Team
@@ -136,10 +136,10 @@ export default function Footer() {
             <PhoneIcon className="size-4 text-badges" />
           </span>
           
-          <a  href="tel:+256701234567"
+          <a  href="tel:+256772840840"
             className="text-sm/6 text-gray-400 transition-colors hover:text-white"
           >
-            +256 701 234 567
+            +256772840840
           </a>
         </li>
         <li className="flex items-start gap-3">

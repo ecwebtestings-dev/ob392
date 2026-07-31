@@ -35,6 +35,7 @@ import images from '../../assets/assets'
 import { getCurrentUser, logout } from '../../Authentication/authService'
 import { api } from '../../Authentication/api'
 
+
 // Services dropdown items shown in the desktop "Services" popover and the mobile disclosure
 const products = [
   {
@@ -107,8 +108,8 @@ export default function Header() {
   }, [])
 
 
-// Auth state — if there's no token at all
-// so initialize authLoading 
+
+// initialize authLoading 
 const [user, setUser] = useState(null)
 const [authLoading, setAuthLoading] = useState(() => Boolean(api.getToken()))
 
@@ -119,7 +120,6 @@ useEffect(() => {
   getCurrentUser()
     .then(setUser)
     .catch(() => {
-      // token invalid/expired — clear it so we don't keep retrying on every mount
       api.setToken(null)
       setUser(null)
     })
@@ -127,13 +127,12 @@ useEffect(() => {
 }, [])
 
 
-  // Logs the user out, clears local state, and redirects to /login
+  // Logs the user out
   const handleLogout = async () => {
     try {
       await logout()
       setUser(null)
-      toast.success('Logged out')
-      navigate('/login')
+      navigate('/')
     } catch (err) {
       toast.error(err.message || 'Failed to log out')
     }
@@ -142,7 +141,7 @@ useEffect(() => {
   // Highlights the "Services" popover trigger whenever we're anywhere under /services
   const isServicesActive = currentPath.startsWith('/services')
 
-  // Turns a full name into up-to-2-letter initials
+  //2-letter initials
   function getInitials(fullName) {
     if (!fullName) return ''
 
@@ -281,6 +280,8 @@ useEffect(() => {
                 anchor="bottom end"
                 className="z-50 w-48 origin-top-right rounded-xl border border-white/10 bg-background/95 backdrop-blur-xl shadow-2xl shadow-black/40 p-1.5 mt-2 transition data-closed:scale-95 data-closed:opacity-0 data-enter:duration-150 data-leave:duration-100"
               >
+
+                
                 {/* LOG OUT BUTTON */}
                 <MenuItem>
                   <button

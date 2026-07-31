@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import {
   AreaChart,
@@ -17,15 +17,12 @@ import {
   UsersIcon,
   CalendarDaysIcon,
   ArrowPathIcon,
+  ArrowUpRightIcon,
   ExclamationCircleIcon,
+  SparklesIcon,
 } from "@heroicons/react/24/outline";
 
 import { api } from "../../Authentication/api";
-
-// ============================================================
-// CONFIGURATION
-// ============================================================
-
 const STATS_ENDPOINT = "/dashboard/stats";
 const DASHBOARD_STATS_QUERY_KEY = ["dashboard-stats"];
 
@@ -40,82 +37,56 @@ const CARD_DEFS = [
     icon: UsersIcon,
     to: "/dashboard/users",
     chips: [
-      {
-        field: "active",
-        label: "Active",
-        tone: "primary",
-      },
-      {
-        field: "suspended",
-        label: "Suspended",
-        tone: "muted",
-      },
+      { field: "active", label: "Active", tone: "primary" },
+      { field: "suspended", label: "Suspended", tone: "muted" },
     ],
   },
-
   {
     key: "inquiries",
     label: "Inquiries",
     icon: EnvelopeIcon,
     to: "/dashboard/inquiries",
     chips: [
-      {
-        field: "unreplied",
-        label: "Unreplied",
-        tone: "muted",
-      },
-      {
-        field: "replied",
-        label: "Replied",
-        tone: "primary",
-      },
+      { field: "unreplied", label: "Unreplied", tone: "muted" },
+      { field: "replied", label: "Replied", tone: "primary" },
     ],
   },
-
   {
     key: "events",
     label: "Events",
     icon: CalendarDaysIcon,
     to: "/dashboard/events",
     chips: [
-      {
-        field: "pending",
-        label: "Pending",
-        tone: "muted",
-      },
-      {
-        field: "completed",
-        label: "Completed",
-        tone: "primary",
-      },
+      { field: "pending", label: "Pending", tone: "muted" },
+      { field: "completed", label: "Completed", tone: "primary" },
     ],
   },
 ];
 
 // ============================================================
-// TOOLTIP STYLE (dark)
+// CHART STYLES
 // ============================================================
 
 const chartTooltipStyle = {
-  background: "#0B0F3D",
-  border: "1px solid rgba(255,255,255,0.12)",
+  background: "#FFFFFF",
+  border: "1px solid rgba(11,31,23,0.08)",
   borderRadius: 8,
   fontSize: 12,
   fontFamily: "var(--font-sans)",
-  color: "#ffffff",
+  color: "#0B1F17",
+  boxShadow: "0 8px 24px rgba(11,31,23,0.08)",
 };
 
-const chartAxisTick = { fill: "#9CA6C2", fontSize: 11 };
-const chartAxisLine = { stroke: "rgba(255,255,255,0.14)" };
+const chartAxisTick = { fill: "#6B7A72", fontSize: 11 };
+const chartAxisLine = { stroke: "rgba(11,31,23,0.1)" };
 
 // ============================================================
-// FETCH DASHBOARD STATS (react-query)
+// DATA FETCHING 
 // ============================================================
 
 async function fetchDashboardStats() {
+  
   const json = await api.get(STATS_ENDPOINT);
-
-  console.log("Dashboard stats response:", json);
 
   if (!json) {
     throw new Error("Empty response from server");
@@ -136,8 +107,8 @@ function useDashboardStats() {
   const query = useQuery({
     queryKey: DASHBOARD_STATS_QUERY_KEY,
     queryFn: fetchDashboardStats,
-    staleTime: 60_000, // data is considered fresh for 1 minute — no refetch on remount within that window
-    gcTime: 5 * 60_000, // cached data kept in memory for 5 minutes after last use
+    staleTime: 60_000, // 1 minute
+    gcTime: 5 * 60_000, // 5 minutes
     retry: 1,
   });
 
@@ -161,78 +132,102 @@ function useDashboardStats() {
 }
 
 // ============================================================
+// WELCOME BANNER
+// ============================================================
+
+function WelcomeBanner({ name }) {
+  const firstName = name ? name.split(" ")[0] : null;
+
+  return (
+    <div className="relative mb-6 overflow-hidden rounded-2xl bg-gradient-to-br from-[#12855A] via-[#0F6B45] to-[#063822] p-6 shadow-sm">
+      <div className="relative flex items-center gap-4">
+        <div className="flex size-12 flex-none items-center justify-center rounded-xl bg-white/15">
+          <SparklesIcon className="size-6 text-[#FFD230]" />
+        </div>
+        <div className="min-w-0">
+          <h1 className="text-lg font-semibold text-white sm:text-xl">
+            Welcome back Mr/Mrs{firstName ? `, ${firstName}` : ""}!
+          </h1>
+          <p className="mt-0.5 text-xs text-white/70 sm:text-[13px]">
+            Here&apos;s what&apos;s happening with your dashboard today.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
 // METRIC CARD
 // ============================================================
 
-function MetricCard({ def, cardData }) {
-  const Icon = def.icon;
-
+function MetricCard({ def, cardData, featured }) {
   const total = cardData?.total ?? 0;
 
   return (
     <Link
       to={def.to}
-      className="
-        block
-        rounded-xl
-        border
-        border-white/10
-        bg-white/5
-        p-4
-        transition-colors
-        hover:border-badges/40
-        hover:bg-white/[0.07]
-      "
+      className={`
+        relative block overflow-hidden rounded-2xl p-5 shadow-sm 
+        transition-all hover:-translate-y-0.5
+        ${
+          featured
+            ? "group bg-gradient-to-br from-[#12855A] via-[#0F6B45] to-[#063822] hover:shadow-lg hover:shadow-[#0F6B45]/20"
+            : "border border-black/5 bg-white hover:border-[#0F6B45]/30 hover:shadow-md"
+        }
+      `}
     >
-      <div className="mb-2.5 flex items-center justify-between">
-        <span className="text-[13px] text-hero-text">
+      <div className="mb-5 flex items-center justify-between">
+        <span
+          className={`text-[14px] font-medium ${
+            featured ? "text-white" : "text-[#0B1F17]"
+          }`}
+        >
           {def.label}
         </span>
 
-        <Icon className="h-4 w-4 text-badges" />
+        <span
+          className={`
+            flex h-7 w-7 flex-none items-center justify-center rounded-full border transition-colors
+            ${
+              featured
+                ? "border-white/25 text-[#FFD230] group-hover:bg-white/10"
+                : "border-[#0B1F17]/10 text-[#0B1F17]/70"
+            }
+          `}
+        >
+          <ArrowUpRightIcon className="h-3.5 w-3.5" />
+        </span>
       </div>
 
-      <div className="mb-3 text-2xl font-semibold text-white">
+      <div
+        className={`mb-4 text-3xl font-bold tracking-tight ${
+          featured ? "text-[#FFD230]" : "text-[#0B1F17]"
+        }`}
+      >
         {Number(total).toLocaleString()}
       </div>
 
       <div className="flex flex-wrap gap-2">
         {def.chips.map((chip) => {
           const value = cardData?.[chip.field] ?? 0;
-
           const isPrimary = chip.tone === "primary";
 
           return (
             <span
               key={chip.field}
-              className={
-                isPrimary
-                  ? `
-                    inline-flex
-                    items-center
-                    gap-1.5
-                    rounded-md
-                    bg-badges/15
-                    px-2
-                    py-1
-                    text-[11.5px]
-                    text-badges
-                  `
-                  : `
-                    inline-flex
-                    items-center
-                    gap-1.5
-                    rounded-md
-                    bg-white/10
-                    px-2
-                    py-1
-                    text-[11.5px]
-                    text-hero-text
-                  `
-              }
+              className={`
+                inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11.5px]
+                ${
+                  featured
+                    ? "bg-white/15 text-white"
+                    : isPrimary
+                    ? "bg-[#0F6B45]/10 text-[#0F6B45]"
+                    : "bg-[#0B1F17]/5 text-[#0B1F17]/60"
+                }
+              `}
             >
               {chip.label}
-
               <span className="font-semibold">
                 {Number(value).toLocaleString()}
               </span>
@@ -254,21 +249,11 @@ function CardsSkeleton() {
       {[0, 1, 2].map((i) => (
         <div
           key={i}
-          className="
-            min-h-[108px]
-            animate-pulse
-            rounded-xl
-            border
-            border-white/10
-            bg-white/5
-            p-4
-          "
+          className="min-h-[120px] animate-pulse rounded-2xl border border-black/5 bg-white p-5 shadow-sm"
         >
-          <div className="mb-3.5 h-2.5 w-2/5 rounded bg-white/10" />
-
-          <div className="mb-3.5 h-5 w-3/5 rounded bg-white/10" />
-
-          <div className="h-2.5 w-4/5 rounded bg-white/10" />
+          <div className="mb-4 h-2.5 w-2/5 rounded bg-[#0B1F17]/10" />
+          <div className="mb-4 h-6 w-3/5 rounded bg-[#0B1F17]/10" />
+          <div className="h-2.5 w-4/5 rounded bg-[#0B1F17]/10" />
         </div>
       ))}
     </div>
@@ -276,51 +261,42 @@ function CardsSkeleton() {
 }
 
 // ============================================================
-// MAIN DASHBOARD
+// EMPTY CHART STATE
+// ============================================================
+
+function EmptyChart() {
+  return (
+    <div className="flex h-[200px] items-center justify-center text-center text-[12.5px] text-[#0B1F17]/50">
+      No data for this period yet.
+    </div>
+  );
+}
+
+// ============================================================
+// MAIN DASHBOARD COMPONENT
 // ============================================================
 
 export default function DashboardOverview() {
-  const {
-    status,
-    data,
-    error,
-    isFetching,
-    reload,
-  } = useDashboardStats();
+  const { user } = useOutletContext();
+  const { status, data, error, isFetching, reload } = useDashboardStats();
 
   const cards = data?.cards ?? {};
-
-  const monthly =
-    data?.charts?.user_registrations_monthly ?? [];
-
-  const growth =
-    data?.charts?.user_growth_trend ?? [];
+  const monthly = data?.charts?.user_registrations_monthly ?? [];
+  const growth = data?.charts?.user_growth_trend ?? [];
 
   return (
-    <div className="min-w-0 rounded-2xl bg-background p-6 font-sans">
+    <div className="min-w-0 rounded-2xl bg-[#F5F7F6] p-6 font-sans">
+      {/* WELCOME BANNER */}
+      <WelcomeBanner name={user?.name} />
 
-      {/* ======================================================
-          HEADER
-      ====================================================== */}
-
-      <div
-        className="
-          mb-6
-          flex
-          flex-col
-          gap-4
-          sm:flex-row
-          sm:items-start
-          sm:justify-between
-        "
-      >
+      {/* HEADER */}
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
-          <h1 className="text-xl font-semibold text-white sm:text-2xl">
-            Dashboard overview
+          <h1 className="text-xl font-semibold text-[#0B1F17] sm:text-2xl">
+            Dashboard
           </h1>
-
-          <p className="mt-0.5 text-xs text-hero-text sm:text-[13.5px]">
-            Summary and registration trends
+          <p className="mt-0.5 text-xs text-[#0B1F17]/60 sm:text-[13.5px]">
+            Plan, prioritize, and accomplish your tasks with ease.
           </p>
         </div>
 
@@ -328,157 +304,84 @@ export default function DashboardOverview() {
           type="button"
           onClick={reload}
           disabled={isFetching}
+          aria-busy={isFetching}
+          aria-label="Refresh dashboard statistics"
           className="
-            flex
-            w-full
-            items-center
-            justify-center
-            gap-1.5
-            rounded-md
-            bg-button-bg
-            px-3
-            py-2
-            text-[12.5px]
-            font-medium
-            text-white
-            transition-colors
-            hover:bg-button-hover
-            disabled:cursor-not-allowed
-            disabled:opacity-60
-            sm:w-auto
+            flex w-full items-center justify-center gap-1.5 rounded-md 
+            bg-[#0F6B45] px-3 py-2 text-[12.5px] font-medium text-white 
+            transition-colors hover:bg-[#0C5A39] 
+            disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto
           "
         >
           <ArrowPathIcon
-            className={`
-              h-3.5
-              w-3.5
-              ${isFetching ? "animate-spin" : ""}
-            `}
+            className={`h-3.5 w-3.5 ${isFetching ? "animate-spin" : ""}`}
           />
-
           Refresh
         </button>
       </div>
 
-      {/* ======================================================
-          ERROR
-      ====================================================== */}
-
+      {/* ERROR STATE */}
       {status === "error" && (
-        <div
-          className="
-            mb-4
-            flex
-            flex-col
-            gap-3
-            rounded-xl
-            border
-            border-red-500/30
-            bg-red-500/10
-            p-4
-            sm:flex-row
-            sm:items-center
-          "
-        >
-          <ExclamationCircleIcon className="h-5 w-5 shrink-0 text-red-400" />
-
-          <span className="text-[13px] text-red-300">
-            Couldn't load dashboard stats — {error}.
+        <div className="mb-4 flex flex-col gap-3 rounded-xl border border-red-200 bg-red-50 p-4 sm:flex-row sm:items-center">
+          <ExclamationCircleIcon className="h-5 w-5 shrink-0 text-red-500" />
+          <span className="text-[13px] text-red-600">
+            Couldn&apos;t load dashboard stats — {error}.
           </span>
-
           <button
             type="button"
             onClick={reload}
-            className="
-              rounded-md
-              border
-              border-red-500/30
-              px-3
-              py-1.5
-              text-[12.5px]
-              text-red-300
-              hover:bg-red-500/10
-              sm:ml-auto
-            "
+            className="rounded-md border border-red-200 px-3 py-1.5 text-[12.5px] text-red-600 hover:bg-red-100 sm:ml-auto"
           >
             Retry
           </button>
         </div>
       )}
 
-      {/* ======================================================
-          CARDS
-      ====================================================== */}
-
+      {/* METRIC CARDS */}
       {status === "loading" ? (
         <CardsSkeleton />
       ) : status === "ready" ? (
-        <div
-          className="
-            mb-4
-            grid
-            grid-cols-1
-            gap-3.5
-            sm:grid-cols-2
-            lg:grid-cols-3
-          "
-        >
-          {CARD_DEFS.map((def) => (
+        <div className="mb-4 grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+          {CARD_DEFS.map((def, index) => (
             <MetricCard
               key={def.key}
               def={def}
               cardData={cards[def.key]}
+              featured={index === 0}
             />
           ))}
         </div>
       ) : null}
 
-      {/* ======================================================
-          CHARTS
-      ====================================================== */}
-
+      {/* CHARTS */}
       {status === "ready" && (
         <div className="grid min-w-0 grid-cols-1 gap-3.5 lg:grid-cols-2">
-
-          {/* ==================================================
-              MONTHLY REGISTRATIONS
-          ================================================== */}
-
-          <div className="min-w-0 rounded-xl border border-white/10 bg-white/5 p-4 sm:p-5">
-            <div className="mb-3 text-[13.5px] font-medium text-white">
+          
+          {/* Monthly Registrations */}
+          <div className="min-w-0 rounded-xl border border-black/5 bg-white p-4 shadow-sm sm:p-5">
+            <div className="mb-3 text-[13.5px] font-medium text-[#0B1F17]">
               Monthly registrations
             </div>
-
             {monthly.length === 0 ? (
               <EmptyChart />
             ) : (
               <div className="h-[200px] w-full">
-                <ResponsiveContainer
-                  width="100%"
-                  height="100%"
-                >
+                <ResponsiveContainer width="100%" height="100%">
                   <BarChart
                     data={monthly}
-                    margin={{
-                      top: 4,
-                      right: 8,
-                      bottom: 0,
-                      left: -20,
-                    }}
+                    margin={{ top: 4, right: 8, bottom: 0, left: -20 }}
                   >
                     <CartesianGrid
-                      stroke="rgba(255,255,255,0.08)"
+                      stroke="rgba(11,31,23,0.08)"
                       strokeDasharray="3 3"
                       vertical={false}
                     />
-
                     <XAxis
                       dataKey="month"
                       tick={chartAxisTick}
                       axisLine={chartAxisLine}
                       tickLine={false}
                     />
-
                     <YAxis
                       allowDecimals={false}
                       tick={chartAxisTick}
@@ -486,15 +389,13 @@ export default function DashboardOverview() {
                       tickLine={false}
                       width={32}
                     />
-
                     <Tooltip
                       contentStyle={chartTooltipStyle}
-                      cursor={{ fill: "rgba(89,185,71,0.08)" }}
+                      cursor={{ fill: "rgba(15,107,69,0.08)" }}
                     />
-
                     <Bar
                       dataKey="count"
-                      fill="#59B947"
+                      fill="#0F6B45"
                       radius={[3, 3, 0, 0]}
                       isAnimationActive={false}
                     />
@@ -504,31 +405,19 @@ export default function DashboardOverview() {
             )}
           </div>
 
-          {/* ==================================================
-              USER GROWTH
-          ================================================== */}
-
-          <div className="min-w-0 rounded-xl border border-white/10 bg-white/5 p-4 sm:p-5">
-            <div className="mb-3 text-[13.5px] font-medium text-white">
+          {/* Cumulative User Growth */}
+          <div className="min-w-0 rounded-xl border border-black/5 bg-white p-4 shadow-sm sm:p-5">
+            <div className="mb-3 text-[13.5px] font-medium text-[#0B1F17]">
               Cumulative user growth
             </div>
-
             {growth.length === 0 ? (
               <EmptyChart />
             ) : (
               <div className="h-[200px] w-full">
-                <ResponsiveContainer
-                  width="100%"
-                  height="100%"
-                >
+                <ResponsiveContainer width="100%" height="100%">
                   <AreaChart
                     data={growth}
-                    margin={{
-                      top: 4,
-                      right: 8,
-                      bottom: 0,
-                      left: -20,
-                    }}
+                    margin={{ top: 4, right: 8, bottom: 0, left: -20 }}
                   >
                     <defs>
                       <linearGradient
@@ -538,33 +427,21 @@ export default function DashboardOverview() {
                         x2="0"
                         y2="1"
                       >
-                        <stop
-                          offset="0%"
-                          stopColor="#59B947"
-                          stopOpacity={0.35}
-                        />
-
-                        <stop
-                          offset="100%"
-                          stopColor="#59B947"
-                          stopOpacity={0}
-                        />
+                        <stop offset="0%" stopColor="#0F6B45" stopOpacity={0.3} />
+                        <stop offset="100%" stopColor="#0F6B45" stopOpacity={0} />
                       </linearGradient>
                     </defs>
-
                     <CartesianGrid
-                      stroke="rgba(255,255,255,0.08)"
+                      stroke="rgba(11,31,23,0.08)"
                       strokeDasharray="3 3"
                       vertical={false}
                     />
-
                     <XAxis
                       dataKey="month"
                       tick={chartAxisTick}
                       axisLine={chartAxisLine}
                       tickLine={false}
                     />
-
                     <YAxis
                       allowDecimals={false}
                       tick={chartAxisTick}
@@ -572,15 +449,11 @@ export default function DashboardOverview() {
                       tickLine={false}
                       width={32}
                     />
-
-                    <Tooltip
-                      contentStyle={chartTooltipStyle}
-                    />
-
+                    <Tooltip contentStyle={chartTooltipStyle} />
                     <Area
                       type="monotone"
                       dataKey="cumulative_total"
-                      stroke="#59B947"
+                      stroke="#0F6B45"
                       strokeWidth={2}
                       fill="url(#growthFill)"
                       isAnimationActive={false}
@@ -590,20 +463,9 @@ export default function DashboardOverview() {
               </div>
             )}
           </div>
+
         </div>
       )}
-    </div>
-  );
-}
-
-// ============================================================
-// EMPTY CHART
-// ============================================================
-
-function EmptyChart() {
-  return (
-    <div className="flex h-[200px] items-center justify-center text-center text-[12.5px] text-hero-text">
-      No data for this period yet.
     </div>
   );
 }

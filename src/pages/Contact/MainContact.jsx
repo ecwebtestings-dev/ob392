@@ -171,10 +171,10 @@ async function handleSubmit(e) {
                     Phone
                   </p>
                   
-                  <a  href="tel:+256701234567"
+                  <a  href="tel:+256772840840"
                     className="mt-1 block text-sm text-gray-600 transition-colors hover:text-badges"
                   >
-                    +256 783380569
+                    +256 772840840
                   </a>
                   
                    <a href="tel:+256783380569"

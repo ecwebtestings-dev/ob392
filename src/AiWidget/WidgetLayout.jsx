@@ -41,10 +41,10 @@ export function AiWidget() {
         />
       )}
 
-      <div className="fixed bottom-5 right-6 z-50 flex flex-col items-end">
+      <div className="fixed bottom-18 right-5 z-50 flex flex-col items-end">
         {/* Chat Window */}
         {isOpen && (
-          <div className="mb-4 flex h-[500px] w-[380px] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl sm:w-[420px]">
+          <div className="mb-4 flex h-[450px] w-[380px] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl sm:w-[420px]">
 
             {/* Header */}
             <div className="flex items-center justify-between border-b border-gray-200 bg-badge-bg px-4 py-3">
@@ -170,20 +170,20 @@ export function AiWidget() {
         )}
 
         {/* Toggle Button + Tooltip */}
-        <div className="group relative">
+        <div className="group relative ">
           {!isOpen && (
             <div className="absolute bottom-full left-1/2 mb-2 -translate-x-1/2 transform whitespace-nowrap rounded-lg bg-background px-3 py-1.5 text-sm text-white opacity-0 shadow-lg transition-all duration-200 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0">
-              OB39 Assistant
+              OB39 Ai
               <div className="absolute -bottom-1 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 bg-background" />
             </div>
           )}
 
           <button
             onClick={toggleOpen}
-            className="flex h-14 w-14 items-center justify-center rounded-full bg-button-bg text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-button-hover hover:shadow-xl"
+            className="flex h-[48px] w-[48px] items-center justify-center rounded-full bg-button-bg text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-button-hover hover:shadow-xl"
             aria-label="Toggle OB39 Assistant"
           >
-            {isOpen ? <X className="h-6 w-6" /> : <Sparkles className="h-6 w-6" />}
+            {isOpen ? <X className="h-5 w-5" /> : <Sparkles className="h-5 w-5" />}
           </button>
         </div>
       </div>
