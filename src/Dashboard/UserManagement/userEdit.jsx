@@ -276,14 +276,14 @@ export default function UserEditModal({ userId, onClose, onUpdated }) {
                   className="
                     w-full
                     rounded-lg
-                    bg-button-bg
+                    bg-[#063822]
                     px-4
                     py-2.5
                     text-sm
                     font-semibold
                     text-white
                     transition-colors
-                    hover:bg-button-hover
+                    hover:bg-[ #063822]
                     disabled:cursor-not-allowed
                     disabled:opacity-60
                     sm:w-auto

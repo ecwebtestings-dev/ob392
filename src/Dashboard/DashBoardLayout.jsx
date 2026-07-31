@@ -81,14 +81,14 @@ export default function DashboardLayout() {
         }`}
       />
 
-      {/* Sidebar — dark green chrome, no hover-to-expand */}
+      {/* Sidebar dark green */}
       <aside
-        className={`fixed inset-y-0 left-0 z-40 hidden flex-col border-r border-white/5 bg-gradient-to-br from-[#12855A] via-[#0F6B45] to-[#063822] transition-all duration-200 lg:flex ${
+        className={`fixed inset-y-0 left-0 z-40 hidden flex-col border-r border-white/5 bg-gradient-to-br from-[#06472f] via-[#04482c] to-[#063822] transition-all duration-200 lg:flex ${
           sidebarExpanded ? "w-64" : "w-20"
         }`}
       >
         <div className="flex h-16 flex-none items-center gap-2.5 border-b border-white/10 px-6">
-          <div className="flex size-9 flex-none items-center justify-center rounded-xl bg-[#0F6B45]">
+          <div className="flex size-9 flex-none items-center justify-center rounded-xl ">
             <img alt="Logo" src={images.logo} className="h-5 w-auto" />
           </div>
           {sidebarExpanded && (
@@ -277,7 +277,7 @@ export default function DashboardLayout() {
                 ))}
               </nav>
 
-              {/* ACCOUNT ACTIONS — pinned to bottom, mobile */}
+              {/* ACCOUNT ACTIONS — */}
               <div className="flex-none space-y-1 border-t border-white/10 px-4 py-4">
                 <SidebarActionLink
                   to="/dashboard/profile"

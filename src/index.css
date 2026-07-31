@@ -19,6 +19,23 @@
     display: none;
 }
 
+/* 
+@theme {
+  --color-background: #063822;
+  --color-heading: #0B1F17;
+  --color-badges: #0F6B45;
+  --color-badge-bg: #EAF5EE;
+  --color-icons: #0F6B45;
+  --color-card-background: #F0F7F3;
+  --color-text-color: #364153;
+  --color-footer-text: #364153;
+  --color-hero-text: #E5E7EB;
+  --color-button-bg: #0F6B45;
+  --color-button-hover: #12855A;
+
+  --font-sans: "Montserrat", sans-serif;
+} */
+
 
 
 @theme {

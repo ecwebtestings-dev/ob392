@@ -145,7 +145,7 @@ function WelcomeBanner({ name }) {
           <HandRaisedIcon className="size-6 text-[#FFD230]" />
         </div>
         <div className="min-w-0">
-          <h1 className="text-lg font-semibold text-white sm:text-xl">
+          <h1 className="text-md font-semibold text-white sm:text-xl">
             Welcome  
             {firstName && <span className="text-[#FFD230]"> Mr/Mrs {firstName}!</span>}
           </h1>
@@ -169,8 +169,8 @@ function MetricCard({ def, cardData, featured }) {
     <Link
       to={def.to}
       className={`
-        relative block overflow-hidden rounded-2xl p-5 shadow-sm 
-        transition-all hover:-translate-y-0.5
+        relative block overflow-hidden rounded-2xl p-3 shadow-sm 
+        transition-all 
         ${
           featured
             ? "group bg-gradient-to-br from-[#12855A] via-[#0F6B45] to-[#063822] hover:shadow-lg hover:shadow-[#0F6B45]/20"
@@ -240,6 +240,8 @@ function MetricCard({ def, cardData, featured }) {
   );
 }
 
+
+
 // ============================================================
 // LOADING SKELETON
 // ============================================================
@@ -281,12 +283,12 @@ export default function DashboardOverview() {
   const { user } = useOutletContext();
   const { status, data, error, isFetching, reload } = useDashboardStats();
 
-  const cards = data?.cards ?? {};
+  const cards = data?.cards ?? {}; 
   const monthly = data?.charts?.user_registrations_monthly ?? [];
   const growth = data?.charts?.user_growth_trend ?? [];
 
   return (
-    <div className="min-w-0 rounded-2xl bg-[#F5F7F6] p-6 font-sans">
+    <div className="min-w-0 rounded-2xl bg-[#F5F7F6] p-2 sm:p-6 font-sans">
       {/* WELCOME BANNER */}
       <WelcomeBanner name={user?.name} />
 

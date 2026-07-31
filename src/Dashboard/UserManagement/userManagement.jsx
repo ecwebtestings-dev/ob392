@@ -74,7 +74,7 @@ export function UsersTable() {
   const end = Math.min(currentPage * PAGE_SIZE, total);
 
   return (
-    <div className="w-full min-w-0 overflow-hidden rounded-2xl bg-white shadow">
+    <div className="w-full min-w-0 overflow-hidden  bg-white shadow">
       {/* TABLE */}
       <div className="w-full overflow-x-auto overflow-y-auto sm:h-[500px] lg:h-[600px]">
         <table className="w-full min-w-[850px] divide-y divide-gray-200 text-xs">
@@ -88,6 +88,7 @@ export function UsersTable() {
               <Th><span className="sr-only">Actions</span></Th>
             </tr>
           </thead>
+          
           <tbody className="divide-y divide-gray-100">
             {users.length === 0 ? (
               <tr>
@@ -188,11 +189,11 @@ function UserRow({ user, isHighlighted, rowRef, onEdit, onAction }) {
 
       <Td>
         {isSuspended ? (
-          <span className="inline-flex whitespace-nowrap rounded-full bg-red-100 px-2 py-1 text-xs font-medium text-red-700">
+          <span className="inline-flex whitespace-nowrap rounded-full px-2 py-1 text-xs font-medium text-red-700">
             Suspended
           </span>
         ) : (
-          <span className="inline-flex whitespace-nowrap rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-700">
+          <span className="inline-flex whitespace-nowrap rounded-full px-2 py-1 text-xs font-medium text-green-700">
             Active
           </span>
         )}
@@ -224,7 +225,7 @@ function UserRow({ user, isHighlighted, rowRef, onEdit, onAction }) {
           )}
 
           {isSuspended ? (
-            <button type="button" onClick={() => onAction("unsuspend")} className={`${iconBtn} text-green-600 hover:bg-green-50`}>
+            <button type="button" onClick={() => onAction("unsuspend")} className={`${iconBtn} text-[#063822] hover:bg-green-50 border border-[#063822]`}>
               <CheckCircleIcon className="size-3.5" />
               <span className="hidden sm:inline">Unsuspend</span>
             </button>
