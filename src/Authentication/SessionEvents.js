@@ -1,5 +1,4 @@
 
-
 const listeners = new Set();
 
 export function onSessionExpired(callback) {
