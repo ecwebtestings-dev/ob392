@@ -4,26 +4,12 @@ import {
   ExclamationTriangleIcon,
   XMarkIcon,
   PhotoIcon,
-  LinkIcon,
-  CalendarDaysIcon,
-  ArrowTopRightOnSquareIcon,
 } from "@heroicons/react/24/outline";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import {
   useEventManagement,
   useCreateEvent,
 } from "./EventManagement";
-
-function formatEventDate(value) {
-  if (!value) return null;
-  const date = new Date(value);
-  if (isNaN(date.getTime())) return null;
-  return date.toLocaleDateString(undefined, {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
-}
 
 export default function EventManagement() {
   const {
@@ -44,10 +30,6 @@ export default function EventManagement() {
     setTitle,
     description,
     setDescription,
-    eventLink,
-    setEventLink,
-    eventDate,
-    setEventDate,
     imagePreview,
     submitting: isCreating,
     handleImageChange,
@@ -61,7 +43,7 @@ export default function EventManagement() {
       ====================================================== */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0">
-          <h1 className="text-xl font-bold tracking-tight text-[#0B1F17] sm:text-2xl">
+          <h1 className="text-xl font-bold tracking-tight text-gray-900 sm:text-2xl">
             Events
           </h1>
 
@@ -74,12 +56,22 @@ export default function EventManagement() {
           type="button"
           onClick={() => setShowCreate(true)}
           className="
-            inline-flex w-full items-center justify-center gap-1.5 rounded-lg
-            bg-gradient-to-br from-[#12855A] via-[#0F6B45] to-[#063822]
-            px-4 py-2.5 text-sm font-semibold text-white shadow-sm
-            transition-all duration-150 hover:-translate-y-0.5 hover:shadow-md
-            active:translate-y-0
-            sm:w-auto sm:flex-none
+            inline-flex
+            w-full
+            items-center
+            justify-center
+            gap-1.5
+            rounded-lg
+            bg-button-bg
+            px-4
+            py-2.5
+            text-sm
+            font-semibold
+            text-white
+            transition-colors
+            hover:bg-button-hover
+            sm:w-auto
+            sm:flex-none
           "
         >
           <PlusIcon className="size-4" />
@@ -100,18 +92,17 @@ export default function EventManagement() {
             {error}
           </div>
         ) : events.length === 0 ? (
-          <div className="flex min-h-[250px] flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-gray-300 bg-white p-6 text-center shadow-sm sm:rounded-2xl">
-            <span className="flex size-12 items-center justify-center rounded-full bg-[#0F6B45]/10">
-              <CalendarDaysIcon className="size-6 text-[#0F6B45]" />
-            </span>
-            <p className="text-sm font-medium text-[#0B1F17]">No events scheduled yet</p>
-            <p className="text-xs text-gray-500">Create your first event to get started.</p>
+          <div className="flex min-h-[250px] items-center justify-center rounded-xl border border-gray-200 bg-white p-6 text-center text-sm text-gray-500 shadow-sm sm:rounded-2xl">
+            No events scheduled yet.
           </div>
         ) : (
           <div
             className="
-              grid grid-cols-1 gap-4
-              sm:grid-cols-2 sm:gap-5
+              grid
+              grid-cols-1
+              gap-4
+              sm:grid-cols-2
+              sm:gap-5
               lg:grid-cols-3
             "
           >
@@ -135,10 +126,6 @@ export default function EventManagement() {
           setTitle={setTitle}
           description={description}
           setDescription={setDescription}
-          eventLink={eventLink}
-          setEventLink={setEventLink}
-          eventDate={eventDate}
-          setEventDate={setEventDate}
           imagePreview={imagePreview}
           handleImageChange={handleImageChange}
           submitting={isCreating}
@@ -167,43 +154,40 @@ export default function EventManagement() {
 // ============================================================
 
 function EventCard({ event, onDelete }) {
-  const displayDate = formatEventDate(event.event_date);
-
   return (
     <article
       className="
-        group flex min-w-0 flex-col overflow-hidden rounded-xl
-        border border-gray-200 bg-white shadow-sm
-        transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg
+        group
+        flex
+        min-w-0
+        flex-col
+        overflow-hidden
+        rounded-xl
+        border
+        border-gray-200
+        bg-white
+        shadow-sm
+        transition-shadow
+        hover:shadow-md
         sm:rounded-2xl
       "
     >
       {/* IMAGE */}
-      <div className="relative aspect-video w-full flex-none overflow-hidden bg-gradient-to-br from-[#0F6B45]/10 to-[#063822]/5">
+      <div className="relative aspect-video w-full flex-none overflow-hidden bg-gray-100">
         {event.image ? (
           <img
             src={event.image}
             alt={event.title}
-            className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
+            className="
+              size-full
+              object-cover
+              duration-300
+            "
           />
         ) : (
-          <div className="flex size-full items-center justify-center text-[#0F6B45]/30">
+          <div className="flex size-full items-center justify-center text-gray-300">
             <PhotoIcon className="size-9 sm:size-10" />
           </div>
-        )}
-
-        {/* DATE BADGE — only shown if a date was provided */}
-        {displayDate && (
-          <span
-            className="
-              absolute left-2 top-2 inline-flex items-center gap-1 rounded-full
-              bg-[#FFD230] px-2.5 py-1 text-[11px] font-semibold text-[#0B1F17]
-              shadow-sm
-            "
-          >
-            <CalendarDaysIcon className="size-3.5" />
-            {displayDate}
-          </span>
         )}
 
         {/* DELETE BUTTON
@@ -212,10 +196,23 @@ function EventCard({ event, onDelete }) {
           type="button"
           onClick={onDelete}
           className="
-            absolute right-2 top-2 flex size-9 items-center justify-center
-            rounded-lg bg-white/95 text-gray-500 shadow-sm backdrop-blur
-            transition-colors hover:bg-red-50 hover:text-red-500
-            sm:opacity-0 sm:group-hover:opacity-100
+            absolute
+            right-2
+            top-2
+            flex
+            size-9
+            items-center
+            justify-center
+            rounded-lg
+            bg-white/95
+            text-gray-500
+            shadow-sm
+            backdrop-blur
+            transition-colors
+            hover:bg-red-50
+            hover:text-red-500
+            sm:opacity-0
+            sm:group-hover:opacity-100
           "
           aria-label={`Delete ${event.title}`}
         >
@@ -227,7 +224,14 @@ function EventCard({ event, onDelete }) {
       <div className="flex min-w-0 flex-1 flex-col p-4 sm:p-5">
         <h3
           title={event.title}
-          className="break-words text-sm font-semibold leading-5 text-[#0B1F17] sm:text-base"
+          className="
+            break-words
+            text-sm
+            font-semibold
+            leading-5
+            text-gray-900
+            sm:text-base
+          "
         >
           {event.title}
         </h3>
@@ -235,29 +239,19 @@ function EventCard({ event, onDelete }) {
         {event.description && (
           <p
             title={event.description}
-            className="mt-2 line-clamp-3 break-words text-xs leading-5 text-gray-500 sm:text-sm sm:leading-relaxed"
+            className="
+              mt-2
+              line-clamp-3
+              break-words
+              text-xs
+              leading-5
+              text-gray-500
+              sm:text-sm
+              sm:leading-relaxed
+            "
           >
             {event.description}
           </p>
-        )}
-
-        {/* LINK — only shown if a link was provided */}
-        {event.link && (
-          
-          <a href={event.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="
-              mt-3 inline-flex w-fit items-center gap-1.5 rounded-lg
-              border border-[#0F6B45]/25 bg-[#0F6B45]/[0.04] px-2.5 py-1.5
-              text-xs font-medium text-[#0F6B45] transition-all duration-150
-              hover:border-[#0F6B45]/40 hover:bg-[#0F6B45]/10
-            "
-          >
-            <LinkIcon className="size-3.5" />
-            Visit link
-            <ArrowTopRightOnSquareIcon className="size-3" />
-          </a>
         )}
       </div>
     </article>
@@ -273,10 +267,6 @@ function CreateEventModal({
   setTitle,
   description,
   setDescription,
-  eventLink,
-  setEventLink,
-  eventDate,
-  setEventDate,
   imagePreview,
   handleImageChange,
   submitting,
@@ -286,27 +276,45 @@ function CreateEventModal({
   return (
     <Dialog open onClose={onClose} className="relative z-50">
       {/* BACKDROP */}
-      <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" aria-hidden="true" />
+      <div
+        className="fixed inset-0 bg-black/40 backdrop-blur-sm"
+        aria-hidden="true"
+      />
 
       {/* MODAL CONTAINER */}
       <div className="fixed inset-0 flex items-center justify-center overflow-y-auto p-3 sm:p-4">
         <DialogPanel
           className="
-            flex max-h-[94vh] w-full max-w-md flex-col overflow-hidden
-            rounded-xl bg-white shadow-2xl
-            sm:max-h-[90vh] sm:rounded-2xl
+            flex
+            max-h-[94vh]
+            w-full
+            max-w-md
+            flex-col
+            overflow-hidden
+            rounded-xl
+            bg-white
+            shadow-2xl
+            sm:max-h-[90vh]
+            sm:rounded-2xl
           "
         >
           {/* MODAL HEADER */}
-          <div className="flex flex-none items-center justify-between border-b border-gray-100 bg-gradient-to-br from-[#12855A] via-[#0F6B45] to-[#063822] px-4 py-4 sm:px-6">
-            <DialogTitle className="text-base font-semibold text-white sm:text-lg">
+          <div className="flex flex-none items-center justify-between border-b border-gray-100 px-4 py-4 sm:px-6">
+            <DialogTitle className="text-base font-semibold text-gray-900 sm:text-lg">
               New event
             </DialogTitle>
 
             <button
               type="button"
               onClick={onClose}
-              className="rounded-lg p-1.5 text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+              className="
+                rounded-lg
+                p-1.5
+                text-gray-400
+                transition-colors
+                hover:bg-gray-100
+                hover:text-gray-600
+              "
               aria-label="Close"
             >
               <XMarkIcon className="size-5" />
@@ -327,10 +335,21 @@ function CreateEventModal({
 
                 <label
                   className="
-                    flex aspect-video w-full cursor-pointer items-center
-                    justify-center overflow-hidden rounded-xl border
-                    border-dashed border-gray-300 bg-gray-50
-                    transition-colors hover:border-[#0F6B45]/50 hover:bg-[#0F6B45]/5
+                    flex
+                    aspect-video
+                    w-full
+                    cursor-pointer
+                    items-center
+                    justify-center
+                    overflow-hidden
+                    rounded-xl
+                    border
+                    border-dashed
+                    border-gray-300
+                    bg-gray-50
+                    transition-colors
+                    hover:border-badges/50
+                    hover:bg-badge-bg/40
                   "
                 >
                   {imagePreview ? (
@@ -342,6 +361,7 @@ function CreateEventModal({
                   ) : (
                     <span className="flex flex-col items-center gap-1.5 px-4 text-center text-gray-400">
                       <PhotoIcon className="size-8" />
+
                       <span className="text-xs font-medium">
                         Click to upload an image
                       </span>
@@ -369,9 +389,20 @@ function CreateEventModal({
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="Cooperative training day"
                   className="
-                    w-full rounded-md border border-gray-200 bg-white px-3 py-2.5
-                    text-sm text-[#0B1F17] placeholder:text-gray-400
-                    focus:border-[#0F6B45]/50 focus:outline-none focus:ring-2 focus:ring-[#0F6B45]/10
+                    w-full
+                    rounded-md
+                    border
+                    border-gray-200
+                    bg-white
+                    px-3
+                    py-2.5
+                    text-sm
+                    text-gray-900
+                    placeholder:text-gray-400
+                    focus:border-badges/50
+                    focus:outline-none
+                    focus:ring-2
+                    focus:ring-badges/10
                   "
                 />
               </div>
@@ -388,71 +419,52 @@ function CreateEventModal({
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Describe the event..."
                   className="
-                    w-full resize-none rounded-md border border-gray-200 bg-white
-                    px-3 py-2.5 text-sm text-[#0B1F17] placeholder:text-gray-400
-                    focus:border-[#0F6B45]/50 focus:outline-none focus:ring-2 focus:ring-[#0F6B45]/10
+                    w-full
+                    resize-none
+                    rounded-md
+                    border
+                    border-gray-200
+                    bg-white
+                    px-3
+                    py-2.5
+                    text-sm
+                    text-gray-900
+                    placeholder:text-gray-400
+                    focus:border-badges/50
+                    focus:outline-none
+                    focus:ring-2
+                    focus:ring-badges/10
                   "
                 />
-              </div>
-
-              {/* EVENT DATE — optional */}
-              <div>
-                <label className="mb-1.5 flex items-center gap-1.5 text-xs font-medium tracking-wide text-gray-500">
-                  Event date
-                  <span className="rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-normal normal-case text-gray-400">
-                    Optional
-                  </span>
-                </label>
-
-                <div className="relative">
-                  <CalendarDaysIcon className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[#0F6B45]/50" />
-                  <input
-                    type="date"
-                    value={eventDate}
-                    onChange={(e) => setEventDate(e.target.value)}
-                    className="
-                      w-full rounded-md border border-gray-200 bg-white py-2.5 pl-9 pr-3
-                      text-sm text-[#0B1F17]
-                      focus:border-[#0F6B45]/50 focus:outline-none focus:ring-2 focus:ring-[#0F6B45]/10
-                    "
-                  />
-                </div>
-              </div>
-
-              {/* EVENT LINK — optional */}
-              <div>
-                <label className="mb-1.5 flex items-center gap-1.5 text-xs font-medium tracking-wide text-gray-500">
-                  Event link
-                  <span className="rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-normal normal-case text-gray-400">
-                    Optional
-                  </span>
-                </label>
-
-                <div className="relative">
-                  <LinkIcon className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[#0F6B45]/50" />
-                  <input
-                    type="url"
-                    value={eventLink}
-                    onChange={(e) => setEventLink(e.target.value)}
-                    placeholder="https://example.com/event-details"
-                    className="
-                      w-full rounded-md border border-gray-200 bg-white py-2.5 pl-9 pr-3
-                      text-sm text-[#0B1F17] placeholder:text-gray-400
-                      focus:border-[#0F6B45]/50 focus:outline-none focus:ring-2 focus:ring-[#0F6B45]/10
-                    "
-                  />
-                </div>
               </div>
             </div>
 
             {/* ACTIONS */}
-            <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+            <div
+              className="
+                mt-6
+                flex
+                flex-col-reverse
+                gap-2
+                sm:flex-row
+                sm:justify-end
+              "
+            >
               <button
                 type="button"
                 onClick={onClose}
                 className="
-                  w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm
-                  font-medium text-gray-600 transition-colors hover:bg-gray-50
+                  w-full
+                  rounded-lg
+                  border
+                  border-gray-200
+                  px-4
+                  py-2.5
+                  text-sm
+                  font-medium
+                  text-gray-600
+                  transition-colors
+                  hover:bg-gray-50
                   sm:w-auto
                 "
               >
@@ -463,11 +475,19 @@ function CreateEventModal({
                 type="submit"
                 disabled={submitting}
                 className="
-                  w-full rounded-lg bg-gradient-to-br from-[#12855A] via-[#0F6B45] to-[#063822]
-                  px-4 py-2.5 text-sm font-semibold text-white shadow-sm
-                  transition-all duration-150 hover:-translate-y-0.5 hover:shadow-md
-                  active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60
-                  disabled:hover:translate-y-0 sm:w-auto
+                  w-full
+                  rounded-lg
+                  bg-button-bg
+                  px-4
+                  py-2.5
+                  text-sm
+                  font-semibold
+                  text-white
+                  transition-colors
+                  hover:bg-button-hover
+                  disabled:cursor-not-allowed
+                  disabled:opacity-60
+                  sm:w-auto
                 "
               >
                 {submitting ? "Creating..." : "Create event"}
@@ -484,41 +504,90 @@ function CreateEventModal({
 // CONFIRM DELETE MODAL
 // ============================================================
 
-function ConfirmDeleteModal({ event, submitting, onConfirm, onCancel }) {
+function ConfirmDeleteModal({
+  event,
+  submitting,
+  onConfirm,
+  onCancel,
+}) {
   return (
     <Dialog open onClose={onCancel} className="relative z-50">
       {/* BACKDROP */}
-      <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" aria-hidden="true" />
+      <div
+        className="fixed inset-0 bg-black/40 backdrop-blur-sm"
+        aria-hidden="true"
+      />
 
       {/* CONTAINER */}
       <div className="fixed inset-0 flex items-center justify-center overflow-y-auto p-4">
-        <DialogPanel className="w-full max-w-sm rounded-xl bg-white p-5 shadow-2xl sm:rounded-2xl sm:p-6">
+        <DialogPanel
+          className="
+            w-full
+            max-w-sm
+            rounded-xl
+            bg-white
+            p-5
+            shadow-2xl
+            sm:rounded-2xl
+            sm:p-6
+          "
+        >
           <div className="flex items-start gap-3">
-            <span className="flex size-10 flex-none items-center justify-center rounded-full bg-red-50">
+            <span
+              className="
+                flex
+                size-10
+                flex-none
+                items-center
+                justify-center
+                rounded-full
+                bg-red-50
+              "
+            >
               <ExclamationTriangleIcon className="size-5 text-red-500" />
             </span>
 
             <div className="min-w-0">
-              <DialogTitle className="text-base font-semibold text-[#0B1F17]">
+              <DialogTitle className="text-base font-semibold text-gray-900">
                 Delete event
               </DialogTitle>
 
               <p className="mt-1 break-words text-sm leading-5 text-gray-500">
-                This will permanently remove "{event.title}". This can't be undone.
+                This will permanently remove "{event.title}". This can't be
+                undone.
               </p>
             </div>
           </div>
 
           {/* ACTIONS */}
-          <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+          <div
+            className="
+              mt-6
+              flex
+              flex-col-reverse
+              gap-2
+              sm:flex-row
+              sm:justify-end
+            "
+          >
             <button
               type="button"
               onClick={onCancel}
               disabled={submitting}
               className="
-                w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm
-                font-medium text-gray-600 transition-colors hover:bg-gray-50
-                disabled:opacity-60 sm:w-auto
+                w-full
+                rounded-lg
+                border
+                border-gray-200
+                px-4
+                py-2.5
+                text-sm
+                font-medium
+                text-gray-600
+                transition-colors
+                hover:bg-gray-50
+                disabled:opacity-60
+                sm:w-auto
               "
             >
               Cancel
@@ -529,9 +598,19 @@ function ConfirmDeleteModal({ event, submitting, onConfirm, onCancel }) {
               onClick={onConfirm}
               disabled={submitting}
               className="
-                w-full rounded-lg bg-red-600 px-4 py-2.5 text-sm font-semibold
-                text-white transition-colors hover:bg-red-700
-                disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto
+                w-full
+                rounded-lg
+                bg-red-600
+                px-4
+                py-2.5
+                text-sm
+                font-semibold
+                text-white
+                transition-colors
+                hover:bg-red-700
+                disabled:cursor-not-allowed
+                disabled:opacity-60
+                sm:w-auto
               "
             >
               {submitting ? "Deleting..." : "Delete event"}
