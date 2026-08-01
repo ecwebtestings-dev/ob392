@@ -19,12 +19,21 @@ import {
   ArrowPathIcon,
   ArrowUpRightIcon,
   ExclamationCircleIcon,
-  HandRaisedIcon
+  HandRaisedIcon,
+  PlusIcon,
 } from "@heroicons/react/24/outline";
 
 import { api } from "../../Authentication/api";
+
+// Hooks come from the hooks file (EventManagement.js).
+// CreateEventModal comes from the renamed UI file (EventManagementPage.jsx).
+import { useEventManagement, useCreateEvent } from "../Events/EventManagement";
+import { CreateEventModal } from "../Events/useEventManagement";
+
 const STATS_ENDPOINT = "/dashboard/stats";
 const DASHBOARD_STATS_QUERY_KEY = ["dashboard-stats"];
+
+const RECENT_EVENTS_LIMIT = 5;
 
 // ============================================================
 // CARD DEFINITIONS
@@ -81,11 +90,10 @@ const chartAxisTick = { fill: "#6B7A72", fontSize: 11 };
 const chartAxisLine = { stroke: "rgba(11,31,23,0.1)" };
 
 // ============================================================
-// DATA FETCHING 
+// DATA FETCHING
 // ============================================================
 
 async function fetchDashboardStats() {
-  
   const json = await api.get(STATS_ENDPOINT);
 
   if (!json) {
@@ -107,8 +115,8 @@ function useDashboardStats() {
   const query = useQuery({
     queryKey: DASHBOARD_STATS_QUERY_KEY,
     queryFn: fetchDashboardStats,
-    staleTime: 60_000, // 1 minute
-    gcTime: 5 * 60_000, // 5 minutes
+    staleTime: 60_000,
+    gcTime: 5 * 60_000,
     retry: 1,
   });
 
@@ -240,7 +248,86 @@ function MetricCard({ def, cardData, featured }) {
   );
 }
 
+// ============================================================
+// RECENT EVENTS CARD
+// ============================================================
 
+function RecentEventsCard({ events, loading, error, onNewEvent }) {
+  const recent = [...events]
+    .sort((a, b) => {
+      const aTime = new Date(a.created_at || a.id).getTime();
+      const bTime = new Date(b.created_at || b.id).getTime();
+      return bTime - aTime;
+    })
+    .slice(0, RECENT_EVENTS_LIMIT);
+
+  return (
+    <div className="flex min-w-0 flex-col rounded-xl border border-black/5 bg-white p-4 shadow-sm sm:p-5">
+      <div className="mb-4 flex items-center justify-between gap-2">
+        <div className="min-w-0">
+          <h2 className="text-[13.5px] font-medium text-[#0B1F17]">Scheduled Events</h2>
+          <p className="text-xs text-[#0B1F17]/50">Most recent events</p>
+        </div>
+
+        <button
+          type="button"
+          onClick={onNewEvent}
+          className="
+            inline-flex flex-none items-center gap-1.5 rounded-lg
+            bg-gradient-to-br from-[#12855A] via-[#0F6B45] to-[#063822]
+            px-2.5 py-1.5 text-[11.5px] font-semibold text-white shadow-sm
+            transition-all duration-150 hover:-translate-y-0.5 hover:shadow-md
+            active:translate-y-0
+          "
+        >
+          <PlusIcon className="size-3.5" />
+          New event
+        </button>
+      </div>
+
+      {loading ? (
+        <div className="space-y-3">
+          {[0, 1, 2].map((i) => (
+            <div key={i} className="h-12 animate-pulse rounded-lg bg-[#0B1F17]/5" />
+          ))}
+        </div>
+      ) : error ? (
+        <p className="py-6 text-center text-xs text-red-500">{error}</p>
+      ) : recent.length === 0 ? (
+        <div className="flex flex-1 flex-col items-center justify-center gap-2 py-8 text-center">
+          <CalendarDaysIcon className="size-8 text-[#0F6B45]/30" />
+          <p className="text-xs text-[#0B1F17]/50">No events scheduled yet.</p>
+        </div>
+      ) : (
+        <ul className="min-w-0 divide-y divide-black/5">
+          {recent.map((ev) => (
+            <li key={ev.id} className="flex min-w-0 items-start gap-3 py-3 first:pt-0 last:pb-0">
+              <span className="mt-0.5 flex size-8 flex-none items-center justify-center rounded-lg bg-[#0F6B45]/10">
+                <CalendarDaysIcon className="size-4 text-[#0F6B45]" />
+              </span>
+              <div className="min-w-0">
+                <p className="truncate text-sm font-medium text-[#0B1F17]">{ev.title}</p>
+                {ev.description && (
+                  <p className="mt-0.5 line-clamp-1 text-xs text-[#0B1F17]/50">
+                    {ev.description}
+                  </p>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <Link
+        to="/dashboard/events"
+        className="mt-4 inline-flex w-fit items-center gap-1 text-xs font-medium text-[#0F6B45] hover:underline"
+      >
+        View all events
+        <ArrowUpRightIcon className="size-3" />
+      </Link>
+    </div>
+  );
+}
 
 // ============================================================
 // LOADING SKELETON
@@ -283,9 +370,34 @@ export default function DashboardOverview() {
   const { user } = useOutletContext();
   const { status, data, error, isFetching, reload } = useDashboardStats();
 
-  const cards = data?.cards ?? {}; 
+  const cards = data?.cards ?? {};
   const monthly = data?.charts?.user_registrations_monthly ?? [];
   const growth = data?.charts?.user_growth_trend ?? [];
+
+  // Reusing the exact same event creation logic/UI as the Events page
+  const {
+    events,
+    loading: eventsLoading,
+    error: eventsError,
+    showCreate,
+    setShowCreate,
+    handleEventCreated,
+  } = useEventManagement();
+
+  const {
+    title,
+    setTitle,
+    description,
+    setDescription,
+    eventLink,
+    setEventLink,
+    eventDate,
+    setEventDate,
+    imagePreview,
+    submitting: isCreatingEvent,
+    handleImageChange,
+    handleSubmit,
+  } = useCreateEvent(handleEventCreated);
 
   return (
     <div className="min-w-0 rounded-2xl bg-[#F5F7F6] p-2 sm:p-6 font-sans">
@@ -356,11 +468,11 @@ export default function DashboardOverview() {
         </div>
       ) : null}
 
-      {/* CHARTS */}
+      {/* CHARTS + RECENT EVENTS */}
       {status === "ready" && (
-        <div className="grid min-w-0 grid-cols-1 gap-3.5 lg:grid-cols-2">
+        <div className="grid min-w-0 grid-cols-1 gap-3.5 lg:grid-cols-3">
           
-          {/* Monthly Registrations */}
+          {/* Monthly Registrations — column chart */}
           <div className="min-w-0 rounded-xl border border-black/5 bg-white p-4 shadow-sm sm:p-5">
             <div className="mb-3 text-[13.5px] font-medium text-[#0B1F17]">
               Monthly registrations
@@ -373,6 +485,7 @@ export default function DashboardOverview() {
                   <BarChart
                     data={monthly}
                     margin={{ top: 4, right: 8, bottom: 0, left: -20 }}
+                    barCategoryGap="30%"
                   >
                     <CartesianGrid
                       stroke="rgba(11,31,23,0.08)"
@@ -399,7 +512,8 @@ export default function DashboardOverview() {
                     <Bar
                       dataKey="count"
                       fill="#0F6B45"
-                      radius={[3, 3, 0, 0]}
+                      radius={[4, 4, 0, 0]}
+                      maxBarSize={36}
                       isAnimationActive={false}
                     />
                   </BarChart>
@@ -467,7 +581,34 @@ export default function DashboardOverview() {
             )}
           </div>
 
+          {/* Scheduled Events */}
+          <RecentEventsCard
+            events={events}
+            loading={eventsLoading}
+            error={eventsError}
+            onNewEvent={() => setShowCreate(true)}
+          />
+
         </div>
+      )}
+
+      {/* CREATE EVENT MODAL — same modal/logic as the Events page */}
+      {showCreate && (
+        <CreateEventModal
+          title={title}
+          setTitle={setTitle}
+          description={description}
+          setDescription={setDescription}
+          eventLink={eventLink}
+          setEventLink={setEventLink}
+          eventDate={eventDate}
+          setEventDate={setEventDate}
+          imagePreview={imagePreview}
+          handleImageChange={handleImageChange}
+          submitting={isCreatingEvent}
+          onSubmit={handleSubmit}
+          onClose={() => setShowCreate(false)}
+        />
       )}
     </div>
   );

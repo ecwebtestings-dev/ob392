@@ -69,14 +69,14 @@ export function useEventManagement() {
   const [showCreate, setShowCreate] = useState(false);
   const [pendingDelete, setPendingDelete] = useState(null);
 
-  function handleEventCreated(newEvent) {
-    // Persist link/date locally as a fallback until the backend supports them
-    setStoredExtra(newEvent.id, {
-      link: newEvent.link || null,
-      event_date: newEvent.event_date || null,
-    });
-
-    queryClient.setQueryData(["events"], (prev = []) => [newEvent, ...prev]);
+  // Called after a successful create. We deliberately do NOT splice a
+  // locally-constructed event into the cache here — the backend response
+  // shape for /event/create isn't reliable enough to trust its `id`
+  // (a missing/renamed id field silently fell back to Date.now(), which
+  // then 404'd on delete since that id never existed server-side).
+  // Instead we just invalidate and let React Query refetch the real list.
+  function handleEventCreated() {
+    queryClient.invalidateQueries({ queryKey: ["events"] });
     setShowCreate(false);
   }
 
@@ -182,16 +182,23 @@ export function useCreateEvent(onCreated) {
       const data = await res.json();
       const created = data.data ?? data;
 
+      // Log the raw response once while you confirm the real id field name
+      // (e.g. it may be created.event.id instead of created.id) — remove
+      // this once you've confirmed the shape.
+      console.debug("event create response:", data);
+
+      // Only persist the link/event_date fallback if we got a real,
+      // trustworthy id back from the server. Never fall back to
+      // Date.now() — a fabricated id here is what breaks delete.
+      if (created?.id) {
+        setStoredExtra(created.id, {
+          link: created.link ?? eventLink ?? null,
+          event_date: created.event_date ?? eventDate ?? null,
+        });
+      }
+
       toast.success("Event created");
-      onCreated({
-        id: created.id ?? Date.now(),
-        title,
-        description,
-        image: created.image ?? imagePreview,
-        link: created.link ?? eventLink ?? null,
-        event_date: created.event_date ?? eventDate ?? null,
-        ...created,
-      });
+      onCreated();
 
       // Reset form
       setTitle("");

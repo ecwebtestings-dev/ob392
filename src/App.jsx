@@ -15,6 +15,7 @@ import Inquiries from "./Dashboard/Inquires/InQuiries";
 import { UsersTable } from "./Dashboard/UserManagement/userManagement";
 import DashboardOverview from "./Dashboard/Statatics/DashboardOverview";
 import { AuditLogsTable } from "./Dashboard/AuditLogs/AuditLogsTable";
+import SessionExpiredModal from "./Authentication/ExpiredSessionMessage";
 //import SearchResults from "./Dashboard/GlobalSearch/SearchResults";
 
 
@@ -61,8 +62,12 @@ function App() {
         }}
       />
 
+      
 
     <BrowserRouter>
+    {/* fired from Authentication/api.js and shows itself when triggered. */}
+      <SessionExpiredModal />
+      
       <Routes>
         <Route element={<MainLayout />}>
           <Route index element={<Home />} />

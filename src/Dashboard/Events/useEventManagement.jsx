@@ -30,6 +30,10 @@ export default function EventManagement() {
     setTitle,
     description,
     setDescription,
+    eventLink,
+    setEventLink,
+    eventDate,
+    setEventDate,
     imagePreview,
     submitting: isCreating,
     handleImageChange,
@@ -126,6 +130,10 @@ export default function EventManagement() {
           setTitle={setTitle}
           description={description}
           setDescription={setDescription}
+          eventLink={eventLink}
+          setEventLink={setEventLink}
+          eventDate={eventDate}
+          setEventDate={setEventDate}
           imagePreview={imagePreview}
           handleImageChange={handleImageChange}
           submitting={isCreating}
@@ -262,11 +270,15 @@ function EventCard({ event, onDelete }) {
 // CREATE EVENT MODAL
 // ============================================================
 
-function CreateEventModal({
+export function CreateEventModal({
   title,
   setTitle,
   description,
   setDescription,
+  eventLink,
+  setEventLink,
+  eventDate,
+  setEventDate,
   imagePreview,
   handleImageChange,
   submitting,
@@ -421,6 +433,65 @@ function CreateEventModal({
                   className="
                     w-full
                     resize-none
+                    rounded-md
+                    border
+                    border-gray-200
+                    bg-white
+                    px-3
+                    py-2.5
+                    text-sm
+                    text-gray-900
+                    placeholder:text-gray-400
+                    focus:border-badges/50
+                    focus:outline-none
+                    focus:ring-2
+                    focus:ring-badges/10
+                  "
+                />
+              </div>
+
+              {/* EVENT DATE */}
+              <div>
+                <label className="mb-1.5 block text-xs font-medium tracking-wide text-gray-500">
+                  Event date
+                </label>
+
+                <input
+                  type="date"
+                  value={eventDate}
+                  onChange={(e) => setEventDate(e.target.value)}
+                  className="
+                    w-full
+                    rounded-md
+                    border
+                    border-gray-200
+                    bg-white
+                    px-3
+                    py-2.5
+                    text-sm
+                    text-gray-900
+                    focus:border-badges/50
+                    focus:outline-none
+                    focus:ring-2
+                    focus:ring-badges/10
+                  "
+                />
+              </div>
+
+              {/* LINK */}
+              <div>
+                <label className="mb-1.5 block text-xs font-medium tracking-wide text-gray-500">
+                  Link{" "}
+                  <span className="font-normal text-gray-400">(optional)</span>
+                </label>
+
+                <input
+                  type="url"
+                  value={eventLink}
+                  onChange={(e) => setEventLink(e.target.value)}
+                  placeholder="https://..."
+                  className="
+                    w-full
                     rounded-md
                     border
                     border-gray-200
