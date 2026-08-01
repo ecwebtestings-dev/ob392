@@ -15,7 +15,7 @@ import Inquiries from "./Dashboard/Inquires/InQuiries";
 import { UsersTable } from "./Dashboard/UserManagement/userManagement";
 import DashboardOverview from "./Dashboard/Statatics/DashboardOverview";
 import { AuditLogsTable } from "./Dashboard/AuditLogs/AuditLogsTable";
-import SessionExpiredModal from "./Authentication/ExpiredSessionMessage";
+import SessionExpiredModal from "./Authentication/expiredSessionMessage";
 //import SearchResults from "./Dashboard/GlobalSearch/SearchResults";
 
 
