@@ -66,7 +66,7 @@ function App() {
 
     <BrowserRouter>
     {/* fired from Authentication/api.js and shows itself when triggered. */}
-      <SessionExpiredModal
+      <SessionExpiredModal/>
       
       <Routes>
         <Route element={<MainLayout />}>
