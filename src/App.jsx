@@ -14,6 +14,7 @@ import EventManagement from "./Dashboard/Events/useEventManagement";
 import Inquiries from "./Dashboard/Inquires/InQuiries";
 import { UsersTable } from "./Dashboard/UserManagement/userManagement";
 import DashboardOverview from "./Dashboard/Statatics/DashboardOverview";
+import { AuditLogsTable } from "./Dashboard/AuditLogs/AuditLogsTable";
 //import SearchResults from "./Dashboard/GlobalSearch/SearchResults";
 
 
@@ -82,6 +83,7 @@ function App() {
           <Route path="users" element={<UsersTable/>} />
           <Route path="notifictaions" element={<Notification/>}/>
           <Route path="events" element={<EventManagement/>} />
+          <Route path="logs" element={<AuditLogsTable/>}/>
           {/** <Route path="search" element={<SearchResults/>}/>*/}
         </Route>
       </Routes>

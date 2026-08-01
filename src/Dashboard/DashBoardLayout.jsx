@@ -13,6 +13,7 @@ import {
   EllipsisHorizontalIcon,
   MagnifyingGlassIcon,
   Cog6ToothIcon,
+  ClipboardDocumentListIcon
 } from "@heroicons/react/24/outline";
 import toast from "react-hot-toast";
 
@@ -27,11 +28,12 @@ const navItems = [
   { to: "/dashboard/inquiries", label: "Inquiries", icon: EnvelopeIcon },
   { to: "/dashboard/users", label: "Users", icon: UsersIcon },
   { to: "/dashboard/events", label: "Events", icon: CalendarDaysIcon },
+  { to: "/dashboard/logs", label: "Logs", icon: ClipboardDocumentListIcon },
 ];
 
 const ADMIN_ROLES = ["admin", "super_admin"];
 
-// Get up to 2 initials from a full name, e.g. "Tony Robert" -> "TR"
+// Get up to 2 initials from a full name
 function getInitials(name) {
   if (!name) return "";
   const parts = name.trim().split(/\s+/);
@@ -44,7 +46,7 @@ export default function DashboardLayout() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
 
-  // Closed Menu Icon by default — controlled ONLY by the toggle button, no hover-to-expand
+  // Closed Menu Icon by default 
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
   const sidebarExpanded = !sidebarCollapsed;
 
@@ -74,7 +76,8 @@ export default function DashboardLayout() {
   const initials = getInitials(user?.name);
 
   return (
-    <div className="flex min-h-screen bg-[#F5F7F6] text-[#0B1F17]">
+    // ROOT — locked to exactly the viewport height so the whole page can't scroll
+    <div className="flex h-screen overflow-hidden bg-[#F5F7F6] text-[#0B1F17]">
       <div
         className={`hidden flex-none transition-all duration-200 lg:block ${
           sidebarCollapsed ? "w-20" : "w-64"
@@ -308,8 +311,8 @@ export default function DashboardLayout() {
           </div>
         )}
 
-        {/* Main Content */}
-        <main className="min-w-0 flex-1 overflow-x-hidden bg-[#eaf2ee] p-6">
+        {/* Main Content — this is now the scroll container, not the page body */}
+        <main className="min-w-0 min-h-0 flex-1 overflow-x-hidden overflow-y-auto bg-[#eaf2ee] p-6">
           <Outlet context={{ user }} />
         </main>
       </div>

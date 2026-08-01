@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import {
   ChevronLeftIcon,
@@ -61,30 +60,44 @@ export default function Inquiries() {
       </div>
 
 
-      
-
-
       {/* ======================================================
-          TABLE CONTAINER
+          TABLE CONTAINER — fixed height, flex column, doesn't scroll itself
       ====================================================== */}
 
-      <div className="mt-6 w-full min-w-0 overflow-hidden  border border-gray-200 bg-white shadow-sm sm:mt-8">
+      <div
+        className="
+          mt-6
+          flex
+          h-[450px]
+          w-full
+          min-w-0
+          flex-col
+          overflow-hidden
+          border
+          border-gray-200
+          bg-white
+          shadow-sm
+          sm:mt-8
+          sm:h-[500px]
+          lg:h-[600px]
+        "
+      >
 
         {/* LOADING */}
         {loading ? (
-          <div className="flex h-[450px] items-center justify-center px-4 text-center text-xs text-gray-500 sm:h-[500px] lg:h-[600px]">
+          <div className="flex flex-1 items-center justify-center px-4 text-center text-xs text-gray-500">
             Loading inquiries...
           </div>
 
         /* ERROR */
         ) : error ? (
-          <div className="flex h-[450px] items-center justify-center px-4 text-center text-xs text-red-500 sm:h-[500px] lg:h-[600px]">
+          <div className="flex flex-1 items-center justify-center px-4 text-center text-xs text-red-500">
             {error}
           </div>
 
         /* EMPTY */
         ) : inquiries.length === 0 ? (
-          <div className="flex h-[450px] items-center justify-center px-4 text-center text-xs text-gray-500 sm:h-[500px] lg:h-[600px]">
+          <div className="flex flex-1 items-center justify-center px-4 text-center text-xs text-gray-500">
             No inquiries yet.
           </div>
 
@@ -93,18 +106,16 @@ export default function Inquiries() {
         : (
           <>
             {/* ==================================================
-                FIXED HEIGHT TABLE
+                TABLE — the only scrollable region, fills remaining space
             ================================================== */}
 
             <div
               className="
-                h-[450px]
+                min-h-0
+                flex-1
                 w-full
-                min-w-0
                 overflow-x-auto
                 overflow-y-auto
-                sm:h-[500px]
-                lg:h-[600px]
               "
             >
 
@@ -159,7 +170,7 @@ export default function Inquiries() {
 
 
             {/* ==================================================
-                PAGINATION
+                PAGINATION — pinned, never scrolls
             ================================================== */}
 
             <Pagination
@@ -175,8 +186,7 @@ export default function Inquiries() {
         )}
 
       </div>
-
-    </div>
+    </div> 
   );
 }
 
@@ -358,6 +368,7 @@ function Pagination({
     <div
       className="
         flex
+        flex-none
         flex-col
         gap-3
         border-t
@@ -466,4 +477,3 @@ function Pagination({
     </div>
   );
 }
-

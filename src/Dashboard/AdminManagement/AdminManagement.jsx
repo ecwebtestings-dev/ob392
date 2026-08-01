@@ -27,7 +27,7 @@ export default function AdminManagement() {
         Grant or remove admin access, or remove a user from the system.
       </p>
 
-      <div className="mt-8 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+      <div className="mt-8 overflow-hidden  border border-gray-200 bg-white shadow-sm">
         {loading ? (
           <div className="p-10 text-center text-sm text-gray-500">
             Loading users...
