@@ -25,8 +25,6 @@ import {
 
 import { api } from "../../Authentication/api";
 
-// Hooks come from the hooks file (EventManagement.js).
-// CreateEventModal comes from the renamed UI file (EventManagementPage.jsx).
 import { useEventManagement, useCreateEvent } from "../Events/EventManagement";
 import { CreateEventModal } from "../Events/useEventManagement";
 

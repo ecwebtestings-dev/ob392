@@ -29,7 +29,7 @@ export default function SessionExpiredModal() {
   return (
     <Dialog open onClose={() => {}} className="relative z-[100]">
       {/* BACKDROP  */}
-      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" aria-hidden="true" />
+      <div className="fixed inset-0 bg-black/80 backdrop-blur-sm" aria-hidden="true" />
 
       <div className="fixed inset-0 flex items-center justify-center p-4">
         <DialogPanel className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl">
@@ -43,7 +43,7 @@ export default function SessionExpiredModal() {
                 Session expired
               </DialogTitle>
               <p className="mt-1 text-sm leading-5 text-gray-500">
-                You've been logged out for your security. Please log in again to continue.
+                Please log in again to continue.
               </p>
             </div>
           </div>
@@ -51,7 +51,7 @@ export default function SessionExpiredModal() {
           <button
             type="button"
             onClick={handleLoginAgain}
-            className="mt-6 w-full rounded-lg bg-button-bg px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-button-hover"
+            className="mt-6 w-full cursor-pointer hover:bg-[#116742] rounded-lg bg-[#063822] px-4 py-2.5 text-sm font-semibold text-white transition-colors"
           >
             Log in again
           </button>

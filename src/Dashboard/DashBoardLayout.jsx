@@ -13,6 +13,7 @@ import {
   EllipsisHorizontalIcon,
   MagnifyingGlassIcon,
   Cog6ToothIcon,
+  ViewColumnsIcon,
   ClipboardDocumentListIcon
 } from "@heroicons/react/24/outline";
 import toast from "react-hot-toast";
@@ -76,7 +77,7 @@ export default function DashboardLayout() {
   const initials = getInitials(user?.name);
 
   return (
-    // ROOT — locked to exactly the viewport height so the whole page can't scroll
+  
     <div className="flex h-screen overflow-hidden bg-[#F5F7F6] text-[#0B1F17]">
       <div
         className={`hidden flex-none transition-all duration-200 lg:block ${
@@ -121,19 +122,22 @@ export default function DashboardLayout() {
             label="My Profile"
             icon={UserCircleIcon}
             expanded={sidebarExpanded}
+            className='hover:cursor-pointer'
           />
           <SidebarActionLink
             to="/dashboard/settings"
             label="Settings"
             icon={Cog6ToothIcon}
             expanded={sidebarExpanded}
+            className='hover:cursor-pointer'
           />
           <SidebarActionButton
             label="Log out"
             icon={ArrowRightStartOnRectangleIcon}
             expanded={sidebarExpanded}
             onClick={handleLogout}
-            danger
+            
+            className='hover:cursor-pointer'
           />
         </div>
       </aside>
@@ -147,7 +151,7 @@ export default function DashboardLayout() {
               className="flex-none rounded-lg p-2 text-[#0B1F17]/60 transition-colors hover:bg-[#0F6B45]/10 hover:text-[#0F6B45]"
               aria-label="Toggle sidebar"
             >
-              <Bars3Icon className="size-5" />
+              <ViewColumnsIcon className="size-5" />
             </button>
 
             {/* SEARCH BAR */}
@@ -184,6 +188,7 @@ export default function DashboardLayout() {
             </div>
           </div>
         </header>
+
 
         {/* Mobile Header  */}
         <header className="sticky top-0 z-30 flex flex-col border-b border-black/5 bg-white lg:hidden">
@@ -240,7 +245,7 @@ export default function DashboardLayout() {
           )}
         </header>
 
-        {/* Mobile Navigation Drawer — same gradient as desktop sidebar */}
+        {/* Mobile Navigation  */}
         {mobileNavOpen && (
           <div className="fixed inset-0 z-50 lg:hidden">
             <div
@@ -249,7 +254,7 @@ export default function DashboardLayout() {
               onClick={() => setMobileNavOpen(false)}
             />
 
-            <div className="fixed inset-y-0 left-0 flex w-72 max-w-[80%] flex-col bg-gradient-to-br from-[#12855A] via-[#0F6B45] to-[#063822] shadow-2xl shadow-black/30">
+            <div className="fixed inset-y-0 left-0 flex w-72 max-w-[80%] flex-col bg-gradient-to-br from-[#06472f] via-[#04482c] to-[#063822] shadow-2xl shadow-black/30">
               <div className="flex h-16 flex-none items-center justify-between border-b border-white/10 px-4">
                 <div className="flex items-center gap-2">
                   <div className="flex size-8 items-center justify-center rounded-lg bg-[#0F6B45]">
@@ -311,7 +316,7 @@ export default function DashboardLayout() {
           </div>
         )}
 
-        {/* Main Content — this is now the scroll container, not the page body */}
+        {/* Main Content*/}
         <main className="min-w-0 min-h-0 flex-1 overflow-x-hidden overflow-y-auto bg-[#eaf2ee] p-6">
           <Outlet context={{ user }} />
         </main>
