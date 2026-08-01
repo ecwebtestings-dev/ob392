@@ -254,7 +254,7 @@ export default function DashboardLayout() {
               onClick={() => setMobileNavOpen(false)}
             />
 
-            <div className="fixed inset-y-0 left-0 flex w-72 max-w-[80%] flex-col bg-gradient-to-br from-[#06472f] via-[#04482c] to-[#063822] shadow-2xl shadow-black/30">
+            <div className="fixed inset-y-0 left-0 flex w-72 max-w-[80%] flex-col bg-[#063822] shadow-2xl shadow-black/30">
               <div className="flex h-16 flex-none items-center justify-between border-b border-white/10 px-4">
                 <div className="flex items-center gap-2">
                   <div className="flex size-8 items-center justify-center rounded-lg bg-[#0F6B45]">
