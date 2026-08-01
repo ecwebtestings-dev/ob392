@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { onSessionExpired } from "./sessionEvents.js";
-import { api } from "./api";
+import { api } from "./api.js";
 
 
 export default function SessionExpiredModal() {
