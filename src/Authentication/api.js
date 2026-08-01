@@ -1,4 +1,4 @@
-import { emitSessionExpired } from "./SessionEvents";
+import { emitSessionExpired } from "./sessionEvents";
 const BASE_URL = import.meta.env.VITE_API_URL;
 
 function getToken() {
