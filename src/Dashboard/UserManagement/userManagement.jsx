@@ -77,7 +77,16 @@ export function UsersTable() {
     <div className="w-full min-w-0 overflow-hidden  bg-white shadow">
       {/* TABLE */}
       <div className="w-full overflow-x-auto overflow-y-auto sm:h-[500px] lg:h-[600px]">
+ 
+        <div className="min-w-0 ml-4 mt-4 mb-3">
+          <h1 className="text-lg font-semibold tracking-tight text-gray-500 sm:text-lg">
+            Registered User Accounts
+          </h1>
+        </div>
+
         <table className="w-full min-w-[850px] divide-y divide-gray-200 text-xs">
+
+
           <thead className="sticky top-0 z-10 bg-gray-50">
             <tr>
               <Th>Name</Th>

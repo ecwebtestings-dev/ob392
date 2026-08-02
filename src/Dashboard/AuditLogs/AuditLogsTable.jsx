@@ -90,7 +90,7 @@ export function AuditLogsTable() {
       </div>
 
       {/* TABLE */}
-      <div className="min-h-0 flex-1 overflow-x-auto overflow-y-auto">
+      <div className="flex-1 h-full overflow-x-auto overflow-y-auto">
         <table className="w-full min-w-[700px] divide-y divide-gray-200 text-xs">
           <thead className="sticky top-0 z-10 bg-gray-50">
             <tr>
