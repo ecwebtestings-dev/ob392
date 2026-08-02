@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import { onSessionExpired } from "./sessionEvents.js";
+import { onSessionExpired } from "./sessionEvents";
 import { api } from "./api.js";
 
 
