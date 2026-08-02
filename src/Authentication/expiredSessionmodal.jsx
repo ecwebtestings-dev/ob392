@@ -40,10 +40,10 @@ export default function SessionExpiredModal() {
 
             <div className="min-w-0">
               <DialogTitle className="text-base font-semibold text-gray-900">
-                Session expired
+                Your session has expired.
               </DialogTitle>
               <p className="mt-1 text-sm leading-5 text-gray-500">
-                Please log in again to continue.
+                You will be redirected to the login page
               </p>
             </div>
           </div>
@@ -53,7 +53,7 @@ export default function SessionExpiredModal() {
             onClick={handleLoginAgain}
             className="mt-6 w-full cursor-pointer hover:bg-[#116742] rounded-lg bg-[#063822] px-4 py-2.5 text-sm font-semibold text-white transition-colors"
           >
-            Log in again
+            Log In
           </button>
         </DialogPanel>
       </div>
