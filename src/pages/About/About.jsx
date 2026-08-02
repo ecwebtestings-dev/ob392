@@ -1,3 +1,4 @@
+import { AiWidget } from "../../AiWidget/WidgetLayout";
 import WhatsApp from "../../components/ui/Whatsapp";
 import AboutHero from "./AboutHero";
 import AboutSection from "./AboutUs";
@@ -21,6 +22,7 @@ export default function About() {
       <TeamPhoto/>
       <JoinUsCTA/>
       <LocationSection/>
+      <AiWidget/>
     </div>
   )
 }
