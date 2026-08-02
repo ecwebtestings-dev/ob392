@@ -76,9 +76,9 @@ export function AuditLogsTable() {
   const end = Math.min(currentPage * PAGE_SIZE, total);
 
   return (
-    // OUTER CONTAINER — fixed height, flex column, does NOT scroll itself
+    // OUTER CONTAINER 
     <div className="flex h-[450px] w-full min-w-0 flex-col overflow-hidden bg-white shadow sm:h-[500px] lg:h-[600px]">
-      {/* HEADER — pinned, never scrolls */}
+      {/* HEADER */}
       <div className="flex flex-none items-center gap-2.5 border-b border-gray-100 px-4 py-4 sm:px-5">
         <span className="flex size-8 flex-none items-center justify-center rounded-lg bg-[#0F6B45]/10">
           <ClockIcon className="size-4 text-[#0F6B45]" />
@@ -89,14 +89,13 @@ export function AuditLogsTable() {
         </div>
       </div>
 
-      {/* TABLE — the only scrollable region, fills remaining space */}
+      {/* TABLE */}
       <div className="min-h-0 flex-1 overflow-x-auto overflow-y-auto">
         <table className="w-full min-w-[700px] divide-y divide-gray-200 text-xs">
           <thead className="sticky top-0 z-10 bg-gray-50">
             <tr>
               <Th>Action</Th>
               <Th>Description</Th>
-              <Th>User ID</Th>
               <Th>Timestamp</Th>
               <Th><span className="sr-only">Actions</span></Th>
             </tr>
@@ -183,9 +182,7 @@ function LogRow({ log, onDelete }) {
       <Td>
         <span className="text-gray-700">{log.body || "—"}</span>
       </Td>
-      <Td>
-        <span className="whitespace-nowrap text-gray-500">#{log.user_id ?? "—"}</span>
-      </Td>
+      
       <Td>
         <span className="whitespace-nowrap text-gray-500">{formatTimestamp(log.created_at)}</span>
       </Td>

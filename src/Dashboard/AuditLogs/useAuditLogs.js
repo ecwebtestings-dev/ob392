@@ -13,7 +13,13 @@ export function useAuditLogsTable(page = 1) {
     staleTime: FIVE_MINUTES,
   });
 
-  const allLogs = data ?? [];
+  //SORTING LOGS
+  const allLogs = [...(data ?? [])].sort((a, b) => {
+    const aTime = new Date(a.created_at || a.id).getTime();
+    const bTime = new Date(b.created_at || b.id).getTime();
+    return bTime - aTime;
+  });
+
   const total = allLogs.length;
   const lastPage = Math.max(1, Math.ceil(total / PAGE_SIZE));
   const currentPage = Math.min(page, lastPage);
