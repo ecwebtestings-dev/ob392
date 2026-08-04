@@ -4,6 +4,8 @@ import {
   ExclamationTriangleIcon,
   XMarkIcon,
   PhotoIcon,
+  CalendarIcon,
+  LinkIcon,
 } from "@heroicons/react/24/outline";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import {
@@ -161,7 +163,18 @@ export default function EventManagement() {
 // EVENT CARD
 // ============================================================
 
+
+// ...
+
 function EventCard({ event, onDelete }) {
+  const formattedDate = event.date
+    ? new Date(event.date).toLocaleDateString(undefined, {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      })
+    : null;
+
   return (
     <article
       className="
@@ -244,6 +257,13 @@ function EventCard({ event, onDelete }) {
           {event.title}
         </h3>
 
+        {formattedDate && (
+          <div className="mt-1.5 flex items-center gap-1.5 text-xs text-gray-500">
+            <CalendarIcon className="size-3.5 flex-none" />
+            <span>{formattedDate}</span>
+          </div>
+        )}
+
         {event.description && (
           <p
             title={event.description}
@@ -260,6 +280,31 @@ function EventCard({ event, onDelete }) {
           >
             {event.description}
           </p>
+        )}
+
+        {event.link && (
+          
+           <a href={event.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="
+              mt-3
+              inline-flex
+              items-center
+              gap-1.5
+              self-start
+              text-xs
+              font-semibold
+              text-button-bg
+              transition-colors
+              hover:text-button-hover
+              hover:underline
+              sm:text-sm
+            "
+          >
+            <LinkIcon className="size-3.5 flex-none" />
+            View event
+          </a>
         )}
       </div>
     </article>

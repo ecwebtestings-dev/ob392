@@ -164,9 +164,8 @@ export function useCreateEvent(onCreated) {
       body.append("title", title);
       body.append("description", description);
       if (imageFile) body.append("image", imageFile);
-      // Sent optimistically — backend may or may not persist these yet.
       if (eventLink) body.append("link", eventLink);
-      if (eventDate) body.append("event_date", eventDate);
+      if (eventDate) body.append("date", eventDate);
 
       const res = await fetch(`${BASE_URL}/event/create`, {
         method: "POST",
