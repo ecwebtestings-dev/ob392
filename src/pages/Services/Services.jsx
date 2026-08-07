@@ -1,5 +1,5 @@
 import { AiWidget } from "../../AiWidget/WidgetLayout";
-// import WhatsApp from "../../components/ui/Whatsapp";
+import WhatsApp from "../../components/ui/Whatsapp";
 import AgribusinessExport from "./AgriBusinessExport";
 import BusinessIncubation from "./BusinessIncubation";
 import CallToAction from "./Calltoaction";
@@ -27,7 +27,7 @@ export default function Services() {
      <HowItWorks/>
      <AiWidget/>
      <ImpactBenefits/>
-     {/* <WhatsApp/> */}
+     <WhatsApp/>
    
     </>
   )
