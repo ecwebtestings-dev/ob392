@@ -8,10 +8,7 @@ import {
   LinkIcon,
 } from "@heroicons/react/24/outline";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import {
-  useEventManagement,
-  useCreateEvent,
-} from "./EventManagement";
+import { useEventManagement, useCreateEvent } from "./EventManagement";
 
 export default function EventManagement() {
   const {
@@ -44,15 +41,12 @@ export default function EventManagement() {
 
   return (
     <div className="mx-auto w-full max-w-6xl min-w-0 px-4 py-5 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
-      {/* =====================================================
-          PAGE HEADER
-      ====================================================== */}
+      {/* PAGE HEADER */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0">
           <h1 className="text-xl font-bold tracking-tight text-gray-900 sm:text-2xl">
             Events
           </h1>
-
           <p className="mt-1 max-w-2xl text-xs leading-5 text-gray-500 sm:text-sm">
             Scheduled events visible to authenticated users.
           </p>
@@ -61,57 +55,23 @@ export default function EventManagement() {
         <button
           type="button"
           onClick={() => setShowCreate(true)}
-          className="
-            inline-flex
-            w-full
-            items-center
-            justify-center
-            gap-1.5
-            rounded-lg
-            bg-button-bg
-            px-4
-            py-2.5
-            text-sm
-            font-semibold
-            text-white
-            transition-colors
-            hover:bg-button-hover
-            sm:w-auto
-            sm:flex-none
-          "
+          className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-[#04472B] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:cursor-pointer sm:w-auto sm:flex-none"
         >
           <PlusIcon className="size-4" />
           New event
         </button>
       </div>
 
-      {/* =====================================================
-          EVENTS
-      ====================================================== */}
+      {/* EVENTS */}
       <div className="mt-6 sm:mt-8">
         {loading ? (
-          <div className="flex min-h-[250px] items-center justify-center rounded-xl border border-gray-200 bg-white p-6 text-center text-sm text-gray-500 shadow-sm sm:rounded-2xl">
-            Loading events...
-          </div>
+          <StatePanel tone="default">Loading events...</StatePanel>
         ) : error ? (
-          <div className="flex min-h-[250px] items-center justify-center rounded-xl border border-gray-200 bg-white p-6 text-center text-sm text-red-500 shadow-sm sm:rounded-2xl">
-            {error}
-          </div>
+          <StatePanel tone="error">{error}</StatePanel>
         ) : events.length === 0 ? (
-          <div className="flex min-h-[250px] items-center justify-center rounded-xl border border-gray-200 bg-white p-6 text-center text-sm text-gray-500 shadow-sm sm:rounded-2xl">
-            No events scheduled yet.
-          </div>
+          <StatePanel tone="default">No events scheduled yet.</StatePanel>
         ) : (
-          <div
-            className="
-              grid
-              grid-cols-1
-              gap-4
-              sm:grid-cols-2
-              sm:gap-5
-              lg:grid-cols-3
-            "
-          >
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
             {events.map((ev) => (
               <EventCard
                 key={ev.id}
@@ -123,9 +83,7 @@ export default function EventManagement() {
         )}
       </div>
 
-      {/* =====================================================
-          CREATE MODAL
-      ====================================================== */}
+      {/* CREATE MODAL */}
       {showCreate && (
         <CreateEventModal
           title={title}
@@ -144,9 +102,7 @@ export default function EventManagement() {
         />
       )}
 
-      {/* =====================================================
-          DELETE MODAL
-      ====================================================== */}
+      {/* DELETE MODAL */}
       {pendingDelete && (
         <ConfirmDeleteModal
           event={pendingDelete}
@@ -160,11 +116,24 @@ export default function EventManagement() {
 }
 
 // ============================================================
-// EVENT CARD
+// STATE PANEL (loading / error / empty)
 // ============================================================
 
+function StatePanel({ tone = "default", children }) {
+  const toneClass = tone === "error" ? "text-red-500" : "text-gray-500";
 
-// ...
+  return (
+    <div
+      className={`flex min-h-[250px] items-center justify-center rounded-xl border border-gray-200 bg-white p-6 text-center text-sm shadow-sm sm:rounded-2xl ${toneClass}`}
+    >
+      {children}
+    </div>
+  );
+}
+
+// ============================================================
+// EVENT CARD
+// ============================================================
 
 function EventCard({ event, onDelete }) {
   const formattedDate = event.date
@@ -176,34 +145,14 @@ function EventCard({ event, onDelete }) {
     : null;
 
   return (
-    <article
-      className="
-        group
-        flex
-        min-w-0
-        flex-col
-        overflow-hidden
-        rounded-xl
-        border
-        border-gray-200
-        bg-white
-        shadow-sm
-        transition-shadow
-        hover:shadow-md
-        sm:rounded-2xl
-      "
-    >
+    <article className="group flex min-w-0 flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md sm:rounded-2xl">
       {/* IMAGE */}
       <div className="relative aspect-video w-full flex-none overflow-hidden bg-gray-100">
         {event.image ? (
           <img
             src={event.image}
             alt={event.title}
-            className="
-              size-full
-              object-cover
-              duration-300
-            "
+            className="size-full object-cover duration-300"
           />
         ) : (
           <div className="flex size-full items-center justify-center text-gray-300">
@@ -211,31 +160,12 @@ function EventCard({ event, onDelete }) {
           </div>
         )}
 
-        {/* DELETE BUTTON
-            Visible on mobile, hover-enhanced on desktop */}
+        {/* DELETE BUTTON — visible on mobile, hover-enhanced on desktop */}
         <button
           type="button"
           onClick={onDelete}
-          className="
-            absolute
-            right-2
-            top-2
-            flex
-            size-9
-            items-center
-            justify-center
-            rounded-lg
-            bg-white/95
-            text-gray-500
-            shadow-sm
-            backdrop-blur
-            transition-colors
-            hover:bg-red-50
-            hover:text-red-500
-            sm:opacity-0
-            sm:group-hover:opacity-100
-          "
           aria-label={`Delete ${event.title}`}
+          className="absolute right-2 top-2 flex size-9 items-center justify-center rounded-lg bg-white/95 text-gray-500 shadow-sm backdrop-blur transition-colors hover:bg-red-50 hover:text-red-500 sm:opacity-0 sm:group-hover:opacity-100"
         >
           <TrashIcon className="size-4" />
         </button>
@@ -245,14 +175,7 @@ function EventCard({ event, onDelete }) {
       <div className="flex min-w-0 flex-1 flex-col p-4 sm:p-5">
         <h3
           title={event.title}
-          className="
-            break-words
-            text-sm
-            font-semibold
-            leading-5
-            text-gray-900
-            sm:text-base
-          "
+          className="break-words text-sm font-semibold leading-5 text-gray-900 sm:text-base"
         >
           {event.title}
         </h3>
@@ -267,40 +190,18 @@ function EventCard({ event, onDelete }) {
         {event.description && (
           <p
             title={event.description}
-            className="
-              mt-2
-              line-clamp-3
-              break-words
-              text-xs
-              leading-5
-              text-gray-500
-              sm:text-sm
-              sm:leading-relaxed
-            "
+            className="mt-2 line-clamp-3 break-words text-xs leading-5 text-gray-500 sm:text-sm sm:leading-relaxed"
           >
             {event.description}
           </p>
         )}
 
         {event.link && (
-          
-           <a href={event.link}
+          <a
+            href={event.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="
-              mt-3
-              inline-flex
-              items-center
-              gap-1.5
-              self-start
-              text-xs
-              font-semibold
-              text-button-bg
-              transition-colors
-              hover:text-button-hover
-              hover:underline
-              sm:text-sm
-            "
+            className="mt-3 inline-flex items-center gap-1.5 self-start text-xs font-semibold text-button-bg transition-colors hover:text-button-hover hover:underline sm:text-sm"
           >
             <LinkIcon className="size-3.5 flex-none" />
             View event
@@ -310,6 +211,25 @@ function EventCard({ event, onDelete }) {
     </article>
   );
 }
+
+// ============================================================
+// FORM FIELD (shared input wrapper for the create modal)
+// ============================================================
+
+function FormField({ label, optional, children }) {
+  return (
+    <div>
+      <label className="mb-1.5 block text-xs font-medium tracking-wide text-gray-500">
+        {label}{" "}
+        {optional && <span className="font-normal text-gray-400">(optional)</span>}
+      </label>
+      {children}
+    </div>
+  );
+}
+
+const inputClass =
+  "w-full rounded-md border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-badges/50 focus:outline-none focus:ring-2 focus:ring-badges/10";
 
 // ============================================================
 // CREATE EVENT MODAL
@@ -332,99 +252,42 @@ export function CreateEventModal({
 }) {
   return (
     <Dialog open onClose={onClose} className="relative z-50">
-      {/* BACKDROP */}
-      <div
-        className="fixed inset-0 bg-black/40 backdrop-blur-sm"
-        aria-hidden="true"
-      />
+      <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" aria-hidden="true" />
 
-      {/* MODAL CONTAINER */}
       <div className="fixed inset-0 flex items-center justify-center overflow-y-auto p-3 sm:p-4">
-        <DialogPanel
-          className="
-            flex
-            max-h-[94vh]
-            w-full
-            max-w-md
-            flex-col
-            overflow-hidden
-            rounded-xl
-            bg-white
-            shadow-2xl
-            sm:max-h-[90vh]
-            sm:rounded-2xl
-          "
-        >
-          {/* MODAL HEADER */}
-          <div className="flex flex-none items-center justify-between border-b border-gray-100 px-4 py-4 sm:px-6">
-            <DialogTitle className="text-base font-semibold text-gray-900 sm:text-lg">
-              New event
+        <DialogPanel className="relative flex max-h-[85vh] w-full max-w-sm flex-col overflow-hidden rounded-xl bg-white shadow-2xl sm:max-h-[80vh] sm:rounded-2xl">
+          {/* HEADER */}
+          <div className="flex flex-none items-center justify-between border-b border-gray-100 px-4 py-3 sm:px-5">
+            <DialogTitle className="text-base font-semibold text-gray-900">
+              Add New event
             </DialogTitle>
 
             <button
               type="button"
               onClick={onClose}
-              className="
-                rounded-lg
-                p-1.5
-                text-gray-400
-                transition-colors
-                hover:bg-gray-100
-                hover:text-gray-600
-              "
               aria-label="Close"
+              className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
             >
               <XMarkIcon className="size-5" />
             </button>
           </div>
 
-          {/* SCROLLABLE FORM */}
+          {/* FORM */}
           <form
             onSubmit={onSubmit}
-            className="min-h-0 flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-5"
+            className="min-h-0 flex-1 overflow-y-auto px-4 py-3 sm:px-5 sm:py-4"
           >
-            <div className="space-y-4">
-              {/* IMAGE */}
-              <div>
-                <label className="mb-1.5 block text-xs font-medium tracking-wide text-gray-500">
-                  Image
-                </label>
-
-                <label
-                  className="
-                    flex
-                    aspect-video
-                    w-full
-                    cursor-pointer
-                    items-center
-                    justify-center
-                    overflow-hidden
-                    rounded-xl
-                    border
-                    border-dashed
-                    border-gray-300
-                    bg-gray-50
-                    transition-colors
-                    hover:border-badges/50
-                    hover:bg-badge-bg/40
-                  "
-                >
+            <div className="space-y-3">
+              <FormField label="Image">
+                <label className="flex h-24 w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg border border-dashed border-gray-300 bg-gray-50 transition-colors hover:border-badges/50 hover:bg-badge-bg/40">
                   {imagePreview ? (
-                    <img
-                      src={imagePreview}
-                      alt="Preview"
-                      className="size-full object-cover"
-                    />
+                    <img src={imagePreview} alt="Preview" className="size-full object-cover" />
                   ) : (
-                    <span className="flex flex-col items-center gap-1.5 px-4 text-center text-gray-400">
-                      <PhotoIcon className="size-8" />
-
-                      <span className="text-xs font-medium">
-                        Click to upload an image
-                      </span>
+                    <span className="flex flex-col items-center gap-1 px-4 text-center text-gray-400">
+                      <PhotoIcon className="size-6" />
+                      <span className="text-xs font-medium">Click to upload an image</span>
                     </span>
                   )}
-
                   <input
                     type="file"
                     accept="image/*"
@@ -432,184 +295,67 @@ export function CreateEventModal({
                     className="hidden"
                   />
                 </label>
-              </div>
+              </FormField>
 
-              {/* TITLE */}
-              <div>
-                <label className="mb-1.5 block text-xs font-medium tracking-wide text-gray-500">
-                  Title
-                </label>
-
+              <FormField label="Title">
                 <input
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  placeholder="Cooperative training day"
-                  className="
-                    w-full
-                    rounded-md
-                    border
-                    border-gray-200
-                    bg-white
-                    px-3
-                    py-2.5
-                    text-sm
-                    text-gray-900
-                    placeholder:text-gray-400
-                    focus:border-badges/50
-                    focus:outline-none
-                    focus:ring-2
-                    focus:ring-badges/10
-                  "
+                  placeholder=""
+                  className={inputClass}
                 />
-              </div>
+              </FormField>
 
-              {/* DESCRIPTION */}
-              <div>
-                <label className="mb-1.5 block text-xs font-medium tracking-wide text-gray-500">
-                  Description
-                </label>
-
+              <FormField label="Description">
                 <textarea
-                  rows={4}
+                  rows={2}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Describe the event..."
-                  className="
-                    w-full
-                    resize-none
-                    rounded-md
-                    border
-                    border-gray-200
-                    bg-white
-                    px-3
-                    py-2.5
-                    text-sm
-                    text-gray-900
-                    placeholder:text-gray-400
-                    focus:border-badges/50
-                    focus:outline-none
-                    focus:ring-2
-                    focus:ring-badges/10
-                  "
+                  placeholder=""
+                  className={`resize-none ${inputClass}`}
                 />
-              </div>
+              </FormField>
 
-              {/* EVENT DATE */}
-              <div>
-                <label className="mb-1.5 block text-xs font-medium tracking-wide text-gray-500">
-                  Event date
-                </label>
+              {/* Date + Link share a row to save vertical space */}
+              <div className="grid grid-cols-2 gap-3">
+                <FormField label="Event date">
+                  <input
+                    type="date"
+                    value={eventDate}
+                    onChange={(e) => setEventDate(e.target.value)}
+                    className={inputClass}
+                  />
+                </FormField>
 
-                <input
-                  type="date"
-                  value={eventDate}
-                  onChange={(e) => setEventDate(e.target.value)}
-                  className="
-                    w-full
-                    rounded-md
-                    border
-                    border-gray-200
-                    bg-white
-                    px-3
-                    py-2.5
-                    text-sm
-                    text-gray-900
-                    focus:border-badges/50
-                    focus:outline-none
-                    focus:ring-2
-                    focus:ring-badges/10
-                  "
-                />
-              </div>
-
-              {/* LINK */}
-              <div>
-                <label className="mb-1.5 block text-xs font-medium tracking-wide text-gray-500">
-                  Link{" "}
-                  <span className="font-normal text-gray-400">(optional)</span>
-                </label>
-
-                <input
-                  type="url"
-                  value={eventLink}
-                  onChange={(e) => setEventLink(e.target.value)}
-                  placeholder="https://..."
-                  className="
-                    w-full
-                    rounded-md
-                    border
-                    border-gray-200
-                    bg-white
-                    px-3
-                    py-2.5
-                    text-sm
-                    text-gray-900
-                    placeholder:text-gray-400
-                    focus:border-badges/50
-                    focus:outline-none
-                    focus:ring-2
-                    focus:ring-badges/10
-                  "
-                />
+                <FormField label="Link">
+                  <input
+                    type="url"
+                    value={eventLink}
+                    onChange={(e) => setEventLink(e.target.value)}
+                    placeholder="https://..."
+                    className={inputClass}
+                  />
+                </FormField>
               </div>
             </div>
 
             {/* ACTIONS */}
-            <div
-              className="
-                mt-6
-                flex
-                flex-col-reverse
-                gap-2
-                sm:flex-row
-                sm:justify-end
-              "
-            >
-              <button
-                type="button"
-                onClick={onClose}
-                className="
-                  w-full
-                  rounded-lg
-                  border
-                  border-gray-200
-                  px-4
-                  py-2.5
-                  text-sm
-                  font-medium
-                  text-gray-600
-                  transition-colors
-                  hover:bg-gray-50
-                  sm:w-auto
-                "
-              >
-                Cancel
-              </button>
+            <div className="mt-4 flex items-center justify-center">
+              
 
               <button
                 type="submit"
                 disabled={submitting}
-                className="
-                  w-full
-                  rounded-lg
-                  bg-button-bg
-                  px-4
-                  py-2.5
-                  text-sm
-                  font-semibold
-                  text-white
-                  transition-colors
-                  hover:bg-button-hover
-                  disabled:cursor-not-allowed
-                  disabled:opacity-60
-                  sm:w-auto
-                "
+                className="w-full rounded-lg bg-[#04472B] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-button-hover disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
               >
                 {submitting ? "Creating..." : "Create event"}
               </button>
             </div>
           </form>
+
+          {/* Fade + hint so users notice the form scrolls if content overflows */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-[60px] h-6 bg-gradient-to-t from-white to-transparent sm:bottom-[68px]" />
         </DialogPanel>
       </div>
     </Dialog>
@@ -620,46 +366,15 @@ export function CreateEventModal({
 // CONFIRM DELETE MODAL
 // ============================================================
 
-function ConfirmDeleteModal({
-  event,
-  submitting,
-  onConfirm,
-  onCancel,
-}) {
+function ConfirmDeleteModal({ event, submitting, onConfirm, onCancel }) {
   return (
     <Dialog open onClose={onCancel} className="relative z-50">
-      {/* BACKDROP */}
-      <div
-        className="fixed inset-0 bg-black/40 backdrop-blur-sm"
-        aria-hidden="true"
-      />
+      <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" aria-hidden="true" />
 
-      {/* CONTAINER */}
       <div className="fixed inset-0 flex items-center justify-center overflow-y-auto p-4">
-        <DialogPanel
-          className="
-            w-full
-            max-w-sm
-            rounded-xl
-            bg-white
-            p-5
-            shadow-2xl
-            sm:rounded-2xl
-            sm:p-6
-          "
-        >
+        <DialogPanel className="w-full max-w-sm rounded-xl bg-white p-5 shadow-2xl sm:rounded-2xl sm:p-6">
           <div className="flex items-start gap-3">
-            <span
-              className="
-                flex
-                size-10
-                flex-none
-                items-center
-                justify-center
-                rounded-full
-                bg-red-50
-              "
-            >
+            <span className="flex size-10 flex-none items-center justify-center rounded-full bg-red-50">
               <ExclamationTriangleIcon className="size-5 text-red-500" />
             </span>
 
@@ -667,44 +382,18 @@ function ConfirmDeleteModal({
               <DialogTitle className="text-base font-semibold text-gray-900">
                 Delete event
               </DialogTitle>
-
               <p className="mt-1 break-words text-sm leading-5 text-gray-500">
-                This will permanently remove "{event.title}". This can't be
-                undone.
+                This will permanently remove "{event.title}". This can't be undone.
               </p>
             </div>
           </div>
 
-          {/* ACTIONS */}
-          <div
-            className="
-              mt-6
-              flex
-              flex-col-reverse
-              gap-2
-              sm:flex-row
-              sm:justify-end
-            "
-          >
+          <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
             <button
               type="button"
               onClick={onCancel}
               disabled={submitting}
-              className="
-                w-full
-                rounded-lg
-                border
-                border-gray-200
-                px-4
-                py-2.5
-                text-sm
-                font-medium
-                text-gray-600
-                transition-colors
-                hover:bg-gray-50
-                disabled:opacity-60
-                sm:w-auto
-              "
+              className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50 disabled:opacity-60 sm:w-auto"
             >
               Cancel
             </button>
@@ -713,21 +402,7 @@ function ConfirmDeleteModal({
               type="button"
               onClick={onConfirm}
               disabled={submitting}
-              className="
-                w-full
-                rounded-lg
-                bg-red-600
-                px-4
-                py-2.5
-                text-sm
-                font-semibold
-                text-white
-                transition-colors
-                hover:bg-red-700
-                disabled:cursor-not-allowed
-                disabled:opacity-60
-                sm:w-auto
-              "
+              className="w-full rounded-lg bg-red-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
             >
               {submitting ? "Deleting..." : "Delete event"}
             </button>
