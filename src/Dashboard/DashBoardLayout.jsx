@@ -22,7 +22,7 @@ import images from "../assets/assets";
 import { getCurrentUser, logout } from "../Authentication/authService";
 import { api } from "../Authentication/api";
 import Notification from "./Notifications/Notifications";
-
+import { useUserSearch } from "./UserManagement/useUserSearch";
 // DIFFERENT COMPONENTS CONNECTED TO THE DASHBOARDS
 const navItems = [
   { to: "/dashboard", label: "Overview", icon: Squares2X2Icon, end: true },
@@ -47,7 +47,7 @@ export default function DashboardLayout() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
 
-  // Closed Menu Icon by default 
+  // Closed Menu Icon by default
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
   const sidebarExpanded = !sidebarCollapsed;
 
@@ -77,7 +77,7 @@ export default function DashboardLayout() {
   const initials = getInitials(user?.name);
 
   return (
-  
+
     <div className="flex h-screen overflow-hidden bg-[#F5F7F6] text-[#0B1F17]">
       <div
         className={`hidden flex-none transition-all duration-200 lg:block ${
@@ -136,14 +136,13 @@ export default function DashboardLayout() {
             icon={ArrowRightStartOnRectangleIcon}
             expanded={sidebarExpanded}
             onClick={handleLogout}
-            
             className='hover:cursor-pointer'
           />
         </div>
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col bg-[#F5F7F6]">
-        {/* Desktop Header — soft white chrome, green + gold accents */}
+        {/* Desktop Header */}
         <header className="sticky top-0 z-30 hidden h-16 flex-none items-center justify-between gap-4 border-b border-black/5 bg-white px-6 lg:flex">
           <div className="flex min-w-0 flex-1 max-w-md items-center gap-3">
             <button
@@ -155,17 +154,7 @@ export default function DashboardLayout() {
             </button>
 
             {/* SEARCH BAR */}
-            <div className="relative min-w-0 flex-1">
-              <MagnifyingGlassIcon className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[#0F6B45]/50" />
-              <input
-                type="text"
-                placeholder="Search"
-                className="w-full rounded-lg border border-black/5 bg-[#F5F7F6] py-2 pl-9 pr-14 text-sm text-[#0B1F17] placeholder:text-[#0B1F17]/40 outline-none transition-colors focus:border-[#0F6B45]/40 focus:bg-white focus:ring-2 focus:ring-[#0F6B45]/15"
-              />
-              <span className="pointer-events-none absolute right-2.5 top-1/2 hidden -translate-y-1/2 items-center rounded-md bg-[#FFD230]/25 px-1.5 py-0.5 text-[10.5px] font-semibold text-[#0B1F17]/70 sm:flex">
-                Enter
-              </span>
-            </div>
+            <UserSearchBar />
           </div>
 
           {/* NOTIFICATIONS + ACCOUNT DISPLAY */}
@@ -192,7 +181,7 @@ export default function DashboardLayout() {
 
         {/* Mobile Header  */}
         <header className="sticky top-0 z-30 flex flex-col border-b border-black/5 bg-white lg:hidden">
-          <div className="flex h-16 flex-none items-center justify-between px-4">
+          <div className="flex h-16 flex-none items-center justify-between px-4 gap-2">
             <button
               onClick={() => setMobileNavOpen((o) => !o)}
               className="rounded-lg p-2 text-[#0B1F17]/60 hover:bg-[#0F6B45]/10 hover:text-[#0F6B45]"
@@ -224,22 +213,26 @@ export default function DashboardLayout() {
           </div>
 
           {mobileActionsOpen && (
-            <div className="flex items-center justify-between border-t border-black/5 px-4 py-3">
-              <Notification />
+            <div className="flex flex-col gap-3 border-t border-black/5 px-4 py-3">
+              <UserSearchBar mobile />
 
-              <div className="flex items-center gap-2.5 rounded-lg py-1.5 pl-1.5 pr-2.5">
-                <span className="flex size-9 flex-none items-center justify-center rounded-full bg-[#0F6B45] text-xs font-semibold text-white">
-                  {initials || <UserCircleIcon className="size-5" />}
-                </span>
+              <div className="flex items-center justify-between">
+                <Notification />
 
-                <span className="flex flex-col items-start leading-tight">
-                  <span className="text-sm font-medium text-[#0B1F17]">
-                    {user?.name || "..."}
+                <div className="flex items-center gap-2.5 rounded-lg py-1.5 pl-1.5 pr-2.5">
+                  <span className="flex size-9 flex-none items-center justify-center rounded-full bg-[#0F6B45] text-xs font-semibold text-white">
+                    {initials || <UserCircleIcon className="size-5" />}
                   </span>
-                  <span className="max-w-[120px] truncate text-[11px] text-[#0B1F17]/50">
-                    {user?.email}
+
+                  <span className="flex flex-col items-start leading-tight">
+                    <span className="text-sm font-medium text-[#0B1F17]">
+                      {user?.name || "..."}
+                    </span>
+                    <span className="max-w-[120px] truncate text-[11px] text-[#0B1F17]/50">
+                      {user?.email}
+                    </span>
                   </span>
-                </span>
+                </div>
               </div>
             </div>
           )}
@@ -321,6 +314,183 @@ export default function DashboardLayout() {
           <Outlet context={{ user }} />
         </main>
       </div>
+    </div>
+  );
+}
+
+// Search input + results dropdown, backed by useUserSearch.
+// Renders results in a portal so they aren't clipped by header overflow, and
+// positions itself under the input on open/scroll/resize.
+function UserSearchBar({ mobile = false }) {
+  const navigate = useNavigate();
+  const containerRef = useRef(null);
+  const inputRef = useRef(null);
+
+  const [term, setTerm] = useState("");
+  const [open, setOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
+  const [coords, setCoords] = useState(null);
+
+  const { results, searching, error } = useUserSearch(term);
+
+  const hasQuery = term.trim().length > 0;
+
+  // Position the dropdown under the input (skipped on mobile, which renders inline below)
+  useEffect(() => {
+    if (mobile || !open || !containerRef.current) return;
+
+    function updateCoords() {
+      const rect = containerRef.current.getBoundingClientRect();
+      setCoords({ top: rect.bottom + 6, left: rect.left, width: rect.width });
+    }
+
+    updateCoords();
+    window.addEventListener("resize", updateCoords);
+    window.addEventListener("scroll", updateCoords, true);
+    return () => {
+      window.removeEventListener("resize", updateCoords);
+      window.removeEventListener("scroll", updateCoords, true);
+    };
+  }, [open, mobile]);
+
+  // Close on outside click
+  useEffect(() => {
+    function handleClick(e) {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
+  useEffect(() => {
+    setActiveIndex(-1);
+  }, [results]);
+
+  function goToUser(u) {
+    if (!u) return;
+    setOpen(false);
+    setTerm("");
+    inputRef.current?.blur();
+    navigate(`/dashboard/users/${u.id ?? u._id}`);
+  }
+
+  function handleKeyDown(e) {
+    if (!open || results.length === 0) {
+      if (e.key === "Escape") {
+        setOpen(false);
+        inputRef.current?.blur();
+      }
+      return;
+    }
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActiveIndex((i) => (i + 1) % results.length);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActiveIndex((i) => (i - 1 + results.length) % results.length);
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      goToUser(results[activeIndex] ?? results[0]);
+    } else if (e.key === "Escape") {
+      setOpen(false);
+      inputRef.current?.blur();
+    }
+  }
+
+  const showDropdown = open && hasQuery;
+
+  const dropdownContent = (
+    <div
+      className={
+        mobile
+          ? "mt-2 max-h-72 overflow-y-auto rounded-lg border border-black/5 bg-white shadow-sm"
+          : "max-h-80 overflow-y-auto rounded-lg border border-black/5 bg-white shadow-xl shadow-black/10"
+      }
+      style={
+        mobile
+          ? undefined
+          : { position: "fixed", top: coords?.top, left: coords?.left, width: coords?.width, zIndex: 60 }
+      }
+    >
+      {searching && (
+        <div className="px-4 py-3 text-sm text-[#0B1F17]/50">Searching…</div>
+      )}
+
+      {!searching && error && (
+        <div className="px-4 py-3 text-sm text-red-500">Couldn't load results</div>
+      )}
+
+      {!searching && !error && results.length === 0 && (
+        <div className="px-4 py-3 text-sm text-[#0B1F17]/50">No users found</div>
+      )}
+
+      {!searching &&
+        !error &&
+        results.map((u, i) => (
+          <button
+            key={u.id ?? u._id}
+            type="button"
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => goToUser(u)}
+            onMouseEnter={() => setActiveIndex(i)}
+            className={`flex w-full items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors ${
+              i === activeIndex ? "bg-[#0F6B45]/10" : "hover:bg-[#0F6B45]/5"
+            }`}
+          >
+            <span className="flex size-8 flex-none items-center justify-center rounded-full bg-[#0F6B45]/15 text-xs font-semibold text-[#0F6B45]">
+              {getInitials(u.name) || <UserCircleIcon className="size-4" />}
+            </span>
+            <span className="flex min-w-0 flex-col leading-tight">
+              <span className="truncate font-medium text-[#0B1F17]">{u.name || "Unnamed user"}</span>
+              <span className="truncate text-[11px] text-[#0B1F17]/50">{u.email}</span>
+            </span>
+          </button>
+        ))}
+    </div>
+  );
+
+  return (
+    <div ref={containerRef} className="relative min-w-0 flex-1">
+      <div className="relative">
+        <MagnifyingGlassIcon className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[#0F6B45]/50" />
+        <input
+          ref={inputRef}
+          type="text"
+          value={term}
+          onChange={(e) => {
+            setTerm(e.target.value);
+            setOpen(true);
+          }}
+          onFocus={() => setOpen(true)}
+          onKeyDown={handleKeyDown}
+          placeholder="Search users"
+          className="w-full rounded-lg border border-black/5 bg-[#F5F7F6] py-2 pl-9 pr-14 text-sm text-[#0B1F17] placeholder:text-[#0B1F17]/40 outline-none transition-colors focus:border-[#0F6B45]/40 focus:bg-white focus:ring-2 focus:ring-[#0F6B45]/15"
+        />
+        {term ? (
+          <button
+            type="button"
+            onClick={() => {
+              setTerm("");
+              setOpen(false);
+              inputRef.current?.focus();
+            }}
+            className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-md p-0.5 text-[#0B1F17]/40 hover:bg-black/5 hover:text-[#0B1F17]/70"
+            aria-label="Clear search"
+          >
+            <XMarkIcon className="size-4" />
+          </button>
+        ) : (
+          <span className="pointer-events-none absolute right-2.5 top-1/2 hidden -translate-y-1/2 items-center rounded-md bg-[#FFD230]/25 px-1.5 py-0.5 text-[10.5px] font-semibold text-[#0B1F17]/70 sm:flex">
+            Enter
+          </span>
+        )}
+      </div>
+
+      {showDropdown && mobile && dropdownContent}
+      {showDropdown && !mobile && coords && createPortal(dropdownContent, document.body)}
     </div>
   );
 }

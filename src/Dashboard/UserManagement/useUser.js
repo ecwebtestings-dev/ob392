@@ -9,7 +9,7 @@ const FIVE_MINUTES = 5 * 60 * 1000;
 
 export const ACTIONS = {
   suspend: {
-    verb: "suspend",
+    verb: "",
     request: suspendUser,  
     title: "Suspend user",
     body: (name) => `This will suspend "${name}"'s account. He/She will lose access immediately.`,
@@ -17,7 +17,7 @@ export const ACTIONS = {
     confirmClass: "bg-red-600 hover:bg-red-700",
   },
   unsuspend: {
-    verb: "unsuspend",
+    verb: "",
     request: unsuspendUser,
     title: "Unsuspend user",
     body: (name) => `This will grant "${name}" access to his account. He/she will gain access immediately.`,
@@ -25,7 +25,7 @@ export const ACTIONS = {
     confirmClass: "bg-green-600 hover:bg-green-700",
   },
   promote: {
-    verb: "promote",
+    verb: "",
     request: promoteUser,
     title: "Grant admin access",
     body: (name) => `"${name}" will gain administrative permissions.`,
@@ -33,7 +33,7 @@ export const ACTIONS = {
     confirmClass: "bg-button-bg hover:bg-button-hover",
   },
   demote: {
-    verb: "demote",
+    verb: "",
     request: demoteUser,
     title: "Remove admin access",
     body: (name) => `"${name}" will lose administrative permissions.`,

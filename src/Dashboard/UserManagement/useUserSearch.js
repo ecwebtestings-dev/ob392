@@ -21,11 +21,12 @@ export function useUserSearch(searchTerm) {
   const { data, isLoading, error, isFetching } = useQuery({
     queryKey: ["users", "search", debouncedTerm],
     queryFn: async () => {
-      const res = await api.get(`/users/search`, { params: { search: debouncedTerm } });
-      return Array.isArray(res.data) ? res.data : res.data?.data ?? [];
+      const query = encodeURIComponent(debouncedTerm);
+      const res = await api.get(`/users/search?search=${query}`);
+      return Array.isArray(res) ? res : res?.data ?? [];
     },
-    enabled: debouncedTerm.trim().length > 0, // don't fire on empty search
-    staleTime: 60 * 1000, // shorter stale time — search results are transient
+    enabled: debouncedTerm.trim().length > 0, 
+    staleTime: 60 * 1000, 
   });
 
   return {
