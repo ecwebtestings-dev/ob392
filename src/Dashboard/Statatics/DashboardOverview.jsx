@@ -30,7 +30,6 @@ import { CreateEventModal } from "../Events/useEventManagement";
 
 const STATS_ENDPOINT = "/dashboard/stats";
 const DASHBOARD_STATS_QUERY_KEY = ["dashboard-stats"];
-
 const RECENT_EVENTS_LIMIT = 5;
 
 // ============================================================
@@ -221,8 +220,7 @@ function MetricCard({ def, cardData, featured }) {
           const isPrimary = chip.tone === "primary";
 
           return (
-            <span
-              key={chip.field}
+            <span key={chip.field}
               className={`
                 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11.5px]
                 ${

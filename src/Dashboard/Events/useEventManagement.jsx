@@ -10,6 +10,7 @@ import {
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useEventManagement, useCreateEvent } from "./EventManagement";
 
+
 export default function EventManagement() {
   const {
     events,
@@ -412,3 +413,5 @@ function ConfirmDeleteModal({ event, submitting, onConfirm, onCancel }) {
     </Dialog>
   );
 }
+
+

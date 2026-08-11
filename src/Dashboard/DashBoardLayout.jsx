@@ -23,6 +23,9 @@ import { getCurrentUser, logout } from "../Authentication/authService";
 import { api } from "../Authentication/api";
 import Notification from "./Notifications/Notifications";
 import { useUserSearch } from "./UserManagement/useUserSearch";
+
+
+
 // DIFFERENT COMPONENTS CONNECTED TO THE DASHBOARDS
 const navItems = [
   { to: "/dashboard", label: "Overview", icon: Squares2X2Icon, end: true },
@@ -319,8 +322,7 @@ export default function DashboardLayout() {
 }
 
 // Search input + results dropdown, backed by useUserSearch.
-// Renders results in a portal so they aren't clipped by header overflow, and
-// positions itself under the input on open/scroll/resize.
+
 function UserSearchBar({ mobile = false }) {
   const navigate = useNavigate();
   const containerRef = useRef(null);
@@ -483,7 +485,7 @@ function UserSearchBar({ mobile = false }) {
             <XMarkIcon className="size-4" />
           </button>
         ) : (
-          <span className="pointer-events-none absolute right-2.5 top-1/2 hidden -translate-y-1/2 items-center rounded-md bg-[#FFD230]/25 px-1.5 py-0.5 text-[10.5px] font-semibold text-[#0B1F17]/70 sm:flex">
+          <span className="pointer-events-none absolute right-2.5 top-1/2 hidden -translate-y-1/2 items-center rounded-mdpx-1.5 py-0.5 text-[10.5px] font-semibold text-[#0B1F17]/70 sm:flex">
             Enter
           </span>
         )}
