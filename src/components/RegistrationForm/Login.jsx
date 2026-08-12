@@ -1,75 +1,81 @@
 import { useState } from "react";
-import { EyeIcon, EyeSlashIcon,ArrowPathIcon } from "@heroicons/react/24/outline";
+import { EyeIcon, EyeSlashIcon, ArrowPathIcon } from "@heroicons/react/24/outline";
 import AuthLayout from "./AuthLayout";
 import { Field } from "./AuthFields";
 import toast from "react-hot-toast";
+// IMPORT AUTH SERVICE FUNCTION FOR LOGIN
 import { login } from "../../Authentication/authService";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
-  // Form fields
+  // STATE TO STORE FORM INPUT VALUES
   const [form, setForm] = useState({
     email: '',
     password: '',
   });
 
-
-  // per-field errors
+  // STATE TO STORE INDIVIDUAL FIELD VALIDATION ERRORS
   const [fieldErrors, setFieldErrors] = useState({}); 
-  // server errors
+  // GENERAL SERVER-SIDE ERROR MESSAGE
   const [error, setError] = useState(''); 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-
-  // Updates one fields and clears errors onchange
+  // HANDLER TO UPDATE FORM FIELDS
   const handleChange = (e) => {
     const {name,value}=e.target;
     setForm((prev)=>({...prev,[name]:value}))
-    //Clears the specific specific error
+    // CLEAR THE SPECIFIC ERROR
     setFieldErrors((prev) => ({ ...prev, [name]:"" }));
-    //Clears the server error
+    // CLEAR THE SERVER ERROR
     if(error) setError('')
   };
 
-
-
-  // Runs before submit returns true if valid
+  // CLIENT-SIDE VALIDATION FUNCTION BEFORE SUBMISSION
   const isValid = () => {
     const newErrors = {};
+    
+    // VALIDATE EMAIL FORMAT AND PRESENCE
     if (!form.email.trim()) {
       newErrors.email = 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
       newErrors.email = 'Enter a valid email address';
     }
+    
+    // VALIDATE PASSWORD PRESENCE
     if (!form.password) {
       newErrors.password = 'Password is required';
     }
+    
+    // UPDATE FIELD ERRORS STATE WITH NEW VALIDATION RESULTS
     setFieldErrors(newErrors);
+    
+    // RETURN TRUE IF NO ERRORS EXIST, FALSE OTHERWISE
     return Object.keys(newErrors).length === 0;
   };
 
-
-
-  //Function to submit data
+  // ASYNC HANDLER FOR FORM SUBMISSION
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
+
+    // ABORT SUBMISSION IF CLIENT-SIDE VALIDATION FAILS
     if (!isValid()) return;
     setError('');
     setLoading(true);
+    
     try {
+      // CALL LOGIN API WITH FORM DATA
       const user = await login(form); 
       toast.success(`Welcome back, ${user.name}!`);
 
-
-      //ROLE BASED ACCESS
-       if (user.role === 'user'){
+      // ROLE BASED ACCESS
+      if (user.role === 'user'){
         navigate('/');
-       }else{
-          navigate('/dashboard');
-       }
+      }else{
+        navigate('/dashboard');
+      }
       
     } catch (err) {
       setError(err.message);
@@ -79,10 +85,9 @@ export default function Login() {
     }
   };
 
-
   return (
     <AuthLayout>
-      {/* Heading */}
+      {/*  PAGE HEADING AND DESCRIPTION */}
       <div>
         <h1 className="text-2xl font-bold tracking-tight m-auto text-white flex justify-center">
           Welcome To OB39
@@ -92,10 +97,10 @@ export default function Login() {
         </p>
       </div>
 
-      {/* Form */}
+      {/*  LOGIN FORM CONTAINER */}
       <form className="mt-8 space-y-4" onSubmit={handleLoginSubmit}>
        
-        {/* EMAIL */}
+        {/* FIELD: EMAIL ADDRESS INPUT */}
         <Field
           label="Email Address"
           type="email"
@@ -106,12 +111,13 @@ export default function Login() {
           error={fieldErrors.email}
         />
 
-        {/* PASSWORD */}
+        {/* FIELD: PASSWORD INPUT WITH VISIBILITY TOGGLE */}
         <div className="group relative rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 transition-colors focus-within:border-badges/50 focus-within:bg-white/[0.06]">
           <label className="block text-xs font-medium tracking-wide text-gray-500">
             Password
           </label>
           <div className="mt-1 flex items-center">
+            {/* CONDITIONAL INPUT TYPE BASED ON SHOW PASSWORD STATE */}
             <input
               type={showPassword ? "text" : "password"}
               placeholder="******"
@@ -120,7 +126,7 @@ export default function Login() {
               name="password"
               className="w-full bg-transparent text-sm font-medium text-white placeholder:text-gray-600 focus:outline-none"
             />
-            {/* Toggles password visibility */}
+            {/* BUTTON TO TOGGLE PASSWORD VISIBILITY */}
             <button
               type="button"
               onClick={() => setShowPassword((p) => !p)}
@@ -133,10 +139,11 @@ export default function Login() {
               )}
             </button>
           </div>
+          {/* DISPLAY PASSWORD FIELD ERROR IF PRESENT */}
           {fieldErrors.password && (<p className="mt-1 text-xs text-red-400">{fieldErrors.password}</p>)}
         </div>
 
-        {/* REMEMBER ME + FORGOT PASSWORD */}
+        {/* REMEMBER ME AND FORGOT PASSWORD */}
         <div className="flex items-center justify-between pt-1">
           <label className="flex items-center gap-2.5 text-sm text-gray-400">
             <input
@@ -151,17 +158,17 @@ export default function Login() {
           </a>
         </div>
 
-        {/* SUBMIT */}
+        {/* BUTTON: FORM SUBMIT WITH LOADING STATE */}
         <button
           type="submit"
           disabled={loading}
           className="mt-2 w-full rounded-lg bg-button-bg py-3.5 text-sm font-semibold uppercase tracking-wider text-background transition-all duration-300 hover:bg-button-hover hover:shadow-lg hover:shadow-badges/25 hover:-translate-y-0.5 disabled:opacity-50 flex items-center justify-center gap-2"
         >
-        {loading ? (<><ArrowPathIcon className="size-4 animate-spin" />Signing In...</>) : ("LOGIN")}
+        {loading ? (<><ArrowPathIcon className="size-4 animate-spin" />Signing In...</>) : ("Login")}
         </button>
       </form>
 
-      {/* Link to signup */}
+      {/* LINK TO SIGNUP PAGE */}
       <p className="mt-8 text-center text-sm text-gray-400">
         Don't have an account?{" "}
         <a href="/signup" className="font-semibold text-badges hover:text-white transition-colors">
