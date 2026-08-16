@@ -16,6 +16,7 @@ import { UsersTable } from "./Dashboard/UserManagement/userManagement";
 import DashboardOverview from "./Dashboard/Statatics/DashboardOverview";
 import { AuditLogsTable } from "./Dashboard/AuditLogs/AuditLogsTable";
 import SessionExpiredModal from "./Authentication/expiredSessionmodal";
+import PartnersPage from "./pages/InvestorsPage/Investors";
 //import SearchResults from "./Dashboard/GlobalSearch/SearchResults";
 
 
@@ -74,7 +75,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services/>}/>
           <Route path="/contact" element={<Contact/>}/>
-           
+           <Route path="/partners" element={<PartnersPage/>}/>
         </Route>
 
         <Route>

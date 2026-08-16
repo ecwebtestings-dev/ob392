@@ -16,6 +16,7 @@ export default function Footer() {
   { name: 'Who We Are', href: '/about' },
   { name: 'Services', href: '/services' },
   { name: 'Contact Us', href: '/contact' },
+  { name: 'Like to invest/partner ?', href: '/partners' },
 ];
 
   const socials = [
@@ -55,10 +56,10 @@ export default function Footer() {
 
             <div className="relative flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
               <div className="max-w-2xl">
-                <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                <h2 className="text-2xl font-bold tracking-tight text-white sm:text-4xl">
                   Ready to transform your business?
                 </h2>
-                <p className="mt-4 text-lg leading-relaxed text-gray-400">
+                <p className="mt-4 text-md leading-relaxed text-gray-400">
                   Join thousands of farmers and entrepreneurs already using OB39
                   Ltd to access capital, training, and global markets across
                   Africa.
@@ -101,18 +102,23 @@ export default function Footer() {
       <h3 className="text-xs font-semibold tracking-widest text-badges">
         COMPANY
       </h3>
-      <ul role="list" className="mt-6 space-y-4">
-        {company.map((item) => (
-          <li key={item.name}>
-            
-            <a  href={item.href}
-              className="text-sm/6 text-gray-400 transition-colors hover:text-white"
-            >
-              {item.name}
-            </a>
-          </li>
-        ))}
-      </ul>
+      
+          <ul role="list" className="mt-6 space-y-4">
+      {company.map((item, index) => (
+        <li key={item.name}>
+          <a
+            href={item.href}
+            className={`text-sm/6 transition-colors hover:text-white ${
+              index === company.length - 1 
+                ? 'text-[#59B947] hover:text-[#7ddb6a]' 
+                : 'text-gray-400'
+            }`}
+          >
+            {item.name}
+          </a>
+        </li>
+  ))}
+</ul>
     </div>
 
     {/* Get In Touch Column */}

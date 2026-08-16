@@ -18,7 +18,7 @@ import {
   MenuItems,
 } from '@headlessui/react'
 import {
-  PhoneIcon,
+  BriefcaseIcon,
   ChevronDownIcon,
   ArrowPathIcon,
   Bars3Icon,
@@ -36,7 +36,7 @@ import { getCurrentUser, logout } from '../../Authentication/authService'
 import { api } from '../../Authentication/api'
 
 
-// Services dropdown items shown in the desktop "Services" popover and the mobile disclosure
+// Services dropdown items
 const products = [
   {
     name: 'Business Development & Advisory',
@@ -65,7 +65,13 @@ const products = [
 ]
 
 // Footer CTA row inside the services dropdown panel
-const callsToAction = [{ name: 'Contact Us', href: './contact', icon: PhoneIcon }]
+const callsToAction = [
+  { 
+    name: 'For Investors/Partners', 
+    href: './partners',
+    icon: BriefcaseIcon 
+  }
+]
 
 // Top-level nav links (rendered on both desktop and mobile)
 const navLinks = [
