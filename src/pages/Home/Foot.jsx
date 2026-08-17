@@ -90,7 +90,7 @@ export default function Footer() {
         <img alt="Logo" src={images.logo} className="h-8 w-auto" />
         <h1 className="text-white">OB39</h1>
       </a>
-      <p className="mt-6 max-w-sm text-base/7 text-gray-400">
+      <p className="mt-6 max-w-sm text-sm text-gray-400">
         Empowering Africa's farmers and entrepreneurs through cooperative
         capital, modern training, and direct market access. Building
         globally competitive enterprises for sustainable economic growth.
@@ -108,7 +108,7 @@ export default function Footer() {
         <li key={item.name}>
           <a
             href={item.href}
-            className={`text-sm/6 transition-colors hover:text-white ${
+            className={`text-sm transition-colors hover:text-white ${
               index === company.length - 1 
                 ? 'text-[#59B947] hover:text-[#7ddb6a]' 
                 : 'text-gray-400'
@@ -131,7 +131,7 @@ export default function Footer() {
           <span className="mt-0.5 flex size-9 flex-shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5">
             <MapPinIcon className="size-4 text-badges" />
           </span>
-          <span className="text-sm/6 text-gray-400">
+          <span className="text-sm text-gray-400">
             Plot 238 Kalule Road,
             <br />
             Kampala, Uganda
@@ -152,7 +152,7 @@ export default function Footer() {
           <span className="mt-0.5 flex size-9 flex-shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5">
             <EnvelopeIcon className="size-4 text-badges" />
           </span>
-          <div className="text-sm/6 text-gray-400">
+          <div className="text-sm text-gray-400">
             
             <a  href="mailto:info@ob39.co.ug"
               className="block transition-colors hover:text-white"
