@@ -4,7 +4,7 @@ import { ArrowRightIcon } from "@heroicons/react/24/outline";
 export default function AnimatedButton({
   href = "/contact",
   children,
-  color = "#22c55e",
+  color = "#59B947",
   icon = true,
 }) {
   return (

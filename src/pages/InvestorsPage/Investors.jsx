@@ -7,13 +7,7 @@ import {
   CheckCircleIcon,
 } from '@heroicons/react/24/outline'
 
-/* ────────────────────────────────────────────────────────────────────────
-   This file uses your @theme tokens directly as Tailwind utilities:
-   bg-background · text-heading · bg-background/text-badges · bg-badge-bg ·
-   text-icons · bg-card-background · text-text-color · text-footer-text ·
-   text-hero-text · bg-button-bg · hover:bg-button-hover · font-sans
-   No colors are hard-coded — everything traces back to your theme file.
-   ─────────────────────────────────────────────────────────────────────── */
+
 
 const TOC = [
   { id: 'exec-summary', number: '01', title: 'Executive Summary' },
@@ -122,12 +116,12 @@ export default function PartnersPage() {
       `}</style>
 
       {/* HERO */}
-      <div className="relative overflow-hidden bg-background">
+      <div className="relative overflow-hidden bg-background lg:h-screen">
         <div className="pointer-events-none absolute -top-32 right-[-6rem] h-[28rem] w-[28rem] rounded-full bg-background opacity-[0.12] blur-3xl" />
         <div className="pointer-events-none absolute bottom-[-8rem] left-[-4rem] h-[22rem] w-[22rem] rounded-full bg-background opacity-[0.06] blur-3xl" />
 
-        <div className="relative mx-auto max-w-6xl px-6 pb-24 pt-28 lg:px-8 lg:pt-32">
-          <div className="flex flex-col justify-between gap-10 lg:flex-row lg:items-start">
+        <div className="relative mx-auto max-w-7xl px-5 pb-24 pt-28 lg:px-8 lg:pt-34 ">
+          <div className="flex flex-col justify-between gap-10 lg:flex-row lg:items-start " >
             <div className="max-w-3xl">
               <Eyebrow>OB39 Limited &middot; Concept Note</Eyebrow>
 
@@ -136,7 +130,7 @@ export default function PartnersPage() {
               </h1>
 
               <p className="mt-7 max-w-3xl text-sm leading-relaxed text-hero-text">
-                OB39 Limited is developing Project , connecting young businesses,
+                OB39 Limited is a developing Project , connecting young businesses,
                 smallholder farmers, markets, capital and technology — beginning with
                 controlled implementation in Uganda, scaling toward East Africa and
                 international markets.
@@ -218,7 +212,7 @@ export default function PartnersPage() {
 
             <Section id="exec-summary" number="01" title="Executive Summary">
               <p className="text-sm leading-relaxed text-text-color">
-                OB39 Limited is developing Project L, an integrated commercial and
+                OB39 Limited is a developing Project , an integrated commercial and
                 development initiative addressing two barriers to economic growth: the
                 difficulty young and developing businesses face in accessing growth
                 resources, business knowledge and markets, and the constraints
@@ -226,7 +220,7 @@ export default function PartnersPage() {
                 labour, storage and reliable markets.
               </p>
               <p className="mt-4 text-sm leading-relaxed text-text-color">
-                OB39 Limited is operating through two complementary pillars — Chapter A
+                We are operating through two complementary pillars — Chapter A
                 (Enterprise Development) and Chapter B (Agricultural Transformation) —
                 building toward a commercially sustainable platform connecting people,
                 businesses, farmers, productive resources, technology, markets,
@@ -299,7 +293,7 @@ export default function PartnersPage() {
               <h3 className="mt-9 text-base font-bold text-heading">Operating Model</h3>
               <p className="mt-3 text-sm leading-relaxed text-text-color">
                 Participating businesses are contributing an agreed proportion of daily
-                profits — originally structured at 10%, 20% or 30% tiers — into pooled,
+                profits originally structured at 10%, 20% or 30% tiers  into pooled,
                 controlled financial arrangements supporting rotational expansion across
                 the group. The precise financial structure, eligibility and legal
                 treatment are being established through formal agreements ahead of
@@ -318,7 +312,7 @@ export default function PartnersPage() {
               <p className="mt-3 text-sm leading-relaxed text-text-color">
                 Farmers are organized into units of approximately 15 households,
                 working together on a rotational basis across planting, weeding,
-                fertilizer application, harvesting and storage preparation — reducing
+                fertilizer application, harvesting and storage preparation  reducing
                 labour constraints and strengthening cooperation.
               </p>
               <h3 className="mt-9 text-base font-bold text-heading">Agricultural Services</h3>
@@ -505,7 +499,7 @@ export default function PartnersPage() {
 
             <Section id="conclusion" number="14" title="Conclusion">
               <p className="text-sm leading-relaxed text-text-color">
-                Project L is built around a simple principle: organized people, equipped
+                Ob39 Limited is being built around a simple principle: organized people, equipped
                 with knowledge and productive resources and connected to markets, can
                 create stronger and more sustainable economic opportunities. OB39 is
                 implementing Project L progressively — beginning with controlled
@@ -515,14 +509,14 @@ export default function PartnersPage() {
               </p>
             </Section>
 
-            {/* CONTACT — closing plate */}
+            {/* CONTACT  */}
             <div className="reveal mt-4 rounded-2xl bg-card-background p-10 text-center sm:p-14">
               <Eyebrow></Eyebrow>
-              <h2 className="mt-5 text-2xl font-extrabold text-heading">Engaging With OB39</h2>
+              <h2 className="mt-5 text-2xl font-extrabold text-heading">Engage With OB39</h2>
               <p className="mx-auto mt-4 max-w-xl text-[0.95rem] leading-relaxed text-text-color">
                 OB39 is welcoming engagement from investors, financial institutions,
                 government authorities and development partners looking to contribute
-                to Project L.
+                to this Project .
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-4">
                 <a

@@ -419,7 +419,7 @@ useEffect(() => {
                   <>
                     
                      <a href="/login"
-                      className="block rounded-lg bg-button-bg px-3 py-3 text-center text-sm font-semibold text-background hover:bg-button-hover transition-colors"
+                      className="block rounded-lg bg-button-bg px-3 py-3 text-center text-sm font-semibold text-white hover:bg-button-hover transition-colors"
                     >
                       Log In
                     </a>
