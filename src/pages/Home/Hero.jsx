@@ -32,7 +32,7 @@ import AnimatedButton from "../../components/ui/Buttons";
               <p className="mt-7 max-w-xl leading-relaxed font-light text-hero-text">
                 OB39 Ltd transforms small-scale producers and emerging businesses
                 through cooperative capital cycles, modern training, and direct
-                digital market access—bypassing middlemen and building
+                digital market access bypassing middlemen and building
                 sustainable, globally competitive enterprises.
               </p>
 

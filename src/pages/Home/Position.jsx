@@ -4,12 +4,14 @@ import { ArrowDownIcon } from "@heroicons/react/24/solid";
 // The programmes OB39 extends the reach of — a set, not a sequence, so these render as
 // a flat list of pills rather than numbered steps.
 const programmes = [
-  "Parish Development Model",
-  "Emyooga",
-  "Operation Wealth Creation",
-  "Uganda Women Entrepreneurship Programme",
-  "Youth Livelihood Programme",
-  "National Strategy for Youth Employment in Agriculture",
+  "Parish Development Model(UG)",
+  "Emyooga(UG)",
+  "Operation Wealth Creation(UG)",
+  "Youth Enterprise Development Fund (KE)",
+  "Youth Livelihood Programme(UG)",
+  "Hustler Fund(KE)",
+  "TASAF(TZ)",
+  "Vision 2020 Umurenge(RW)",
 ];
 
 // OB39's actual workflow, in order — this genuinely is a sequence, so it earns numbering.
@@ -72,7 +74,7 @@ export default function PositioningSection() {
 
           <p className="mt-6 text-base leading-relaxed text-gray-600 sm:text-lg">
             Instead of competing with existing government and NGO programmes, OB39
-            serves as a community implementation partner — identifying entrepreneurs
+            is serving as a community implementation partner identifying entrepreneurs
             and farmers, organizing them into structured groups, and carrying them
             from training through to finance, markets, and long-term monitoring.
           </p>

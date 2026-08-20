@@ -77,7 +77,7 @@ export default function ImpactNumbers() {
 
           <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-gray-500">
             From small farming cooperatives to a national digital marketplace
-            — we've built the infrastructure that actually works.
+          we're built the infrastructure that actually works.
           </p>
         </div>
 
@@ -90,7 +90,7 @@ export default function ImpactNumbers() {
             >
               <p className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
                 {item.value}
-                <span className="text-badges">{item.suffix}</span>
+                <span className="text-badges text-[1.5rem]">{item.suffix}</span>
               </p>
 
               <p className="mt-2 text-sm font-semibold text-gray-800">
@@ -144,8 +144,8 @@ export default function ImpactNumbers() {
         {/* Youth & Women Empowerment */}
         <div className="mt-16">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full bg-badges/10 px-4 py-1.5 text-sm font-semibold uppercase tracking-widest text-badges">
-              <span className="h-1.5 w-1.5 rounded-full bg-badges" />
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-semibold uppercase tracking-widest text-badges">
+              <span className="h-1.5 w-1.5 " />
               Inclusive by Design
             </span>
 
@@ -156,7 +156,7 @@ export default function ImpactNumbers() {
             <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-gray-500">
               OB39's cooperative model is built to remove the traditional
               barriers that keep young people and women locked out of
-              capital — no land titles, no collateral, no gatekeepers.
+              capital no land titles, no collateral, no gatekeepers.
             </p>
           </div>
 
@@ -164,7 +164,7 @@ export default function ImpactNumbers() {
             {inclusion.map((item) => (
               <div
                 key={item.title}
-                className="rounded-2xl border border-badges/20 bg-badges/[0.04] p-6 text-center transition-all duration-300 hover:border-badges/40 hover:bg-badges/[0.07] hover:shadow-lg hover:shadow-gray-100"
+                className="rounded-2xl border border-badges/20 bg-badges/[0.04] p-6 text-center transition-all duration-300 hover:border-badges/40 hover:bg-badges/[0.007] hover:shadow-lg hover:shadow-gray-100"
               >
                 <p className="text-3xl font-extrabold tracking-tight text-badges sm:text-4xl">
                   {item.value}
