@@ -1,5 +1,4 @@
 import AboutOverview from "./SectionContentLayout";
-import WhatsApp from "../../components/ui/Whatsapp";
 import ProblemsWeSolve from "./AboutReview";
 import CallToAction from "./CallToAction";
 import Hero from "./Hero";
@@ -10,6 +9,7 @@ import InvestmentOpportunity from "./WhyUs";
 import PositioningSection from "./Position";
 import { AiWidget } from "../../AiWidget/WidgetLayout";
 import { Helmet } from "react-helmet-async";
+
 
 
 export default function Home() {
@@ -30,8 +30,9 @@ export default function Home() {
       <CallToAction/>
       <InvestmentOpportunity/>
       <Testimonials/>
-      <WhatsApp/>
+
       <AiWidget/>
+     
       
   
     </div>

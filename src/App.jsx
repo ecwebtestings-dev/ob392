@@ -16,8 +16,7 @@ import { UsersTable } from "./Dashboard/UserManagement/userManagement";
 import DashboardOverview from "./Dashboard/Statatics/DashboardOverview";
 import { AuditLogsTable } from "./Dashboard/AuditLogs/AuditLogsTable";
 import SessionExpiredModal from "./Authentication/expiredSessionmodal";
-import PartnersPage from "./pages/InvestorsPage/Investors";
-//import SearchResults from "./Dashboard/GlobalSearch/SearchResults";
+import InvestorsPage from "./pages/InvestorsPage/InvestorsPage";
 
 
 
@@ -66,7 +65,7 @@ function App() {
       
 
     <BrowserRouter>
-    {/* fired from Authentication/api.js and shows itself when triggered. */}
+   
       <SessionExpiredModal/>
       
       <Routes>
@@ -75,7 +74,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services/>}/>
           <Route path="/contact" element={<Contact/>}/>
-           <Route path="/partners" element={<PartnersPage/>}/>
+           <Route path="/partners" element={<InvestorsPage/>}/>
         </Route>
 
         <Route>
@@ -90,7 +89,7 @@ function App() {
           <Route path="notifictaions" element={<Notification/>}/>
           <Route path="events" element={<EventManagement/>} />
           <Route path="logs" element={<AuditLogsTable/>}/>
-          {/** <Route path="search" element={<SearchResults/>}/>*/}
+         
         </Route>
       </Routes>
      

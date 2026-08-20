@@ -1,5 +1,4 @@
 import { AiWidget } from "../../AiWidget/WidgetLayout";
-import WhatsApp from "../../components/ui/Whatsapp";
 import AboutHero from "./AboutHero";
 import AboutSection from "./AboutUs";
 import JoinUsCTA from "./CallToJoin";
@@ -21,7 +20,7 @@ export default function About() {
       <AboutHero />
       <AboutSection/>
       <CompanyStory/>
-      <WhatsApp/>
+
       <LeadershipQuote/>
       <MsmeImpact/>
       <TeamPhoto/>
