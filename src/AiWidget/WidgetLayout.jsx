@@ -41,7 +41,7 @@ export function AiWidget() {
         />
       )}
 
-      <div className="fixed bottom-10 right-5 z-50 flex flex-col items-end">
+      <div className="fixed bottom-18 right-5 z-50 flex flex-col items-end">
         {/* Chat Window */}
         {isOpen && (
           <div className="mb-4 flex h-[450px] w-[380px] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl sm:w-[420px]">
@@ -171,6 +171,8 @@ export function AiWidget() {
 
               {/* Toggle Button + Tooltip + WhatsApp bubble */}
         <div className="group relative flex items-center gap-3">
+          {/* WhatsApp bubble — slides in from the right on hover */}
+          
             <a href="https://wa.me/256783380569"
             target="_blank"
             rel="noopener noreferrer"
