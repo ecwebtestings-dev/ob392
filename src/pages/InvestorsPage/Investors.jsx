@@ -131,7 +131,7 @@ export default function PartnersPage() {
 
               <p className="mt-7 max-w-3xl text-sm leading-relaxed text-hero-text">
                 OB39 Limited is a developing Project , connecting young businesses,
-                smallholder farmers, markets, capital and technology — beginning with
+                smallholder farmers, markets, capital and technology  beginning with
                 controlled implementation in Uganda, scaling toward East Africa and
                 international markets.
               </p>
@@ -141,7 +141,7 @@ export default function PartnersPage() {
                   href="/contact"
                   className="inline-flex items-center gap-2 rounded-lg bg-button-bg px-6 py-3 text-sm font-semibold text-white transition-colors duration-300 hover:bg-button-hover"
                 >
-                  Request the Full Concept Note
+                  Concept Note
                   <ArrowRightIcon className="size-4" />
                 </a>
                 <a
@@ -220,8 +220,8 @@ export default function PartnersPage() {
                 labour, storage and reliable markets.
               </p>
               <p className="mt-4 text-sm leading-relaxed text-text-color">
-                We are operating through two complementary pillars — Chapter A
-                (Enterprise Development) and Chapter B (Agricultural Transformation) —
+                We are operating through two complementary pillars  Chapter A
+                (Enterprise Development) and Chapter B (Agricultural Transformation) 
                 building toward a commercially sustainable platform connecting people,
                 businesses, farmers, productive resources, technology, markets,
                 logistics and investment. OB39 is beginning with controlled
@@ -275,7 +275,7 @@ export default function PartnersPage() {
               </div>
             </Section>
 
-            <Section id="chapter-a" number="04" title="Chapter A — Enterprise Development">
+            <Section id="chapter-a" number="04" title="Chapter A Enterprise Development">
               <p className="text-sm leading-relaxed text-text-color">
                 OB39 is reaching young and developing businesses through agents and
                 organizing them into units of approximately 60 members.

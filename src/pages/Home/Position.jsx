@@ -1,20 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowDownIcon } from "@heroicons/react/24/solid";
 
-// The programmes OB39 extends the reach of — a set, not a sequence, so these render as
-// a flat list of pills rather than numbered steps.
-const programmes = [
+const programmes = [ 
   "Parish Development Model(UG)",
   "Emyooga(UG)",
   "Operation Wealth Creation(UG)",
-  "Youth Enterprise Development Fund (KE)",
-  "Youth Livelihood Programme(UG)",
-  "Hustler Fund(KE)",
-  "TASAF(TZ)",
-  "Vision 2020 Umurenge(RW)",
+  "Consultative Group to Assist the Poor (CGAP)", 
+  "Foreign, Commonwealth & Development Office ",
+  "Food and Agriculture Organization (FAO)", 
+  "United Nations Development Programme (UNDP)", 
+  "German Society for International Cooperation (GIZ)", 
 ];
 
-// OB39's actual workflow, in order — this genuinely is a sequence, so it earns numbering.
 const process = [
   "Identify",
   "Organize",
@@ -107,7 +104,7 @@ export default function PositioningSection() {
               </ul>
             </BridgeCard>
 
-            {/* Mobile-only connector */}
+            {/* Mobile connector */}
             <Connector inView={inView} />
 
             <div
@@ -164,7 +161,7 @@ export default function PositioningSection() {
   );
 }
 
-//  endpoints the bridge connects.
+
 function BridgeCard({ label, children, inView, delay }) {
   return (
     <div
