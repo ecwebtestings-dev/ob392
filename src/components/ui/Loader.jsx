@@ -1,14 +1,45 @@
 
+
 const Loader = () => {
   return (
-    <div className="flex-col gap-4 w-full flex items-center justify-center">
-      <div className="w-28 h-28 border-8 text-blue-400 text-4xl animate-spin border-gray-300 flex items-center justify-center border-t-blue-400 rounded-full">
-        <svg viewBox="0 0 24 24" fill="currentColor" height="1em" width="1em" className="animate-ping">
-          <path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z" />
-        </svg>
-      </div>
+    <div className="relative w-[75px] h-[100px]">
+      {/* Bar 1 */}
+      <div
+        className="absolute bottom-0 left-0 w-[10px] h-1/2 bg-black
+                   origin-bottom shadow-[1px_1px_0_rgba(0,0,0,0.2)]
+                   scale-y-[0.2] animate-[barUp1_4s_infinite]"
+      />
+      {/* Bar 2 */}
+      <div
+        className="absolute bottom-0 left-[15px] w-[10px] h-1/2 bg-black
+                   origin-bottom shadow-[1px_1px_0_rgba(0,0,0,0.2)]
+                   scale-y-[0.4] animate-[barUp2_4s_infinite]"
+      />
+      {/* Bar 3 */}
+      <div
+        className="absolute bottom-0 left-[30px] w-[10px] h-1/2 bg-black
+                   origin-bottom shadow-[1px_1px_0_rgba(0,0,0,0.2)]
+                   scale-y-[0.6] animate-[barUp3_4s_infinite]"
+      />
+      {/* Bar 4 */}
+      <div
+        className="absolute bottom-0 left-[45px] w-[10px] h-1/2 bg-black
+                   origin-bottom shadow-[1px_1px_0_rgba(0,0,0,0.2)]
+                   scale-y-[0.8] animate-[barUp4_4s_infinite]"
+      />
+      {/* Bar 5 */}
+      <div
+        className="absolute bottom-0 left-[60px] w-[10px] h-1/2 bg-black
+                   origin-bottom shadow-[1px_1px_0_rgba(0,0,0,0.2)]
+                   scale-y-[1] animate-[barUp5_4s_infinite]"
+      />
+      {/* Bouncing ball */}
+      <div
+        className="absolute bottom-[10px] left-0 w-[10px] h-[10px] rounded-full
+                   bg-[rgb(44,143,255)] animate-[ball624_4s_infinite]"
+      />
     </div>
   );
-}
+};
 
 export default Loader;

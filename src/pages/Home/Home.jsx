@@ -17,6 +17,7 @@ export default function Home() {
     <>
     <Helmet>
         <title>OB39 | Business Incubation & Agribusiness Export in Africa</title>
+        <meta name="google-site-verification" content="XJupw4ZGBL3f2nk9WMZ32eWNeYE-3DcRX954_r04wy4" />
         <meta name="description" content="OB39 Ltd's services span business incubation, agribusiness and export support, and a digital marketplace across Africa." />
         <link rel="canonical" href="https://ob39ltd.com/" />
       </Helmet>
